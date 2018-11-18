@@ -1,19 +1,48 @@
 package com.example.inved.mynews;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        this.configureToolbar();
         this.configureViewPagerAndTabs();
     }
+
+    /**Creation of the toolbar*/
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //2 - Inflate the menu and add it to the Toolbar
+        getMenuInflater().inflate(R.menu.menu_activity_main, menu);
+        return true;
+    }
+
+    // ----
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void configureToolbar(){
+        // Get the toolbar view inside the activity layout
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        // Sets the Toolbar
+        setSupportActionBar(toolbar);
+    }
+
+    private void setSupportActionBar(Toolbar toolbar) {
+    }
+
+    /**End of the creation of the toolbar*/
 
     private void configureViewPagerAndTabs(){
         //Get ViewPager from layout
