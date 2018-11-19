@@ -14,7 +14,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3; // 3 - Number of page to show
+        return 8; // 3 - Number of page to show
     }
 
     @Override

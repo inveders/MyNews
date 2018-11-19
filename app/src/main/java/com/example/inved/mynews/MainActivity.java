@@ -6,8 +6,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
-    private void setSupportActionBar(Toolbar toolbar) {
-    }
 
     /**End of the creation of the toolbar*/
 
@@ -55,6 +53,6 @@ public class MainActivity extends AppCompatActivity {
         // 2 - Glue TabLayout and ViewPager together
         tabs.setupWithViewPager(pager);
         // 3 - Design purpose. Tabs have the same width
-        tabs.setTabMode(TabLayout.MODE_FIXED);
+
     }
 }
