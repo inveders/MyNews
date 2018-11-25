@@ -1,4 +1,4 @@
-package com.example.inved.mynews;
+package com.example.inved.mynews.Controller;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 
+import com.example.inved.mynews.R;
+
 public class MainActivity extends AppCompatActivity {
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -19,6 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
         this.configureToolbar();
         this.configureViewPagerAndTabs();
+
+    }
+
+    public void DayOfMood(int positionby) {
+
+        positionby=1;
     }
 
     /**Creation of the toolbar*/
@@ -55,4 +64,5 @@ public class MainActivity extends AppCompatActivity {
         // 3 - Design purpose. Tabs have the same width
 
     }
+
 }

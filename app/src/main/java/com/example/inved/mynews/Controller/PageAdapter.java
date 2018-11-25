@@ -1,8 +1,12 @@
-package com.example.inved.mynews;
+package com.example.inved.mynews.Controller;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.inved.mynews.View.GeneralFragment;
+import com.example.inved.mynews.View.MostPopularPageFragment;
+import com.example.inved.mynews.View.TopStoriesPageFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
@@ -25,21 +29,23 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 1: //Page number 2
                 return MostPopularPageFragment.newInstance();
             case 2: //Page number 3
-                return TechPageFragment.newInstance();
+                return GeneralFragment.newInstance(position);
             case 3: //Page number 4
-                return SciencePageFragment.newInstance();
+                return GeneralFragment.newInstance(position);
             case 4: //Page number 5
-                return SportsPageFragment.newInstance();
+                return GeneralFragment.newInstance(position);
             case 5: //Page number 6
-                return FoodPageFragment.newInstance();
+                return GeneralFragment.newInstance(position);
             case 6: //Page number 7
-                return TravelPageFragment.newInstance();
+                return GeneralFragment.newInstance(position);
             case 7: //Page number 8
-                return WorldPageFragment.newInstance();
+                return GeneralFragment.newInstance(position);
             default:
                 return null;
         }
     }
+
+
 
     @Override
     public CharSequence getPageTitle(int position) {

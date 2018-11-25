@@ -1,4 +1,4 @@
-package com.example.inved.mynews;
+package com.example.inved.mynews.View;
 
 
 import android.os.Bundle;
@@ -8,20 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.inved.mynews.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FoodPageFragment extends Fragment {
+public class SportsPageFragment extends Fragment {
 
 
-    public static FoodPageFragment newInstance() {
-        return (new FoodPageFragment());
+    public static SportsPageFragment newInstance() {
+        return (new SportsPageFragment());
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_food_page, container, false);
+        return inflater.inflate(R.layout.fragment_sports_page, container, false);
     }
 }
 
