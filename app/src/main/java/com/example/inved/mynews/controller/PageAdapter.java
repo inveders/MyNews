@@ -1,17 +1,21 @@
-package com.example.inved.mynews.Controller;
+package com.example.inved.mynews.controller;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
-import com.example.inved.mynews.View.GeneralFragment;
-import com.example.inved.mynews.View.MostPopularPageFragment;
-import com.example.inved.mynews.View.TopStoriesPageFragment;
+import com.example.inved.mynews.view.FoodPageFragment;
+import com.example.inved.mynews.view.MostPopularPageFragment;
+import com.example.inved.mynews.view.SciencePageFragment;
+import com.example.inved.mynews.view.SportsPageFragment;
+import com.example.inved.mynews.view.TechPageFragment;
+import com.example.inved.mynews.view.TopStoriesPageFragment;
+import com.example.inved.mynews.view.TravelPageFragment;
+import com.example.inved.mynews.view.WorldPageFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
     // 2 - Default Constructor
-    public PageAdapter(FragmentManager mgr) {
+    private PageAdapter(FragmentManager mgr) {
         super(mgr);
 
     }
@@ -29,27 +33,26 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 1: //Page number 2
                 return MostPopularPageFragment.newInstance();
             case 2: //Page number 3
-                return GeneralFragment.newInstance(position);
+                return TechPageFragment.newInstance();
             case 3: //Page number 4
-                return GeneralFragment.newInstance(position);
+                return SciencePageFragment.newInstance();
             case 4: //Page number 5
-                return GeneralFragment.newInstance(position);
+                return SportsPageFragment.newInstance();
             case 5: //Page number 6
-                return GeneralFragment.newInstance(position);
+                return FoodPageFragment.newInstance();
             case 6: //Page number 7
-                return GeneralFragment.newInstance(position);
+                return TravelPageFragment.newInstance();
             case 7: //Page number 8
-                return GeneralFragment.newInstance(position);
+                return WorldPageFragment.newInstance();
             default:
                 return null;
         }
     }
 
 
-
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position){
+        switch (position) {
             case 0: //Page number 1
                 return "TOP STORIES";
             case 1: //Page number 2

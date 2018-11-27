@@ -1,4 +1,4 @@
-package com.example.inved.mynews.Controller;
+package com.example.inved.mynews.controller;
 
 import android.os.Build;
 import android.support.annotation.RequiresApi;
@@ -25,10 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void DayOfMood(int positionby) {
-
-        positionby=1;
-    }
 
     /**Creation of the toolbar*/
     @Override
