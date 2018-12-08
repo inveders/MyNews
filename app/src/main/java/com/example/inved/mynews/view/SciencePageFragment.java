@@ -1,5 +1,7 @@
 package com.example.inved.mynews.view;
 
+import android.support.v4.app.LoaderManager;
+
 public class SciencePageFragment extends AbsNyTimesFragment {
 
 
@@ -10,6 +12,11 @@ public class SciencePageFragment extends AbsNyTimesFragment {
     @Override
     public String getTitle() {
         return "Science";
+    }
+
+    @Override
+    public LoaderManager getSupportLoaderManager() {
+        return super.getSupportLoaderManager();
     }
 }
 

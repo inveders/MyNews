@@ -2,6 +2,7 @@ package com.example.inved.mynews.view;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
 
 
 /**
@@ -17,6 +18,11 @@ public class FoodPageFragment extends AbsNyTimesFragment {
     @Override
     public String getTitle() {
         return "Food";
+    }
+
+    @Override
+    public LoaderManager getSupportLoaderManager() {
+        return super.getSupportLoaderManager();
     }
 }
 
