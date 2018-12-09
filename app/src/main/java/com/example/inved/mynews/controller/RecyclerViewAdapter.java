@@ -2,7 +2,6 @@ package com.example.inved.mynews.controller;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,30 +9,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.inved.mynews.R;
-import com.example.inved.mynews.model.topstories.Result;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    List<Result> results;
+    private List<String> results;
 
-    RecyclerViewAdapter(List<Result> results){
+
+    RecyclerViewAdapter(List<String> results){
         this.results=results;
     }
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.fragment_general_item,parent,false);
 
-        return new MyViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
-        holder.display(results.get(position));
+    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
+
+        /* mImageItem.setImageDrawable(response.body().results.multimedia.getImage());
+           */
+        holder.mTitleItem.setText(results.get(position));
+        //holder.mImageItem.setImageDrawable(results.get(position));
     }
 
     @Override
@@ -41,22 +44,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return results.size();
     }
 
-    public class MyViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mTitleItem;
-        private ImageView mImageItem;
+        TextView mTitleItem;
+        ImageView mImageItem;
 
-        MyViewHolder(View itemView){
-            //super(itemView);
+        ViewHolder(View itemView){
+            super(itemView);
 
             mTitleItem = itemView.findViewById(R.id.fragment_general_item_title);
             mImageItem = itemView.findViewById(R.id.fragment_general_item_image);
         }
 
-        /*void display(Jeuvideo jeuvideo){
-            mTitleItem.setText(jeuvideo.getTitle());
-            mImageItem.setImageDrawable(jeuvideo.getImage());
-
-        }*/
     }
 }
