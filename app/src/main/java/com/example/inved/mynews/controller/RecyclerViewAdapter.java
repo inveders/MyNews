@@ -1,7 +1,10 @@
 package com.example.inved.mynews.controller;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,39 +12,47 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.model.topstories.Result;
 
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<String> results;
+   @Nullable
+    private List<Result> mData;
 
-
-    RecyclerViewAdapter(List<String> results){
-        this.results=results;
-    }
+    RecyclerViewAdapter(){}
 
     @NonNull
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.fragment_general_item,parent,false);
+        View v;
+        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_general_item,parent,false);
 
-        return new ViewHolder(view);
+        Log.d("DEBAGO","RecyclerViewAdapter");
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
+        if (mData==null) return ;
 
-        /* mImageItem.setImageDrawable(response.body().results.multimedia.getImage());
-           */
-        holder.mTitleItem.setText(results.get(position));
-        //holder.mImageItem.setImageDrawable(results.get(position));
+        holder.mTitleItem.setText(mData.get(position).title);
+
     }
 
     @Override
     public int getItemCount() {
-        return results.size();
+        if(mData==null) return 0;
+
+        return mData.size();
+    }
+
+    public void setData(List<Result> data) {
+        mData = data;
+
+        notifyDataSetChanged(); //RecyclerView charge toi
+        Log.d("DEBAGO","setData"+mData);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,7 +62,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         ViewHolder(View itemView){
             super(itemView);
-
+            Log.d("DEBAGO","mTitleItem");
             mTitleItem = itemView.findViewById(R.id.fragment_general_item_title);
             mImageItem = itemView.findViewById(R.id.fragment_general_item_image);
         }
