@@ -1,6 +1,5 @@
 package com.example.inved.mynews.controller;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -26,8 +25,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v;
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_general_item,parent,false);
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_general_item,parent,false);
 
         Log.d("DEBAGO","RecyclerViewAdapter");
         return new ViewHolder(v);
@@ -62,7 +61,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         ViewHolder(View itemView){
             super(itemView);
-            Log.d("DEBAGO","mTitleItem");
+            Log.d("DEBAGO","mTitleItem"+mTitleItem);
             mTitleItem = itemView.findViewById(R.id.fragment_general_item_title);
             mImageItem = itemView.findViewById(R.id.fragment_general_item_image);
         }
