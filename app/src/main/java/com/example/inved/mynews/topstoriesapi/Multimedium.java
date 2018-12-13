@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.model.topstories;
+package com.example.inved.mynews.topstoriesapi;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

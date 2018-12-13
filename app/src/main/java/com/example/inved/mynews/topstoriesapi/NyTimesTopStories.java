@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.model.topstories;
+package com.example.inved.mynews.topstoriesapi;
 
 import java.util.List;
 
@@ -10,6 +10,6 @@ public class NyTimesTopStories {
 
     @SerializedName("results")
     @Expose
-    public List<Result> results = null;
+    public List<Result> resultsTopStories = null;
 
 }

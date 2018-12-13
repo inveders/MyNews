@@ -1,8 +1,10 @@
 package com.example.inved.mynews.view;
 
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.util.Log;
 
 import com.example.inved.mynews.controller.AbsNyTimesFragment;
 
@@ -13,9 +15,18 @@ import com.example.inved.mynews.controller.AbsNyTimesFragment;
 public class FoodPageFragment extends AbsNyTimesFragment {
 
 
-    public static FoodPageFragment newInstance() {
+
+
+    public static FoodPageFragment newInstance(String name,String key) {
+
+        sectionName =name;
+        apiKey = key;
+        Log.d("DEBAGO","FoodPageFragment"+name);
+
         return (new FoodPageFragment());
+
     }
+
 
     @Override
     public String getTitle() {

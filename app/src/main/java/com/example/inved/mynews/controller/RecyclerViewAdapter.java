@@ -3,7 +3,6 @@ package com.example.inved.mynews.controller;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.inved.mynews.R;
-import com.example.inved.mynews.model.topstories.Result;
+import com.example.inved.mynews.topstoriesapi.Result;
 
 import java.util.List;
 
@@ -28,7 +27,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_general_item,parent,false);
 
-        Log.d("DEBAGO","RecyclerViewAdapter");
         return new ViewHolder(v);
     }
 
@@ -50,8 +48,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void setData(List<Result> data) {
         mData = data;
 
-        notifyDataSetChanged(); //RecyclerView charge toi
-        Log.d("DEBAGO","setData"+mData);
+        //Fill the Recycler View
+        notifyDataSetChanged();
+
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,7 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         ViewHolder(View itemView){
             super(itemView);
-            Log.d("DEBAGO","mTitleItem"+mTitleItem);
+
             mTitleItem = itemView.findViewById(R.id.fragment_general_item_title);
             mImageItem = itemView.findViewById(R.id.fragment_general_item_image);
         }

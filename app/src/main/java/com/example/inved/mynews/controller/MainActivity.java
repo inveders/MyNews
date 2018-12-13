@@ -7,14 +7,11 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 
 import com.example.inved.mynews.R;
 
 public class MainActivity extends AppCompatActivity {
-
-
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -22,25 +19,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("DEBAGO","Main Activity 1");
-        //Choisir comment on affiche notre liste (vertical, horizonthal)
-//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayout.VERTICAL, false));
-
         this.configureToolbar();
         this.configureViewPagerAndTabs();
-
-
     }
 
-    /**Creation of the toolbar*/
+    /**Creation of the toolbar and the menu*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //2 - Inflate the menu and add it to the Toolbar
+        // Inflate the menu and add it to the Toolbar
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
     }
-
-    // ----
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void configureToolbar(){
@@ -51,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**End of the creation of the toolbar*/
 
+    /**Configuration of the ViewPager*/
     private void configureViewPagerAndTabs(){
         //Get ViewPager from layout
         ViewPager pager = findViewById(R.id.activity_main_viewpager);
@@ -63,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
         TabLayout tabs= findViewById(R.id.activity_main_tabs);
         // 2 - Glue TabLayout and ViewPager together
         tabs.setupWithViewPager(pager);
-        // 3 - Design purpose. Tabs have the same width
 
     }
 

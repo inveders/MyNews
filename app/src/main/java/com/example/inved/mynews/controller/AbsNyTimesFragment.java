@@ -13,9 +13,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.inved.mynews.R;
-import com.example.inved.mynews.model.topstories.Result;
+import com.example.inved.mynews.topstoriesapi.Result;
 import com.example.inved.mynews.utils.MyAsyncTaskLoader;
 
 import java.util.List;
@@ -31,42 +32,45 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     /**Create a static task id that will identify our loader*/
     LoaderManager mLoaderManager;
     RecyclerViewAdapter mRecyclerViewAdapter;
+    public static final String NAME_ARG ="nameArticle";
+    public static String sectionName="home";
+    public static String apiKey="home";
+    public static int articlePeriod;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_general, container, false);
-
-        //RecyclerView mRecyclerView = v.findViewById(R.id.fragment_general_page_title);
-        //generalFragmentPageTitle.setText(getTitle());
-
-        RecyclerView mRecyclerView = v.findViewById(R.id.recycler_view);
+        Log.d("DEBAGO","AbsNyTimesFragment"+sectionName);
+        //RecyclerView initialization
+        RecyclerView mRecyclerView = v.findViewById(R.id.fragment_general_recycler_view);
         mRecyclerViewAdapter = new RecyclerViewAdapter();
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        //Choose how to display the list in the RecyclerView (vertical or horizontal)
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayout.VERTICAL,false));
+
+        //LoaderManager initialization
         mLoaderManager = getLoaderManager();
-        this.startAsyncTaskLoader();
-        this.resumeAsyncTaskLoaderIfPossible();
-
         if(mLoaderManager.getLoader(1)!=null){
             mLoaderManager.initLoader(1,null,this);
         }
+
+        //Launch AsyncTaskLoader
+
+        this.startAsyncTaskLoader();
+        this.resumeAsyncTaskLoaderIfPossible();
 
         return v;
     }
 
     public abstract String getTitle();
 
+
     /**Start a new AsyncTaskLoader*/
     private void startAsyncTaskLoader(){
 
         mLoaderManager.initLoader(1,null,this);
     }
-
-  /*  /**Configure LoaderManager*/
-   /* public LoaderManager getSupportLoaderManager() {
-        return supportLoaderManager;
-    }*/
 
     /**Resume previous AsyncTaskLoader if still running*/
     private void resumeAsyncTaskLoaderIfPossible(){
@@ -77,10 +81,9 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     @NonNull
     @Override
     public Loader<List<Result>> onCreateLoader(int i, @Nullable Bundle bundle) {
-        Log.d("DEBAGO","onCreateLoader");
+
         return new MyAsyncTaskLoader(getContext());
     }
-
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<Result>> loader, List<Result> results) {
@@ -93,6 +96,8 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
 
     }
+
+
 
 }
 
