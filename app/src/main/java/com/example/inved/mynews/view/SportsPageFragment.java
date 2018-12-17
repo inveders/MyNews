@@ -14,9 +14,8 @@ import com.example.inved.mynews.controller.AbsNyTimesFragment;
 public class SportsPageFragment extends AbsNyTimesFragment {
 
 
-    public static SportsPageFragment newInstance(String name,String key) {
+    public static SportsPageFragment newInstance(String name) {
         sectionName =name;
-        apiKey = key;
         Log.d("DEBAGO","SportsPageFragment"+name);
         return (new SportsPageFragment());
     }

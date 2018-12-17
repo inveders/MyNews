@@ -18,7 +18,7 @@ public class NyTimesMostPopular {
     private Integer numResults;
     @SerializedName("results")
     @Expose
-    public List<Result> resultsMostPopular = null;
+    public List<ResultMostPopular> resultsMostPopular = null;
 
     public String getStatus() {
         return status;
@@ -44,12 +44,12 @@ public class NyTimesMostPopular {
         this.numResults = numResults;
     }
 
-    public List<Result> getResults() {
+    public List<ResultMostPopular> getResults() {
         return resultsMostPopular;
     }
 
-    public void setResults(List<Result> results) {
-        this.resultsMostPopular = results;
+    public void setResults(List<ResultMostPopular> resultMostPopular) {
+        this.resultsMostPopular = resultMostPopular;
     }
 
 }

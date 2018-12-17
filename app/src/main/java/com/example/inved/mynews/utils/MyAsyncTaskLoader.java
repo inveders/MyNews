@@ -5,13 +5,11 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import com.example.inved.mynews.controller.NyTimesAPI;
-import com.example.inved.mynews.mostpopularapi.NyTimesMostPopular;
 import com.example.inved.mynews.topstoriesapi.NyTimesTopStories;
 import com.example.inved.mynews.topstoriesapi.Result;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -20,8 +18,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.inved.mynews.controller.AbsNyTimesFragment.apiKey;
-import static com.example.inved.mynews.controller.AbsNyTimesFragment.articlePeriod;
+import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
 import static com.example.inved.mynews.controller.AbsNyTimesFragment.sectionName;
 
 public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
@@ -38,22 +35,6 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
     @Override
     public List<Result> loadInBackground() {
 
-        /*if(sectionName.equals("all-sections")) {
-            /**1er appel retrofit*/
-    /*        Response<NyTimesMostPopular> responseMostPopular = null;
-            try {
-                responseMostPopular = nyTimesMostPopularCall.execute(); //on reste bloqué ici tant que pas fini
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (responseMostPopular == null || responseMostPopular.body() == null) {
-                return null;
-            } else
-                Log.d("DEBAGO", "retrofit" + articlePeriod);
-            return (responseMostPopular.body()).resultsMostPopular; //the Objects.requiresNonNull is not necessary
-        }
-
-        else {*/
             Response<NyTimesTopStories> responseTopStories = null;
             try {
                 responseTopStories = nyTimesTopStoriesCall.execute(); //on reste bloqué ici tant que pas fini
@@ -65,8 +46,6 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
             } else
                 Log.d("DEBAGO", "retrofit" + sectionName);
             return (responseTopStories.body()).resultsTopStories; //the Objects.requiresNonNull is not necessary
-      /*  }*/
-
     }
 
     @Override
@@ -88,14 +67,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
             .build(); //Par défaut
 
     private NyTimesAPI service = retrofit.create(NyTimesAPI.class); // nomInterface service = retrofit.create(nomInterface.class)
-    private Call<NyTimesTopStories> nyTimesTopStoriesCall = service.getNyTimesTopStories(sectionName,apiKey);
-    private Call<NyTimesMostPopular> nyTimesMostPopularCall = service.getNyTimesMostPopular(sectionName,articlePeriod,apiKey);
-
-
-
-
-
-
+    private Call<NyTimesTopStories> nyTimesTopStoriesCall = service.getNyTimesTopStories(sectionName,API_KEY);
 
 
 }

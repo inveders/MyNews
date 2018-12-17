@@ -17,10 +17,9 @@ public class FoodPageFragment extends AbsNyTimesFragment {
 
 
 
-    public static FoodPageFragment newInstance(String name,String key) {
+    public static FoodPageFragment newInstance(String name) {
 
         sectionName =name;
-        apiKey = key;
         Log.d("DEBAGO","FoodPageFragment"+name);
 
         return (new FoodPageFragment());

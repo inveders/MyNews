@@ -30,21 +30,21 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0: //Page number 1
-                return TopStoriesPageFragment.newInstance("home","69b33155fef846e29c9753f95e628397");
+                return TopStoriesPageFragment.newInstance("home");
             case 1: //Page number 2
-                return MostPopularPageFragment.newInstance("all-sections","69b33155fef846e29c9753f95e628397",7);
+                return MostPopularPageFragment.newInstance();
             case 2: //Page number 3
-                return TechPageFragment.newInstance("technology","69b33155fef846e29c9753f95e628397");
+                return TechPageFragment.newInstance("technology");
             case 3: //Page number 4
-                return SciencePageFragment.newInstance("science","69b33155fef846e29c9753f95e628397");
+                return SciencePageFragment.newInstance("science");
             case 4: //Page number 5
-                return SportsPageFragment.newInstance("sports","69b33155fef846e29c9753f95e628397");
+                return SportsPageFragment.newInstance("sports");
             case 5: //Page number 6
-                return FoodPageFragment.newInstance("food","69b33155fef846e29c9753f95e628397");
+                return FoodPageFragment.newInstance("food");
             case 6: //Page number 7
-                return TravelPageFragment.newInstance("travel","69b33155fef846e29c9753f95e628397");
+                return TravelPageFragment.newInstance("travel");
             case 7: //Page number 8
-                return WorldPageFragment.newInstance("world","69b33155fef846e29c9753f95e628397");
+                return WorldPageFragment.newInstance("world");
             default:
                 return null;
         }

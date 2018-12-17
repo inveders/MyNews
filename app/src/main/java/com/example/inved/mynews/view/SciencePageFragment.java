@@ -8,9 +8,8 @@ import com.example.inved.mynews.controller.AbsNyTimesFragment;
 public class SciencePageFragment extends AbsNyTimesFragment {
 
 
-    public static SciencePageFragment newInstance(String name,String key) {
+    public static SciencePageFragment newInstance(String name) {
         sectionName =name;
-        apiKey = key;
         Log.d("DEBAGO","SciencePageFragment"+name);
         return (new SciencePageFragment());
     }

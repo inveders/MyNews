@@ -14,9 +14,8 @@ import com.example.inved.mynews.controller.AbsNyTimesFragment;
 public class TravelPageFragment extends AbsNyTimesFragment {
 
 
-    public static TravelPageFragment newInstance(String name,String key) {
+    public static TravelPageFragment newInstance(String name) {
         sectionName =name;
-        apiKey = key;
         Log.d("DEBAGO","TravelPageFragment"+name);
         return (new TravelPageFragment());
     }

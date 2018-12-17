@@ -1,11 +1,13 @@
 
 package com.example.inved.mynews.mostpopularapi;
 
+import android.util.Log;
+
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
+public class ResultMostPopular {
 
     @SerializedName("url")
     @Expose
@@ -24,7 +26,7 @@ public class Result {
     private String byline;
     @SerializedName("title")
     @Expose
-    private String title;
+    public String title;
     @SerializedName("abstract")
     @Expose
     private String _abstract;
@@ -37,9 +39,10 @@ public class Result {
     @SerializedName("des_facet")
     @Expose
     private List<String> desFacet = null;
-    @SerializedName("org_facet")
+
+   /* @SerializedName("org_facet")
     @Expose
-    private List<String> orgFacet = null;
+    private List<String> orgFacet = null;*/
     @SerializedName("per_facet")
     @Expose
     private List<String> perFacet = null;
@@ -130,13 +133,13 @@ public class Result {
         this.desFacet = desFacet;
     }
 
-    public List<String> getOrgFacet() {
+  /*  public List<String> getOrgFacet() {
         return orgFacet;
     }
 
     public void setOrgFacet(List<String> orgFacet) {
         this.orgFacet = orgFacet;
-    }
+    }*/
 
     public List<String> getPerFacet() {
         return perFacet;

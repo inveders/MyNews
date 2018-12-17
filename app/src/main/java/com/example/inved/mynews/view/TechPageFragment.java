@@ -14,9 +14,8 @@ public class TechPageFragment extends AbsNyTimesFragment {
 
 
 
-    public static TechPageFragment newInstance(String name,String key) {
+    public static TechPageFragment newInstance(String name) {
         sectionName =name;
-        apiKey = key;
         Log.d("DEBAGO","TechPageFragment"+name);
         return (new TechPageFragment());
     }

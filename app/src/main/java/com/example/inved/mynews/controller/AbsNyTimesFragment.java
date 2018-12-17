@@ -32,10 +32,9 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     /**Create a static task id that will identify our loader*/
     LoaderManager mLoaderManager;
     RecyclerViewAdapter mRecyclerViewAdapter;
-    public static final String NAME_ARG ="nameArticle";
+    public static final String API_KEY ="69b33155fef846e29c9753f95e628397";
     public static String sectionName="home";
-    public static String apiKey="home";
-    public static int articlePeriod;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
