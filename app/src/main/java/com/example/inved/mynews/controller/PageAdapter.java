@@ -3,14 +3,6 @@ package com.example.inved.mynews.controller;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.example.inved.mynews.view.FoodPageFragment;
-import com.example.inved.mynews.view.MostPopularPageFragment;
-import com.example.inved.mynews.view.SciencePageFragment;
-import com.example.inved.mynews.view.SportsPageFragment;
-import com.example.inved.mynews.view.TechPageFragment;
-import com.example.inved.mynews.view.TopStoriesPageFragment;
-import com.example.inved.mynews.view.TravelPageFragment;
-import com.example.inved.mynews.view.WorldPageFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
@@ -30,21 +22,21 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0: //Page number 1
-                return TopStoriesPageFragment.newInstance("home");
+                return GeneralPageFragment.newInstance("home");
             case 1: //Page number 2
-                return MostPopularPageFragment.newInstance();
+                return MostPopularPageFragment.newInstance("all-sections",7);
             case 2: //Page number 3
-                return TechPageFragment.newInstance("technology");
+                return GeneralPageFragment.newInstance("technology");
             case 3: //Page number 4
-                return SciencePageFragment.newInstance("science");
+                return GeneralPageFragment.newInstance("science");
             case 4: //Page number 5
-                return SportsPageFragment.newInstance("sports");
+                return GeneralPageFragment.newInstance("sports");
             case 5: //Page number 6
-                return FoodPageFragment.newInstance("food");
+                return GeneralPageFragment.newInstance("food");
             case 6: //Page number 7
-                return TravelPageFragment.newInstance("travel");
+                return GeneralPageFragment.newInstance("travel");
             case 7: //Page number 8
-                return WorldPageFragment.newInstance("world");
+                return GeneralPageFragment.newInstance("world");
             default:
                 return null;
         }

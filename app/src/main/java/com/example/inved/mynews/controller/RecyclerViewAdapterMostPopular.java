@@ -14,7 +14,7 @@ import com.example.inved.mynews.mostpopularapi.ResultMostPopular;
 
 import java.util.List;
 
-public class RecyclerViewAdapterMostPopular extends RecyclerView.Adapter<RecyclerViewAdapterMostPopular.ViewHolder> {
+/*public class RecyclerViewAdapterMostPopular extends RecyclerView.Adapter<RecyclerViewAdapterMostPopular.ViewHolder> {
 
     @Nullable
     private List<ResultMostPopular> mDataMostPopular;
@@ -66,4 +66,4 @@ public class RecyclerViewAdapterMostPopular extends RecyclerView.Adapter<Recycle
         }
 
     }
-}
+}*/

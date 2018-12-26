@@ -3,10 +3,13 @@ package com.example.inved.mynews.topstoriesapi;
 
 import java.util.List;
 
+import com.example.inved.mynews.mostpopularapi.Medium;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Result {
+
+    /**Sction used for top stories and over specialities: section, subsection, title, abstract, url, published date*/
 
     @SerializedName("section")
     @Expose
@@ -29,44 +32,78 @@ public class Result {
     @SerializedName("short_url")
     @Expose
     public String shortUrl;
-    @SerializedName("byline")
-    @Expose
-    public String byline;
-    @SerializedName("item_type")
-    @Expose
-    public String itemType;
-    @SerializedName("updated_date")
-    @Expose
-    public String updatedDate;
-    @SerializedName("created_date")
-    @Expose
-    public String createdDate;
+
     @SerializedName("published_date")
     @Expose
     public String publishedDate;
-    @SerializedName("material_type_facet")
-    @Expose
-    public String materialTypeFacet;
-    @SerializedName("kicker")
-    @Expose
-    public String kicker;
-    @SerializedName("des_facet")
-    @Expose
-    public List<String> desFacet = null;
-    @SerializedName("org_facet")
-    @Expose
-    public List<String> orgFacet = null;
-    @SerializedName("per_facet")
-    @Expose
-    public List<String> perFacet = null;
-    @SerializedName("geo_facet")
-    @Expose
-    public List<String> geoFacet = null;
+
     @SerializedName("multimedia")
     @Expose
     public List<Multimedium> multimedia = null;
     @SerializedName("related_urls")
     @Expose
     public List<RelatedUrl> relatedUrls = null;
+
+
+    /**Section used for Most popular in more than Top stories*/
+
+
+    @SerializedName("count_type")
+    @Expose
+    private String countType;
+
+    @SerializedName("media")
+    @Expose
+    private List<Medium> media = null;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getSection() {
+        return section;
+    }
+
+    public void setSection(String section) {
+        this.section = section;
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAbstract() {
+        return _abstract;
+    }
+
+    public void setAbstract(String _abstract) {
+        this._abstract = _abstract;
+    }
+
+    public String getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(String publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public List<Medium> getMedia() {
+        return media;
+    }
+
+    public void setMedia(List<Medium> media) {
+        this.media = media;
+    }
+
 
 }

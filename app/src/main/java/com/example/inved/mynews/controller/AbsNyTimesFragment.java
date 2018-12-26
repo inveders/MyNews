@@ -29,17 +29,21 @@ import java.util.List;
 
 public abstract class AbsNyTimesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Result>> {
 
+
+    protected static final String KEY_ARG_SECTION="KEY_ARG_SECTION";
+    protected static final String KEY_ARG_PERIOD="KEY_ARG_PERIOD";
+
     /**Create a static task id that will identify our loader*/
     LoaderManager mLoaderManager;
     RecyclerViewAdapter mRecyclerViewAdapter;
     public static final String API_KEY ="69b33155fef846e29c9753f95e628397";
-    public static String sectionName="home";
+
 
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_general, container, false);
-        Log.d("DEBAGO","AbsNyTimesFragment"+sectionName);
+        Log.d("DEBAGO","AbsNyTimesFragment");
         //RecyclerView initialization
         RecyclerView mRecyclerView = v.findViewById(R.id.fragment_general_recycler_view);
         mRecyclerViewAdapter = new RecyclerViewAdapter();

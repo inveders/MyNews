@@ -1,9 +1,12 @@
 package com.example.inved.mynews.utils;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
+import com.example.inved.mynews.controller.AbsNyTimesFragment;
+import com.example.inved.mynews.controller.GeneralPageFragment;
 import com.example.inved.mynews.controller.NyTimesAPI;
 import com.example.inved.mynews.topstoriesapi.NyTimesTopStories;
 import com.example.inved.mynews.topstoriesapi.Result;
@@ -19,7 +22,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
-import static com.example.inved.mynews.controller.AbsNyTimesFragment.sectionName;
+import static com.example.inved.mynews.controller.AbsNyTimesFragment.KEY_ARG_SECTION;
 
 public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
 
@@ -44,7 +47,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
             if (responseTopStories == null || responseTopStories.body() == null) {
                 return null;
             } else
-                Log.d("DEBAGO", "retrofit" + sectionName);
+                Log.d("DEBAGO", "retrofit");
             return (responseTopStories.body()).resultsTopStories; //the Objects.requiresNonNull is not necessary
     }
 
@@ -67,7 +70,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
             .build(); //Par défaut
 
     private NyTimesAPI service = retrofit.create(NyTimesAPI.class); // nomInterface service = retrofit.create(nomInterface.class)
-    private Call<NyTimesTopStories> nyTimesTopStoriesCall = service.getNyTimesTopStories(sectionName,API_KEY);
+    private Call<NyTimesTopStories> nyTimesTopStoriesCall = service.getNyTimesTopStories("home",API_KEY);
 
 
 }
