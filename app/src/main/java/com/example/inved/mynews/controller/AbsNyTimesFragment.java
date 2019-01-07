@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.topstoriesapi.Result;
 import com.example.inved.mynews.utils.MyAsyncTaskLoader;
+import com.example.inved.mynews.utils.MyAsyncTaskLoaderMostPopular;
 
 import java.util.List;
 
@@ -30,12 +31,13 @@ import java.util.List;
 public abstract class AbsNyTimesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Result>> {
 
 
-    protected static final String KEY_ARG_SECTION="KEY_ARG_SECTION";
+    /*protected*/public static final String KEY_ARG_SECTION="KEY_ARG_SECTION";
     protected static final String KEY_ARG_PERIOD="KEY_ARG_PERIOD";
 
     /**Create a static task id that will identify our loader*/
     LoaderManager mLoaderManager;
     RecyclerViewAdapter mRecyclerViewAdapter;
+
     public static final String API_KEY ="69b33155fef846e29c9753f95e628397";
 
 
@@ -58,6 +60,7 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
             mLoaderManager.initLoader(1,null,this);
         }
 
+
         //Launch AsyncTaskLoader
 
         this.startAsyncTaskLoader();
@@ -68,9 +71,12 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
 
     public abstract String getTitle();
 
+    protected abstract boolean isMostPopular();
+
 
     /**Start a new AsyncTaskLoader*/
     private void startAsyncTaskLoader(){
+
 
         mLoaderManager.initLoader(1,null,this);
     }
@@ -85,7 +91,15 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     @Override
     public Loader<List<Result>> onCreateLoader(int i, @Nullable Bundle bundle) {
 
-        return new MyAsyncTaskLoader(getContext());
+        if (isMostPopular()) {
+          
+            return new MyAsyncTaskLoaderMostPopular(getContext(),getArguments().getString(KEY_ARG_SECTION),getArguments().getInt(KEY_ARG_PERIOD));
+
+        }
+        else {
+            return new MyAsyncTaskLoader(getContext(),getArguments().getString(KEY_ARG_SECTION));
+        }
+
     }
 
     @Override

@@ -11,10 +11,13 @@ public class GeneralPageFragment extends AbsNyTimesFragment {
         Bundle arg = new Bundle(1);
         arg.putString(KEY_ARG_SECTION,name);
 
-        Log.d("DEBAGO","GeneralPageFragment "+name+""+KEY_ARG_SECTION);
+        Log.d("DEBAGO","GeneralPageFragment "+name+" "+KEY_ARG_SECTION);
         GeneralPageFragment generalPageFragment = new GeneralPageFragment();
         generalPageFragment.setArguments(arg); //Le fragment est lié à la bundle
         return generalPageFragment;
+
+
+
 
     }
 
@@ -23,4 +26,10 @@ public class GeneralPageFragment extends AbsNyTimesFragment {
     public String getTitle() {
         return getArguments().getString(KEY_ARG_SECTION);
     }
+
+    @Override
+    protected boolean isMostPopular() {
+        return false;
+    }
 }
+

@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         this.configureViewPagerAndTabs();
     }
 
+
     /**Creation of the toolbar and the menu*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void configureToolbar(){
@@ -54,12 +56,6 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(pager);
 
     }
-
-
-
-
-
-
 
 }
 

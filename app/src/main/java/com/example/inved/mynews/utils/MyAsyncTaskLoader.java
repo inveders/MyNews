@@ -1,14 +1,10 @@
 package com.example.inved.mynews.utils;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.example.inved.mynews.controller.AbsNyTimesFragment;
-import com.example.inved.mynews.controller.GeneralPageFragment;
-import com.example.inved.mynews.controller.NyTimesAPI;
-import com.example.inved.mynews.topstoriesapi.NyTimesTopStories;
+import com.example.inved.mynews.topstoriesapi.NewYorkTimesAPI;
 import com.example.inved.mynews.topstoriesapi.Result;
 
 import java.io.IOException;
@@ -22,23 +18,28 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
-import static com.example.inved.mynews.controller.AbsNyTimesFragment.KEY_ARG_SECTION;
 
 public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
 
-
+    String name;
 
     /**Constructor*/
-    public MyAsyncTaskLoader(Context context){
+    public MyAsyncTaskLoader(Context context,String name){
+
 
         super(context);
+        this.name = name;
+
 
     }
+
 
     @Override
     public List<Result> loadInBackground() {
 
-            Response<NyTimesTopStories> responseTopStories = null;
+            Call<NewYorkTimesAPI> nyTimesTopStoriesCall = service.getNyTimesAPI(name,API_KEY);
+
+            Response<NewYorkTimesAPI> responseTopStories = null;
             try {
                 responseTopStories = nyTimesTopStoriesCall.execute(); //on reste bloqué ici tant que pas fini
             } catch (IOException e) {
@@ -48,7 +49,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
                 return null;
             } else
                 Log.d("DEBAGO", "retrofit");
-            return (responseTopStories.body()).resultsTopStories; //the Objects.requiresNonNull is not necessary
+            return (responseTopStories.body()).results; //the Objects.requiresNonNull is not necessary
     }
 
     @Override
@@ -69,8 +70,8 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
             .client(client)
             .build(); //Par défaut
 
-    private NyTimesAPI service = retrofit.create(NyTimesAPI.class); // nomInterface service = retrofit.create(nomInterface.class)
-    private Call<NyTimesTopStories> nyTimesTopStoriesCall = service.getNyTimesTopStories("home",API_KEY);
+    private com.example.inved.mynews.controller.NyTimesAPI service = retrofit.create(com.example.inved.mynews.controller.NyTimesAPI.class); // nomInterface service = retrofit.create(nomInterface.class)
+
 
 
 }

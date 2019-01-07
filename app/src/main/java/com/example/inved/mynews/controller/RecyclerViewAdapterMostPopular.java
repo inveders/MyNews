@@ -1,19 +1,5 @@
 package com.example.inved.mynews.controller;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.example.inved.mynews.R;
-import com.example.inved.mynews.mostpopularapi.ResultMostPopular;
-
-import java.util.List;
-
 /*public class RecyclerViewAdapterMostPopular extends RecyclerView.Adapter<RecyclerViewAdapterMostPopular.ViewHolder> {
 
     @Nullable

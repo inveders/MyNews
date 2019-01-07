@@ -48,69 +48,8 @@ public class MostPopularPageFragment extends AbsNyTimesFragment {
         return getArguments().getString(KEY_ARG_SECTION);
     }
 
-
-    /**Create a static task id that will identify our loader*/
-    LoaderManager mLoaderManager;
-    RecyclerViewAdapter mRecyclerViewAdapter;
-
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_most_popular_page, container, false);
-        //RecyclerView initialization
-        RecyclerView mRecyclerView = v.findViewById(R.id.fragment_most_popular_recycler_view);
-        mRecyclerViewAdapter = new RecyclerViewAdapter();
-        mRecyclerView.setAdapter(mRecyclerViewAdapter);
-
-        //Choose how to display the list in the RecyclerView (vertical or horizontal)
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayout.VERTICAL,false));
-
-        //LoaderManager initialization
-        mLoaderManager = getLoaderManager();
-        if(mLoaderManager.getLoader(1)!=null){
-            mLoaderManager.initLoader(1,null,this);
-        }
-
-        //Launch AsyncTaskLoader
-
-        this.startAsyncTaskLoader();
-        this.resumeAsyncTaskLoaderIfPossible();
-
-        return v;
+    protected boolean isMostPopular() {
+        return true;
     }
-
-
-    /**Start a new AsyncTaskLoader : MyAsycTaskLoaderMostPopular*/
-    private void startAsyncTaskLoader(){
-
-        mLoaderManager.initLoader(1,null,this);
-    }
-
-    /**Resume previous AsyncTaskLoader if still running*/
-    private void resumeAsyncTaskLoaderIfPossible(){
-
-    }
-
-    /**Implements callback methods of the Loader Manager*/
-    @NonNull
-    @Override
-    public Loader<List<Result>> onCreateLoader(int i, @Nullable Bundle bundle) {
-
-        return new MyAsyncTaskLoader(getContext());
-    }
-
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<Result>> loader, List<Result> results) {
-
-        mRecyclerViewAdapter.setData(results);
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
-
-    }
-
-
 }
