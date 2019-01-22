@@ -71,7 +71,8 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
 
     public abstract String getTitle();
 
-    protected abstract boolean isMostPopular();
+    public abstract boolean isMostPopular();
+
 
 
     /**Start a new AsyncTaskLoader*/
@@ -92,11 +93,12 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     public Loader<List<Result>> onCreateLoader(int i, @Nullable Bundle bundle) {
 
         if (isMostPopular()) {
-          
+
             return new MyAsyncTaskLoaderMostPopular(getContext(),getArguments().getString(KEY_ARG_SECTION),getArguments().getInt(KEY_ARG_PERIOD));
 
         }
         else {
+
             return new MyAsyncTaskLoader(getContext(),getArguments().getString(KEY_ARG_SECTION));
         }
 

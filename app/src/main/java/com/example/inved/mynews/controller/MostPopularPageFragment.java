@@ -43,13 +43,15 @@ public class MostPopularPageFragment extends AbsNyTimesFragment {
     }
 
 
+
     @Override
     public String getTitle() {
         return getArguments().getString(KEY_ARG_SECTION);
     }
 
     @Override
-    protected boolean isMostPopular() {
+    public boolean isMostPopular() {
+
         return true;
     }
 }

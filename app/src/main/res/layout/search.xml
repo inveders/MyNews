@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/text_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search query term"
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox_technology"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Technology"
+        app:layout_constraintLeft_toLeftOf="@+id/text_input"
+        app:layout_constraintTop_toBottomOf="@+id/text_input"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+         />
+
+    <CheckBox
+        android:id="@+id/checkBox_science"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Science"
+        app:layout_constraintLeft_toLeftOf="@+id/text_input"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_technology"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+         />
+
+    <CheckBox
+        android:id="@+id/checkBox_sports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sports"
+        app:layout_constraintLeft_toLeftOf="@+id/text_input"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_science"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Food"
+        app:layout_constraintLeft_toLeftOf="@+id/text_input"
+        app:layout_constraintTop_toBottomOf="@+id/text_input"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="200dp"  />
+
+    <CheckBox
+        android:id="@+id/checkBox_travel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Travel"
+        app:layout_constraintLeft_toLeftOf="@+id/text_input"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_food"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="200dp" />
+
+    <CheckBox
+        android:id="@+id/checkBox_world"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="World"
+        app:layout_constraintLeft_toLeftOf="@+id/text_input"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_travel"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="200dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SEARCH"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_world"
+        android:layout_marginTop="30dp"
+        />
+</android.support.constraint.ConstraintLayout>

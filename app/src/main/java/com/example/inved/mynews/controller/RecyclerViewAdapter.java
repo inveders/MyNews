@@ -3,6 +3,7 @@ package com.example.inved.mynews.controller;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.topstoriesapi.Multimedium;
 import com.example.inved.mynews.topstoriesapi.Result;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -33,8 +36,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
         if (mData==null) return ;
-
+       // if (mMedia==null) return ;
+        holder.mSectionItem.setText(mData.get(position).section);
+        holder.mSubsectionItem.setText(mData.get(position).subsection);
+        holder.mDateArticleItem.setText(mData.get(position).publishedDate);
         holder.mTitleItem.setText(mData.get(position).title);
+//      Picasso.get().load(mData.get(position).getImageURL()).into(holder.mImageItem);
+        Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);
+
 
     }
 
@@ -53,14 +62,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTitleItem;
+        TextView mSectionItem;
+        TextView mSubsectionItem;
+        TextView mDateArticleItem;
         ImageView mImageItem;
 
         ViewHolder(View itemView){
+
             super(itemView);
 
+            mSectionItem = itemView.findViewById(R.id.fragment_general_item_section);
+            mSubsectionItem = itemView.findViewById(R.id.fragment_general_item_subsection);
+            mDateArticleItem = itemView.findViewById(R.id.fragment_general_item_date_article);
             mTitleItem = itemView.findViewById(R.id.fragment_general_item_title);
             mImageItem = itemView.findViewById(R.id.fragment_general_item_image);
         }

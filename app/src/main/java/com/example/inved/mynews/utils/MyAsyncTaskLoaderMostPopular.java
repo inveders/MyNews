@@ -38,14 +38,14 @@ public class MyAsyncTaskLoaderMostPopular extends AsyncTaskLoader<List<Result>> 
     @Override
     public List<Result> loadInBackground() {
 
-        Call<NewYorkTimesAPI> nyTimesMostPopularCall = service.getNyTimesMostPopular(name, period, API_KEY);
+       Call<NewYorkTimesAPI> nyTimesMostPopularCall = service.getNyTimesMostPopular(name, period, API_KEY);
 
         /**1st retrofit call*/
         Response<NewYorkTimesAPI> responseMostPopular = null;
         try {
-            Log.d("DEBAGO", "before retrofit Most Popular");
+            Log.d("DEBAGA", "before retrofit Most Popular");
             responseMostPopular = nyTimesMostPopularCall.execute(); //on reste bloqué ici tant que pas fini
-            Log.d("DEBAGO", "retrofit Most Popular");
+            Log.d("DEBAGA", "retrofit Most Popular");
         } catch (IOException e) {
             e.printStackTrace();
         }

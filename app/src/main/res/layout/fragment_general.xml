@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".controller.AbsNyTimesFragment"
     android:gravity="center"
-    android:background="#EDD9CF">
+    >
 
 
     <android.support.v7.widget.RecyclerView

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -16,16 +17,58 @@
         app:srcCompat="?attr/actionModeSplitBackground" />
 
     <TextView
+        android:id="@+id/fragment_general_item_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="SECTION"
+        app:layout_constraintTop_toTopOf="@id/fragment_general_item_image"
+        app:layout_constraintLeft_toRightOf="@+id/fragment_general_item_image"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/fragment_general_item_subsection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="SUBSECTION"
+        app:layout_constraintTop_toTopOf="@id/fragment_general_item_image"
+        app:layout_constraintLeft_toRightOf="@+id/fragment_general_item_section"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/fragment_general_item_date_article"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="DATE"
+        app:layout_constraintLeft_toRightOf="@+id/fragment_general_item_subsection"
+        android:layout_marginStart="80dp"
+        />
+
+    <TextView
+        android:id="@+id/fragment_general_item_quotation_mark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=">"
+        app:layout_constraintTop_toTopOf="@id/fragment_general_item_image"
+        app:layout_constraintRight_toLeftOf="@+id/fragment_general_item_subsection"
+        android:layout_marginStart="25dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
         android:id="@+id/fragment_general_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BONJOUR"
+        android:layout_marginStart="15dp"
+        android:text="TITLE"
+        app:layout_constraintTop_toTopOf="@id/fragment_general_item_image"
         app:layout_constraintLeft_toRightOf="@+id/fragment_general_item_image"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="25dp"
+        android:layout_marginTop="22dp"
 
-        />
-
+         />
 
 
 </android.support.constraint.ConstraintLayout>
