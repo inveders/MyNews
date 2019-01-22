@@ -24,6 +24,7 @@
         app:layout_constraintTop_toBottomOf="@+id/text_input"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        android:onClick="onCheckboxClicked"
          />
 
     <CheckBox
@@ -35,6 +36,7 @@
         app:layout_constraintTop_toBottomOf="@+id/checkBox_technology"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        android:onClick="onCheckboxClicked"
          />
 
     <CheckBox
@@ -45,7 +47,8 @@
         app:layout_constraintLeft_toLeftOf="@+id/text_input"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_science"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp" />
+        android:layout_marginStart="10dp"
+        android:onClick="onCheckboxClicked"/>
 
     <CheckBox
         android:id="@+id/checkBox_food"
@@ -55,7 +58,8 @@
         app:layout_constraintLeft_toLeftOf="@+id/text_input"
         app:layout_constraintTop_toBottomOf="@+id/text_input"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="200dp"  />
+        android:layout_marginStart="200dp"
+        android:onClick="onCheckboxClicked"/>
 
     <CheckBox
         android:id="@+id/checkBox_travel"
@@ -65,7 +69,8 @@
         app:layout_constraintLeft_toLeftOf="@+id/text_input"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_food"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="200dp" />
+        android:layout_marginStart="200dp"
+        android:onClick="onCheckboxClicked"/>
 
     <CheckBox
         android:id="@+id/checkBox_world"
@@ -75,10 +80,11 @@
         app:layout_constraintLeft_toLeftOf="@+id/text_input"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_travel"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="200dp" />
+        android:layout_marginStart="200dp"
+        android:onClick="onCheckboxClicked"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_Search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SEARCH"
