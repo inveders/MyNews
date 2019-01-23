@@ -21,7 +21,15 @@ public class Search {
 
     Button buttonSearch;
 
+    public void IsCheckboxChecked(){
 
+    }
+
+    public void addition(int pA, int pB){
+        int a = pA;
+        int b = pB;
+        int result = a + b;
+    }
 
   /*  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.search, container, false);

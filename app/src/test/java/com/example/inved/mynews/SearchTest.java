@@ -1,23 +1,6 @@
 package com.example.inved.mynews;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.Toast;
-
-import com.example.inved.mynews.controller.MainActivity;
-import com.example.inved.mynews.controller.Search;
-
 import org.junit.Test;
-
-import static android.content.ContentValues.TAG;
-import static org.junit.Assert.assertEquals;
 
 public class SearchTest {
 
@@ -29,16 +12,22 @@ public class SearchTest {
     }*/
 
 
-    private CheckBox checkboxTechnology;
+   // private CheckBox checkboxTechnology;
 
         @Test
-        public void isCheckboxTechnologyChecked(){
+        public void Given_true_When_isCheckboxChecked_Then_LaunchSearch(){
            // CheckBox checkboxTechnology = (CheckBox)v;
-            if (checkboxTechnology.isChecked()){
+         /*   if (checkboxTechnology.isChecked()){
                 Log.d("DEBAGoa","OK");
-            }
+            }*/
         }
 
+   @Test
+    public void Given_aAndB_When_isCheckboxChecked_Then_result(int a,int b){
+       int a = 1;
+       int b = 2;
+       int result = a+b;
+   }
 
 
 
