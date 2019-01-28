@@ -3,7 +3,6 @@ package com.example.inved.mynews.controller;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.inved.mynews.R;
-import com.example.inved.mynews.topstoriesapi.Multimedium;
 import com.example.inved.mynews.topstoriesapi.Result;
 import com.squareup.picasso.Picasso;
 
@@ -19,37 +17,34 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-   @Nullable
+    @Nullable
     private List<Result> mData;
 
-    RecyclerViewAdapter(){}
+    RecyclerViewAdapter() {
+    }
 
     @NonNull
     @Override
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_general_item,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_general_item, parent, false);
 
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        if (mData==null) return ;
-       // if (mMedia==null) return ;
+        if (mData == null) return;
         holder.mSectionItem.setText(mData.get(position).section);
         holder.mSubsectionItem.setText(mData.get(position).subsection);
         holder.mDateArticleItem.setText(mData.get(position).publishedDate);
         holder.mTitleItem.setText(mData.get(position).title);
-//      Picasso.get().load(mData.get(position).getImageURL()).into(holder.mImageItem);
         Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);
-
-
     }
 
     @Override
     public int getItemCount() {
-        if(mData==null) return 0;
+        if (mData == null) return 0;
 
         return mData.size();
     }
@@ -71,7 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView mDateArticleItem;
         ImageView mImageItem;
 
-        ViewHolder(View itemView){
+        ViewHolder(View itemView) {
 
             super(itemView);
 

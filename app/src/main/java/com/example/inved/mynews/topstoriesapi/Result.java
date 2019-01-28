@@ -1,11 +1,7 @@
 
 package com.example.inved.mynews.topstoriesapi;
 
-import android.util.Log;
-
-import com.example.inved.mynews.controller.AbsNyTimesFragment;
-import com.example.inved.mynews.controller.GeneralPageFragment;
-import com.example.inved.mynews.controller.MostPopularPageFragment;
+import com.example.inved.mynews.utils.CollectionUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -14,7 +10,9 @@ import java.util.List;
 public class Result {
 
 
-    /**Sction used for top stories and over specialities: section, subsection, title, abstract, url, published date*/
+    /**
+     * Sction used for top stories and over specialities: section, subsection, title, abstract, url, published date
+     */
 
     @SerializedName("section")
     @Expose
@@ -44,37 +42,41 @@ public class Result {
     @Expose
     private List<Multimedium> multimedia;
 
-    /**Section used for Most popular in more than Top stories*/
+    /**
+     * Section used for Most popular in more than Top stories
+     */
 
     @SerializedName("media")
     @Expose
     private List<Medium> media = null;
 
-    /*private AbsNyTimesFragment valuePageFragment = new GeneralPageFragment();
+    public String getImageUrl() {
 
-    MostPopularPageFragment valueMostPopularPageFragment = new MostPopularPageFragment();
-    private int mostPopularOrNot1 ;
-    private int mostPopularOrNot2 ;*/
+        if (CollectionUtils.isEmpty(media)) {
 
-//FAIRE UNE BOUCLE ICI
+            for (int i = 0; i < multimedia.size(); i++) {
+                String url = multimedia.get(i).getUrl(); /**Permet de gagner de la vitesse en gaspillant un tout petit peu de mémoire en plus(4 bytes)*/
+                if (url != null) {
+                    return url;
+                }
+            }
 
-    public String getImageUrl(){
-     /*   Log.d("DEBAGA", "on est dans getImageURL");
-        mostPopularOrNot1 = valuePageFragment.getValue();
-        mostPopularOrNot2 = valueMostPopularPageFragment.getValue();
-        Log.d("DEBAGA", "0e boucle mostPopularOrNot1 "+mostPopularOrNot1+" et mostPopularOrNot2 "+mostPopularOrNot2);*/
-     /*   if(valuePageFragment.isMostPopular()){
-            Log.d("DEBAGA", "ismostpopular "+valuePageFragment.isMostPopular());
-            return multimedia.get(1).getUrlMultimedium();
+        } else {
+
+            for (int i = 0; i < media.size(); i++) {
+                List<MediaMetadatum> url1 = media.get(i).getMediaMetadata();
+                for (int j = 0; j < url1.size(); j++) {
+                    String url = url1.get(j).getUrl();
+                    if (url != null) {
+                        return url;
+                    }
+                }
+
+            }
+
         }
-        else {
-            return media.get(1).getMediaMetadata().get(1).getUrlMediaMetadatum();
-        }*/
-       // return multimedia.get(1).getUrlMultimedium();
-       // Log.d("DEBAGA", "on est dans getImageURL"+media.get(1).getMediaMetadata().get(1).getUrl());
-        return "https://cdn.static.nicematin.com/media/npo/mobile_xlarge/2018/02/picasso-1-e1518944311718.jpg";
 
-
+        return null;
     }
 
 }

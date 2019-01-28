@@ -28,7 +28,7 @@ import java.util.List;
 public class MostPopularPageFragment extends AbsNyTimesFragment {
 
 
-    public static MostPopularPageFragment newInstance(String name, int period) {
+    public static MostPopularPageFragment newInstance(String name) {
 
         Bundle arg = new Bundle(2);
         arg.putString(KEY_ARG_SECTION,name);
@@ -36,7 +36,7 @@ public class MostPopularPageFragment extends AbsNyTimesFragment {
         Log.d("DEBAGO","MostPopularPageFragment "+name+""+KEY_ARG_SECTION);
         MostPopularPageFragment mostPopularPageFragment = new MostPopularPageFragment();
         mostPopularPageFragment.setArguments(arg); //Le fragment est lié à la bundle
-        arg.putInt(KEY_ARG_PERIOD,period);
+        arg.putInt(KEY_ARG_PERIOD,7);
         mostPopularPageFragment.setArguments(arg);
         return mostPopularPageFragment;
 
