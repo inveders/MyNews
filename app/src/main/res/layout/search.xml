@@ -48,6 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/checkBox_science"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+
         android:onClick="onCheckboxClicked"/>
 
     <CheckBox

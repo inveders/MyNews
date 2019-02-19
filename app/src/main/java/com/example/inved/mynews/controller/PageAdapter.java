@@ -9,7 +9,7 @@ import com.example.inved.mynews.Themes;
 public class PageAdapter extends FragmentPagerAdapter {
 
     // 2 - Default Constructor
-    private PageAdapter(FragmentManager mgr) {
+    public PageAdapter(FragmentManager mgr) {
         super(mgr);
 
     }
