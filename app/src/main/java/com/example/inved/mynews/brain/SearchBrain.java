@@ -1,5 +1,7 @@
 package com.example.inved.mynews.brain;
 
+import android.util.Log;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.inved.mynews.Themes;
@@ -11,9 +13,9 @@ public class SearchBrain {
     }
 
     /**Convert an EditText in String*/
-    public void convertEditTextToString(EditText editTextToConvert){
+    public String convertEditTextToString(EditText editTextToConvert){
         String userInput =editTextToConvert.getText().toString();
-        getLucene(userInput);
+        return getLucene(userInput);
     }
 
     /**Convert a String in Lucene Syntax - Test*/
@@ -22,20 +24,25 @@ public class SearchBrain {
         return String.format("title:\"%1$s\" OR body:\"%1$s\"",userInput);
     }
 
-    /**Avoir une CheckBox en entrée et une fq en sortie*/
-        public String getFilter(int mPosition){
+    /**To have an checkbox and convert it to filter*/
+    public String getFilter(int mPosition){
 
-            switch (Themes.values()[mPosition].getTitle())
-            {
-            case "TECHNOLOGY" : return "technology";
-            case "SCIENCE" : return "science";
-            case "SPORTS" : return "sport";
-            case "FOOD" : return "food";
-            case "TRAVEL" : return "travel";
-            case "WORLD" : return "world";
-            default: return "home";
-            }
+
+        switch (Themes.values()[mPosition-1].getTitle())
+
+        {
+            case "TECHNOLOGY" : return "Technology";
+            case "SCIENCE" : return "Science";
+            case "SPORTS" : return "Sports";
+            case "FOOD" : return "Food";
+            case "TRAVEL" : return "Travel";
+            case "WORLD" : return "World";
+            default: return "Technology";
+        }
 
     }
+
+    /**To verify is an checkbox is checked*/
+
 
 }

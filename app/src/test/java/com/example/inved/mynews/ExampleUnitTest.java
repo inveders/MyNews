@@ -1,17 +1,5 @@
 package com.example.inved.mynews;
 
-import com.example.inved.mynews.controller.Search;
-
-import junit.framework.Assert;
-
-import org.junit.Test;
-import org.mockito.Mockito;
-
-import java.util.Random;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.times;
-
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -23,12 +11,12 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    private Search spySearch = Mockito.spy(new Search()); //Utiliser cette notation
+    private SearchActivity spySearch = Mockito.spy(new SearchActivity()); //Utiliser cette notation
 
     @Test
     public void givenParam1AndParam2_whenAddition_thenResult(){ //Test classique
         //    Given
-        Search search = new Search();
+        SearchActivity search = new SearchActivity();
         int param1 = 1;
         int param2 = 2;
         //When

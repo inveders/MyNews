@@ -39,13 +39,13 @@ public class SearchBrainTest {
     @Test
     public void should_Return_Filter_Name_With_CheckBox_Position(){
         //Given
-        int position = 1;
+        int position = 3;
 
         //When
-        String filter = spySearchBrain.getFilter(position);
+        String filter = spySearchBrain.getFilter(position-1);
 
         //Then
-        Assert.assertEquals("technology",filter);
+        Assert.assertEquals("Technology",filter);
 
 
         //    Mockito.verify(spySearch,times(1)).getOperand();

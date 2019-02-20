@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_activity_main_search:
                 //Toast.makeText(this, "Recherche indisponible, demandez plutôt l'avis de Google, c'est mieux et plus rapide.", Toast.LENGTH_LONG).show();
                 //To pass from MainActivity to HistoryActivity
-                startActivity(new Intent(this, Search.class));
+                startActivity(new Intent(this, SearchActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

@@ -3,8 +3,8 @@ package com.example.inved.mynews.utils;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.example.inved.mynews.brain.SearchBrain;
 import com.example.inved.mynews.controller.NyTimesSearchAPI;
+import com.example.inved.mynews.searchapi.SearchResult;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
 
-public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchBrain> {
+public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
 
     private String query;
     private String filter;
@@ -32,11 +32,11 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchBrain> {
 
 
     @Override
-    public SearchBrain loadInBackground() {
+    public SearchResult loadInBackground() {
 
-        Call<SearchBrain> nyTimesSearchCall = service.getNyTimesSearchAPI(query, filter, API_KEY);
+        Call<SearchResult> nyTimesSearchCall = service.getNyTimesSearchAPI(query, filter, API_KEY);
 
-        Response<SearchBrain> responseBusiness = null;
+        Response<SearchResult> responseBusiness = null;
         try {
             responseBusiness = nyTimesSearchCall.execute(); //on reste bloqué ici tant que pas fini
         } catch (IOException e) {
@@ -46,7 +46,7 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchBrain> {
             return null;
         } else
 
-            return null;
+            return responseBusiness.body();
     }
 
     @Override
