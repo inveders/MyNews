@@ -36,22 +36,6 @@ public class SearchBrainTest {
         //  Mockito.verifyNoMoreInteractions(spySearch); //On vérifie qu'aucune autre mth n'a été appelée
     }
 
-    @Test
-    public void should_Return_Filter_Name_With_CheckBox_Position(){
-        //Given
-        int position = 3;
-
-        //When
-        String filter = spySearchBrain.getFilter(position-1);
-
-        //Then
-        Assert.assertEquals("Technology",filter);
-
-
-        //    Mockito.verify(spySearch,times(1)).getOperand();
-        //  Mockito.verify(spySearch).getOperand(); /**Quand on veut vérifier 1 fois c'est pareil que la ligne du haut*/
-        //  Mockito.verifyNoMoreInteractions(spySearch); //On vérifie qu'aucune autre mth n'a été appelée
-    }
 
 
 }

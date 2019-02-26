@@ -7,6 +7,7 @@ import com.example.inved.mynews.controller.NyTimesSearchAPI;
 import com.example.inved.mynews.searchapi.SearchResult;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -20,16 +21,15 @@ import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
 public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
 
     private String query;
-    private String filter;
+    private List<String> filter;
 
-    public MyAsyncTaskLoaderSearch(Context context, String query, String filter) {
+    public MyAsyncTaskLoaderSearch(Context context, String query, List<String> filter) {
 
         super(context);
         this.query = query;
         this.filter = filter;
 
     }
-
 
     @Override
     public SearchResult loadInBackground() {

@@ -16,12 +16,7 @@ public class GeneralPageFragment extends AbsNyTimesFragment {
         generalPageFragment.setArguments(arg); //Le fragment est lié à la bundle
         return generalPageFragment;
 
-
-
-
     }
-
-
 
     @Override
     public String getTitle() {

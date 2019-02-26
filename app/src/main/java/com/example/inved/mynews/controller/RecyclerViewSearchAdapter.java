@@ -11,36 +11,35 @@ import android.widget.TextView;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.searchapi.SearchResult;
-import com.example.inved.mynews.topstoriesapi.Result;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerViewSearchAdapter.ViewHolder> {
 
     @Nullable
-    private List<Result> mData;
+    private List<SearchResult> mData;
 
-    RecyclerViewAdapter() {
+    RecyclerViewSearchAdapter() {
     }
 
     @NonNull
     @Override
-    public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerViewSearchAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_general_item, parent, false);
 
-        return new ViewHolder(v);
+        return new RecyclerViewSearchAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        if (mData == null) return;
+    public void onBindViewHolder(@NonNull RecyclerViewSearchAdapter.ViewHolder holder, int position) {
+      /*  if (mData == null) return;
         holder.mSectionItem.setText(mData.get(position).section);
         holder.mSubsectionItem.setText(mData.get(position).subsection);
         holder.mDateArticleItem.setText(mData.get(position).publishedDate);
         holder.mTitleItem.setText(mData.get(position).title);
-        Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);
+        Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);*/
     }
 
     @Override
@@ -50,7 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mData.size();
     }
 
-    public void setData(List<Result> data) {
+    public void setData(List<SearchResult> data) {
         mData = data;
 
         //Fill the Recycler View
@@ -79,4 +78,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
     }
+
 }

@@ -7,11 +7,15 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.inved.mynews.R;
@@ -19,15 +23,18 @@ import com.example.inved.mynews.brain.SearchBrain;
 import com.example.inved.mynews.searchapi.SearchResult;
 import com.example.inved.mynews.utils.MyAsyncTaskLoaderSearch;
 
+import java.util.List;
+
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<SearchResult>{
 
     EditText editTextSearch;
     CheckBox checkboxTechnology,checkboxScience,checkboxSports,checkboxFood,checkboxTravel,checkboxWorld;
     Button buttonSearch;
     SearchBrain searchBrain;
-    String userInput, mQuery, mFilter;
-    int position;
-
+    String userInput, mQuery;
+    List<String> isCheckBoxList, mFilter;
+    LoaderManager mLoaderManager;
+    RecyclerViewSearchAdapter mRecyclerViewSearchAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,59 +51,64 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         buttonSearch = findViewById(R.id.button_Search);
 
 
-
         //In this part of the code, we show a Toast when we click on the search button
         buttonSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                //if(isNullOrBlank(/*A CONFIGURER*/)
-                searchBrain = new SearchBrain();
-                mQuery = searchBrain.convertEditTextToString(editTextSearch); //to have the query
-                position = onCheckboxClicked(view);
-                Log.d("DEBAGO","Search2 "+position);
-                mFilter = searchBrain.getFilter(position); //A COMPLETER PAR LA SUITE
 
-             //   SearchActivity.this.initloader
+                onCheckboxClicked();
+                /**Convert an EditText in String*/
+                userInput = editTextSearch.getText().toString();
+                mFilter = isCheckBoxList;
 
+                if(mFilter!=null && !TextUtils.isEmpty(userInput) || !TextUtils.isEmpty(userInput)) {
+                    searchBrain = new SearchBrain();
+                    mQuery = searchBrain.getLucene(userInput); //to have the query
+                    //LoaderManager initialization
+                    mLoaderManager = getSupportLoaderManager();
+                    if (mLoaderManager.getLoader(1) != null) {
+                        mLoaderManager.initLoader(1, null, SearchActivity.this);
+                    }
 
-               // Toast.makeText(SearchActivity.this,userInput,Toast.LENGTH_SHORT).show();
-                Log.d("DEBAGO","Search3");
-                Toast.makeText(SearchActivity.this,"ok",Toast.LENGTH_SHORT).show();
+                    //Launch of the asynctaskLoaderSearch
+                    startAsyncTaskLoaderSearch();
+
+                    // Toast.makeText(SearchActivity.this,userInput,Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(SearchActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                }
+                else if (TextUtils.isEmpty(userInput)) {
+                    editTextSearch.setError("Rentrez au moins un mot clé");
+                }
+                else {
+                    Toast.makeText(SearchActivity.this, "Aucune Checkbox n'est cochée", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-
     }
 
-    public int onCheckboxClicked(View view) {
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
+    public void onCheckboxClicked() {
 
+        //Delete all elements of the List before to verify is checkbox are checked.
+       // isCheckBoxList.clear();
         // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.checkBox_technology:
-                if (checked) return 3;
-                break;
-            case R.id.checkBox_science:
-                if (checked) return 4;
-                break;
-            case R.id.checkBox_sports:
-                if (checked) return 5;
-                break;
-            case R.id.checkBox_food:
-                if (checked) return 6;
-                break;
-            case R.id.checkBox_travel:
-                if (checked) return 7;
-                break;
-            case R.id.checkBox_world:
-                if (checked) return 8;
-                break;
-            // TODO: Veggie sandwich
-        }
-        return 6;
+        if (checkboxTechnology.isChecked()) isCheckBoxList.add("Technology");
+        if (checkboxScience.isChecked()) isCheckBoxList.add("Science");
+        if (checkboxSports.isChecked()) isCheckBoxList.add("Sports");
+        if (checkboxFood.isChecked()) isCheckBoxList.add("Food");
+        if (checkboxTravel.isChecked()) isCheckBoxList.add("Travel");
+        if (checkboxWorld.isChecked()) isCheckBoxList.add("World");
+
     }
 
+    /**Start a new AsyncTaskLoader*/
+    private void startAsyncTaskLoaderSearch(){
+
+        mLoaderManager.initLoader(1,null,this);
+    }
+
+    @NonNull
     @Override
     public Loader<SearchResult> onCreateLoader(int i, Bundle bundle) {
         return new MyAsyncTaskLoaderSearch(this,mQuery,mFilter);
@@ -105,21 +117,12 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onLoadFinished(@NonNull Loader<SearchResult> loader, SearchResult data) {
 
+       // mRecyclerViewSearchAdapter.setData(data);
     }
 
     @Override
     public void onLoaderReset(Loader<SearchResult> loader) {
 
     }
-
-   /* private static boolean isNullOrBlank(String s)
-    {
-        return (s != null && !s.trim().equals(""));
-    }*/
-
-
-
-
-
 
 }

@@ -26,10 +26,8 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
     /**Constructor*/
     public MyAsyncTaskLoader(Context context,String name){
 
-
         super(context);
         this.name = name;
-
 
     }
 
