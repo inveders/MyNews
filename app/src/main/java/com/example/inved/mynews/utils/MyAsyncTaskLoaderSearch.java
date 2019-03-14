@@ -2,6 +2,7 @@ package com.example.inved.mynews.utils;
 
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
 
 import com.example.inved.mynews.controller.NyTimesSearchAPI;
 import com.example.inved.mynews.searchapi.SearchResult;
@@ -21,20 +22,24 @@ import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
 public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
 
     private String query;
-    private List<String> filter;
+    private String filter;
+    private String beginDate;
+    private String endDate;
 
-    public MyAsyncTaskLoaderSearch(Context context, String query, List<String> filter) {
+    public MyAsyncTaskLoaderSearch(Context context, String query, String filter, String beginDate, String endDate) {
 
         super(context);
         this.query = query;
         this.filter = filter;
+        this.beginDate = beginDate;
+        this.endDate = endDate;
 
     }
 
     @Override
     public SearchResult loadInBackground() {
 
-        Call<SearchResult> nyTimesSearchCall = service.getNyTimesSearchAPI(query, filter, API_KEY);
+        Call<SearchResult> nyTimesSearchCall = service.getNyTimesSearchAPI(query, filter, beginDate, endDate, API_KEY);
 
         Response<SearchResult> responseBusiness = null;
         try {
@@ -43,6 +48,7 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
             e.printStackTrace();
         }
         if (responseBusiness == null || responseBusiness.body() == null) {
+            Log.d("DEBAGa", "loadInBackground pb");
             return null;
         } else
 

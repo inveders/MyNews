@@ -11,9 +11,8 @@ import retrofit2.http.Query;
 
 public interface NyTimesSearchAPI {
 
-    @Headers("APPID: 69b33155fef846e29c9753f95e628397")
     @GET("articlesearch.json")
-    Call<SearchResult> getNyTimesSearchAPI(@Query("q") String query, @Query("fq") List<String> filter, @Query("api-key") String apiKey );
+    Call<SearchResult> getNyTimesSearchAPI(@Query("q") String query, @Query("fq") String filter, @Query("begin_date") String beginDate, @Query("end_date") String endDate, @Query("api-key") String apiKey );
 }
 
 

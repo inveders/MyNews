@@ -1,10 +1,8 @@
 package com.example.inved.mynews.brain;
 
 import android.util.Log;
-import android.widget.CheckBox;
-import android.widget.EditText;
 
-import com.example.inved.mynews.Themes;
+import java.util.List;
 
 public class SearchBrain {
 
@@ -12,10 +10,21 @@ public class SearchBrain {
 
     }
 
-    /**Convert a String in Lucene Syntax - Test*/
-    public String getLucene(String userInput){
+    /**
+     * Convert a String in Lucene Syntax - Test
+     */
+    public String getLucene(List<String> userInput) {
 
-        return String.format("title:\"%1$s\" OR body:\"%1$s\"",userInput);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("section_name:(");
+        for (int i = 0; i < userInput.size(); i++) {
+            stringBuilder.append("\"")
+                    .append(userInput.get(i))
+                    .append("\"");
+        }
+        stringBuilder.append(")");
+        Log.d("DEBAGa", stringBuilder.toString());
+        return stringBuilder.toString();
     }
 
 

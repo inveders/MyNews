@@ -4,9 +4,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:padding="20dip">
+    android:padding="20dp">
 
     <ImageView
         android:id="@+id/fragment_most_popular_item_image"
@@ -14,16 +14,18 @@
         android:layout_height="56dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="?attr/actionModeSplitBackground" />
+        app:srcCompat="?attr/actionModeSplitBackground"
+        android:contentDescription="@string/CONTENT_DESCRIPTION"
+        />
 
     <TextView
         android:id="@+id/fragment_most_popular_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BONJOUR"
+        android:text="@string/SIMPLE_TEXT"
         app:layout_constraintLeft_toRightOf="@+id/fragment_most_popular_item_image"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
 
         />
 

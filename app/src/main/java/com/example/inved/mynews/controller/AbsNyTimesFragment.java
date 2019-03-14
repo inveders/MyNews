@@ -1,9 +1,11 @@
 package com.example.inved.mynews.controller;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -45,7 +47,7 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_general, container, false);
-        Log.d("DEBAGO","AbsNyTimesFragment");
+
         //RecyclerView initialization
         RecyclerView mRecyclerView = v.findViewById(R.id.fragment_general_recycler_view);
         mRecyclerViewAdapter = new RecyclerViewAdapter();
@@ -58,6 +60,8 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
         mLoaderManager = getLoaderManager();
         if(mLoaderManager.getLoader(1)!=null){
             mLoaderManager.initLoader(1,null,this);
+
+
         }
 
 
@@ -115,6 +119,7 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
 
     }
+
 
 
 

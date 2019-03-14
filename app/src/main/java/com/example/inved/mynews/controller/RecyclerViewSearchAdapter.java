@@ -3,13 +3,16 @@ package com.example.inved.mynews.controller;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.searchapi.Doc;
 import com.example.inved.mynews.searchapi.SearchResult;
 import com.squareup.picasso.Picasso;
 
@@ -18,7 +21,7 @@ import java.util.List;
 public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerViewSearchAdapter.ViewHolder> {
 
     @Nullable
-    private List<SearchResult> mData;
+    private List<Doc> mData;
 
     RecyclerViewSearchAdapter() {
     }
@@ -34,12 +37,21 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewSearchAdapter.ViewHolder holder, int position) {
-      /*  if (mData == null) return;
-        holder.mSectionItem.setText(mData.get(position).section);
-        holder.mSubsectionItem.setText(mData.get(position).subsection);
-        holder.mDateArticleItem.setText(mData.get(position).publishedDate);
-        holder.mTitleItem.setText(mData.get(position).title);
-        Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);*/
+
+        holder.mSectionItem.setText(mData.get(position).sectionName);
+        holder.mSubsectionItem.setText(mData.get(position).subsectionName);
+        holder.mDateArticleItem.setText(mData.get(position).pubDate);
+        holder.mTitleItem.setText(mData.get(position).headline.main);
+
+        if (mData.get(position).multimedia.get(0).url != null) {
+            Log.d("DEBAGa", "N'est pas nul, valeur"+mData.get(position).multimedia.get(0).url);
+            Picasso.get().load(mData.get(position).multimedia.get(0).url).into(holder.mImageItem);
+        }
+        else {
+            Log.d("DEBAGa", "Est nul");
+        }
+
+        /**Verifier que multimedia n'est pas vide*/
     }
 
     @Override
@@ -49,7 +61,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
         return mData.size();
     }
 
-    public void setData(List<SearchResult> data) {
+    public void setData(List<Doc> data) {
         mData = data;
 
         //Fill the Recycler View

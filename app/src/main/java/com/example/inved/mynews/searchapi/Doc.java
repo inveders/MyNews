@@ -48,7 +48,7 @@ public class Doc {
     public String sectionName;
     @SerializedName("subsectoinName")
     @Expose
-    public String subsectoinName;
+    public String subsectionName;
     @SerializedName("byline")
     @Expose
     public Byline byline;

@@ -46,7 +46,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
             if (responseTopStories == null || responseTopStories.body() == null) {
                 return null;
             } else
-                Log.d("DEBAGO", "retrofit");
+
             return (responseTopStories.body()).results; //the Objects.requiresNonNull is not necessary
     }
 

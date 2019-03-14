@@ -1,8 +1,13 @@
 package com.example.inved.mynews.controller;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.inved.mynews.R;
-import com.example.inved.mynews.searchapi.SearchResult;
 import com.example.inved.mynews.topstoriesapi.Result;
 import com.squareup.picasso.Picasso;
+
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
 
@@ -21,8 +29,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Nullable
     private List<Result> mData;
 
+
     RecyclerViewAdapter() {
+
     }
+
+
 
     @NonNull
     @Override
@@ -34,14 +46,34 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, int position) {
-        if (mData == null) return;
+    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder,int position) {
+
+        DateTime dt = new DateTime(mData.get(position).publishedDate);
+        DateTimeFormatter displayArticleDateFormat = DateTimeFormat.forPattern("dd/MM/yy");
+        String convertedPublishedDate = dt.toString(displayArticleDateFormat);
+        Log.d("DEBAGa", "convertedPublishedDate "+convertedPublishedDate);
+
+
         holder.mSectionItem.setText(mData.get(position).section);
         holder.mSubsectionItem.setText(mData.get(position).subsection);
-        holder.mDateArticleItem.setText(mData.get(position).publishedDate);
+        holder.mDateArticleItem.setText(convertedPublishedDate);
+
+
         holder.mTitleItem.setText(mData.get(position).title);
         Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);
+
+        holder.mTitleItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               openChromeCustomTabs(view.getContext(),"https://www.lafabriquedunet.fr/seo/articles/structure-url-performante/");
+
+            }
+        });
+
+
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -76,7 +108,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mDateArticleItem = itemView.findViewById(R.id.fragment_general_item_date_article);
             mTitleItem = itemView.findViewById(R.id.fragment_general_item_title);
             mImageItem = itemView.findViewById(R.id.fragment_general_item_image);
+
+
         }
 
     }
+
+    /**Creation of the Chrome Custom Tabs*/
+    private void openChromeCustomTabs (Context context, String url){
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        CustomTabsIntent intent = builder.build();
+        intent.launchUrl(context, Uri.parse(url));
+    }
+
+
+
 }

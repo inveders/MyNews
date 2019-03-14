@@ -2,5 +2,25 @@
     <string name="app_name">MyNews</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="SECTION">SECTION</string>
+    <string name="SUBSECTION">SUBSECTION</string>
+    <string name="TITLE">TITLE</string>
+    <string name="DATE">DATE</string>
+    <string name="LEFT_QUOTATION">\></string>
+    <string name="CONTENT_DESCRIPTION">Image of Article</string>
+    <string name="SIMPLE_TEXT">Simple texte</string>
+
+    //For SearchFragment
+    <string name="SEARCH_QUERY">Search query item</string>
+    <string name="SEARCH_BUTTON">SEARCH</string>
+    <string name="SELECT_DATE">SELECT DATE</string>
+    <string name="BEGIN_DATE">Begin date</string>
+    <string name="END_DATE">End date</string>
+    <string name="CheckboxTechnology">Technology</string>
+    <string name="CheckboxSports">Sports</string>
+    <string name="CheckboxWorld">World</string>
+    <string name="CheckboxScience">Science</string>
+    <string name="CheckboxFood">Food</string>
+    <string name="CheckboxTravel">Travel</string>
+
 </resources>
