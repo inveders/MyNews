@@ -16,11 +16,11 @@ public class ExampleUnitTest {
     @Test
     public void givenParam1AndParam2_whenAddition_thenResult(){ //Test classique
         //    Given
-        SearchActivity search = new SearchActivity();
+        SearchActivity activity_search = new SearchActivity();
         int param1 = 1;
         int param2 = 2;
         //When
-        int result = search.addition(param1,param2);
+        int result = activity_search.addition(param1,param2);
         //Then : on vérifie tout ce qu'il nous faut (assertion)
         Assert.assertEquals(3,result);
     }

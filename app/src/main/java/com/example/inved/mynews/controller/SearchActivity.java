@@ -1,8 +1,7 @@
 package com.example.inved.mynews.controller;
 
 
-
-import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -22,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.brain.SearchBrain;
+import com.example.inved.mynews.searchapi.Doc;
 import com.example.inved.mynews.searchapi.SearchResult;
 import com.example.inved.mynews.utils.MyAsyncTaskLoaderSearch;
 
@@ -30,7 +30,10 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<SearchResult>{
 
@@ -47,21 +50,20 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     String mBeginDate;
     String mEndDate;
     List<String> isCheckBoxList= new ArrayList<>();
-    RecyclerViewSearchAdapter mRecyclerViewSearchAdapter;
     TextView mDisplayBeginDate;
     TextView mDisplayEndDate;
-    DatePickerDialog.OnDateSetListener mDateSetListener;
     public static final String KEY="KEY_DIALOG" ;
+    public static final String KEY_SEARCH="KEY_SEARCH" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search);
+        setContentView(R.layout.activity_search);
 
-        RecyclerView recyclerView = findViewById(R.id.search_recycler_view);
+       /* RecyclerView recyclerView = findViewById(R.id.search_recycler_view);
         mRecyclerViewSearchAdapter = new RecyclerViewSearchAdapter();
         recyclerView.setAdapter(mRecyclerViewSearchAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
 
         editTextSearch = findViewById(R.id.text_input);
         checkboxTechnology = findViewById(R.id.checkBox_technology);
@@ -88,7 +90,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
-        //In this part of the code, we show a Toast when we click on the search button
+        //In this part of the code, we show a Toast when we click on the activity_search button
         buttonSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
@@ -154,7 +156,11 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         Log.d("DEBAGa", "onLoadFinished "+data);
         if(data!=null && data.response!=null && data.response.docs!=null){
             Log.d("DEBAGa", "Nombre de résultat "+data.response.docs.size());
-            mRecyclerViewSearchAdapter.setData(data.response.docs);
+           // mRecyclerViewSearchAdapter.setData(data.response.docs);
+            String message = "My message";
+            Intent intent = new Intent (this, SearchResultActivity.class);
+            intent.putExtra(Intent.EXTRA_TEXT,message);
+            startActivity(intent);
         }
     }
 
