@@ -1,14 +1,13 @@
 package com.example.inved.mynews.utils;
 
 import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
+import androidx.loader.content.AsyncTaskLoader;
 import android.util.Log;
 
 import com.example.inved.mynews.controller.NyTimesSearchAPI;
 import com.example.inved.mynews.searchapi.SearchResult;
 
 import java.io.IOException;
-import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
