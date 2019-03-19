@@ -1,8 +1,7 @@
 package com.example.inved.mynews.utils;
 
 import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
-import android.util.Log;
+import androidx.loader.content.AsyncTaskLoader;
 
 import com.example.inved.mynews.topstoriesapi.NewYorkTimesAPI;
 import com.example.inved.mynews.topstoriesapi.Result;

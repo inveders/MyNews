@@ -3,13 +3,11 @@ package com.example.inved.mynews.controller;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +19,6 @@ import android.widget.Toast;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.brain.SearchBrain;
-import com.example.inved.mynews.searchapi.Doc;
 import com.example.inved.mynews.searchapi.SearchResult;
 import com.example.inved.mynews.utils.MyAsyncTaskLoaderSearch;
 
@@ -30,10 +27,7 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<SearchResult>{
 
