@@ -1,43 +1,50 @@
 
 package com.example.inved.mynews.searchapi;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Multimedium {
+public class Multimedium implements Parcelable {
 
-    @SerializedName("rank")
-    @Expose
-    public Integer rank;
-    @SerializedName("subtype")
-    @Expose
-    public String subtype;
-    @SerializedName("caption")
-    @Expose
-    public Object caption;
-    @SerializedName("credit")
-    @Expose
-    public Object credit;
-    @SerializedName("type")
-    @Expose
-    public String type;
+
     @SerializedName("url")
     @Expose
     public String url;
-    @SerializedName("height")
-    @Expose
-    public Integer height;
-    @SerializedName("width")
-    @Expose
-    public Integer width;
-    @SerializedName("legacy")
-    @Expose
-    public Legacy legacy;
-    @SerializedName("subType")
-    @Expose
-    public String subType;
-    @SerializedName("crop_name")
-    @Expose
-    public String cropName;
 
+    public String getSearchUrl() {
+        return url;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.url);
+    }
+
+    public Multimedium() {
+    }
+
+    protected Multimedium(Parcel in) {
+        this.url = in.readString();
+    }
+
+    public static final Creator<Multimedium> CREATOR = new Creator<Multimedium>() {
+        @Override
+        public Multimedium createFromParcel(Parcel source) {
+            return new Multimedium(source);
+        }
+
+        @Override
+        public Multimedium[] newArray(int size) {
+            return new Multimedium[size];
+        }
+    };
 }

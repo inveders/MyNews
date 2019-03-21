@@ -32,26 +32,27 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
         this.filter = filter;
         this.beginDate = beginDate;
         this.endDate = endDate;
+        Log.d("DEBAGa", "Asyntask parameters"+query+" "+filter+" "+beginDate+" "+endDate);
 
     }
 
     @Override
     public SearchResult loadInBackground() {
 
-        Call<SearchResult> nyTimesSearchCall = service.getNyTimesSearchAPI(query, filter, beginDate, endDate, API_KEY);
+        Call<SearchResult> nyTimesSearchCall = service.getNyTimesSearchAPI(query, filter,beginDate, endDate, API_KEY);
 
-        Response<SearchResult> responseBusiness = null;
+        Response<SearchResult> responseSearchResult = null;
         try {
-            responseBusiness = nyTimesSearchCall.execute(); //on reste bloqué ici tant que pas fini
+            responseSearchResult = nyTimesSearchCall.execute(); //on reste bloqué ici tant que pas fini
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (responseBusiness == null || responseBusiness.body() == null) {
+        if (responseSearchResult == null || responseSearchResult.body() == null) {
             Log.d("DEBAGa", "loadInBackground pb");
             return null;
         } else
-
-            return responseBusiness.body();
+            Log.d("DEBAGa", "loadInBackground ok super");
+            return responseSearchResult.body();
     }
 
     @Override
@@ -71,7 +72,7 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
      * Retrofit Top Stories API
      */
     private Retrofit retrofit = new Retrofit.Builder() //Par défaut
-            .baseUrl("https://api.nytimes.com/svc/activity_search/v2/") //API location
+            .baseUrl("https://api.nytimes.com/svc/search/v2/") //API location
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build(); //Par défaut

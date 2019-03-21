@@ -2,7 +2,11 @@ package com.example.inved.mynews.controller;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +18,17 @@ import com.example.inved.mynews.R;
 import com.example.inved.mynews.searchapi.Doc;
 import com.squareup.picasso.Picasso;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerViewSearchAdapter.ViewHolder> {
 
     @Nullable
-    private List<Doc> mData;
+    private ArrayList<Doc> mData;
 
     RecyclerViewSearchAdapter() {
     }
@@ -34,21 +43,31 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewSearchAdapter.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull RecyclerViewSearchAdapter.ViewHolder holder, final int position) {
+        Log.d("DEBAGa", "On rentre dans le recycler Adapter Search");
         holder.mSectionItem.setText(mData.get(position).sectionName);
         holder.mSubsectionItem.setText(mData.get(position).subsectionName);
-        holder.mDateArticleItem.setText(mData.get(position).pubDate);
-        holder.mTitleItem.setText(mData.get(position).headline.main);
 
-        if (mData.get(position).multimedia.get(0).url != null) {
-            Log.d("DEBAGa", "N'est pas nul, valeur"+mData.get(position).multimedia.get(0).url);
-            Picasso.get().load(mData.get(position).multimedia.get(0).url).into(holder.mImageItem);
+        DateTime dt = new DateTime(mData.get(position).pubDate);
+        DateTimeFormatter displayArticleDateFormat = DateTimeFormat.forPattern("dd/MM/yy");
+        String convertedPublishedDate = dt.toString(displayArticleDateFormat);
+        holder.mDateArticleItem.setText(convertedPublishedDate);
+
+        if (mData.get(position).getImageSearchUrl() != null) {
+            Log.d("DEBAGa", "N'est pas nul, valeur"+mData.get(position).getImageSearchUrl());
+            Picasso.get().load(mData.get(position).getImageSearchUrl()).into(holder.mImageItem);
         }
         else {
-            Log.d("DEBAGa", "Est nul");
+            Picasso.get().load("https://pmcdeadline2.files.wordpress.com/2016/10/the-new-york-times-logo-featured.jpg?w=446&h=299&crop=1").into(holder.mImageItem);
         }
 
+        holder.mTitleItem.setText(mData.get(position).headline.main);
+        holder.mTitleItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openChromeCustomTabs(view.getContext(),mData.get(position).webUrl);
+            }
+        });
         /**Verifier que multimedia n'est pas vide*/
     }
 
@@ -59,7 +78,8 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
         return mData.size();
     }
 
-    public void setData(List<Doc> data) {
+    public void setData(ArrayList<Doc> data) {
+        Log.d("DEBAGa", "RVSA : On va remplir l'item");
         mData = data;
 
         //Fill the Recycler View
@@ -87,6 +107,13 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
             mImageItem = itemView.findViewById(R.id.fragment_general_item_image);
         }
 
+    }
+
+    /**Creation of the Chrome Custom Tabs*/
+    private void openChromeCustomTabs (Context context, String url){
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        CustomTabsIntent intent = builder.build();
+        intent.launchUrl(context, Uri.parse(url));
     }
 
 }

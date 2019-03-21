@@ -34,8 +34,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         // Do something with the date chosen by the user
         myActivity.onDatePicked(new LocalDateTime(year,month+1,day,0,0), (SearchActivity.WhatDatePickerTyped) getArguments().getSerializable(SearchActivity.KEY));
 
-
-        //getArguments().getSerializable(SearchActivity.KEY);
     }
 
 }

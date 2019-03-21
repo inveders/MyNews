@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.brain.SearchBrain;
+import com.example.inved.mynews.searchapi.Response;
 import com.example.inved.mynews.searchapi.SearchResult;
 import com.example.inved.mynews.utils.MyAsyncTaskLoaderSearch;
 
@@ -47,17 +48,12 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     TextView mDisplayBeginDate;
     TextView mDisplayEndDate;
     public static final String KEY="KEY_DIALOG" ;
-    public static final String KEY_SEARCH="KEY_SEARCH" ;
+    public static final String KEY_LIST_DOC="KEY_LIST_DOC" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
-       /* RecyclerView recyclerView = findViewById(R.id.search_recycler_view);
-        mRecyclerViewSearchAdapter = new RecyclerViewSearchAdapter();
-        recyclerView.setAdapter(mRecyclerViewSearchAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));*/
 
         editTextSearch = findViewById(R.id.text_input);
         checkboxTechnology = findViewById(R.id.checkBox_technology);
@@ -95,7 +91,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
 
                 if(!isCheckBoxList.isEmpty() && !TextUtils.isEmpty(mQuery)) {
-                    Log.d("DEBAGa", "on lance la recherche");
+                   // Log.d("DEBAGa", "on lance la recherche");
                     searchBrain = new SearchBrain();
                     mFilter = searchBrain.getLucene(isCheckBoxList);
 
@@ -147,13 +143,10 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
     @Override
     public void onLoadFinished(@NonNull Loader<SearchResult> loader, SearchResult data) {
-        Log.d("DEBAGa", "onLoadFinished "+data);
         if(data!=null && data.response!=null && data.response.docs!=null){
-            Log.d("DEBAGa", "Nombre de résultat "+data.response.docs.size());
-           // mRecyclerViewSearchAdapter.setData(data.response.docs);
-            String message = "My message";
+           // Log.d("DEBAGa", "Nombre de résultat "+data.response.docs.size());
             Intent intent = new Intent (this, SearchResultActivity.class);
-            intent.putExtra(Intent.EXTRA_TEXT,message);
+            intent.putParcelableArrayListExtra(KEY_LIST_DOC,data.response.docs);
             startActivity(intent);
         }
     }

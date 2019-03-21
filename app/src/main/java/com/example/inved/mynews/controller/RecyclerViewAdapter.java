@@ -45,27 +45,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder,int position) {
+    public void onBindViewHolder(@NonNull RecyclerViewAdapter.ViewHolder holder, final int position) {
 
         DateTime dt = new DateTime(mData.get(position).publishedDate);
         DateTimeFormatter displayArticleDateFormat = DateTimeFormat.forPattern("dd/MM/yy");
         String convertedPublishedDate = dt.toString(displayArticleDateFormat);
-        Log.d("DEBAGa", "convertedPublishedDate "+convertedPublishedDate);
 
 
         holder.mSectionItem.setText(mData.get(position).section);
         holder.mSubsectionItem.setText(mData.get(position).subsection);
         holder.mDateArticleItem.setText(convertedPublishedDate);
 
-
-        holder.mTitleItem.setText(mData.get(position).title);
         Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);
 
+        holder.mTitleItem.setText(mData.get(position).title);
         holder.mTitleItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               openChromeCustomTabs(view.getContext(),"https://www.lafabriquedunet.fr/seo/articles/structure-url-performante/");
-
+               openChromeCustomTabs(view.getContext(),mData.get(position).url);
             }
         });
 

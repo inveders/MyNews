@@ -61,12 +61,13 @@
 
     <TextView
         android:id="@+id/fragment_general_item_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:text="@string/TITLE"
         app:layout_constraintTop_toTopOf="@id/fragment_general_item_image"
         app:layout_constraintLeft_toRightOf="@+id/fragment_general_item_image"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constrainedWidth="true"
         android:layout_marginTop="22dp"
          />
