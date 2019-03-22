@@ -1,10 +1,14 @@
 package com.example.inved.mynews.controller;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.RequiresApi;
 import com.google.android.material.tabs.TabLayout;
+
+import androidx.core.app.NotificationCompat;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,6 +20,7 @@ import com.example.inved.mynews.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String CHANNEL_ID ="1";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -25,10 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.configureToolbar();
         this.configureViewPagerAndTabs();
-
-
     }
-
 
 
     /**Creation of the toolbar and the menu*/
@@ -54,7 +56,8 @@ public class MainActivity extends AppCompatActivity {
         //3 - Handle actions on menu items
         switch (item.getItemId()) {
             case R.id.menu_activity_main_params:
-                Toast.makeText(this, "Il n'y a rien à paramétrer ici, passez votre chemin...", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(this, NotificationActivity.class));
+                //Toast.makeText(this, "Il n'y a rien à paramétrer ici, passez votre chemin...", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.menu_activity_main_search:
                 //Toast.makeText(this, "Recherche indisponible, demandez plutôt l'avis de Google, c'est mieux et plus rapide.", Toast.LENGTH_LONG).show();
@@ -81,7 +84,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /***Creation of the notification*/
+    NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_fiber_new_black_24dp)
+           /* .setContentTitle(textTitle)
+            .setContentText(textContent)
+            .setStyle(new NotificationCompat.BigTextStyle()
+                    .bigText(longerTextContent))*/
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setVisibility(NotificationCompat.VISIBILITY_SECRET);
 
+
+    private void createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            String description = getString(R.string.channel_description);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
 
 }
 

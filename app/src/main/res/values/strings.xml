@@ -10,8 +10,8 @@
     <string name="CONTENT_DESCRIPTION">Image of Article</string>
     <string name="SIMPLE_TEXT">Simple texte</string>
 
-    //For SearchFragment
-    <string name="SEARCH_QUERY">Search query item</string>
+    <!--For SearchFragment and Notification-->
+    <string name="SEARCH_QUERY">Search query term</string>
     <string name="SEARCH_BUTTON">SEARCH</string>
     <string name="SELECT_DATE">SELECT DATE</string>
     <string name="BEGIN_DATE">Begin date</string>
@@ -23,4 +23,13 @@
     <string name="CheckboxFood">Food</string>
     <string name="CheckboxTravel">Travel</string>
 
+    <!--For Notification only-->
+    <string name="channel_name">News articles</string>
+    <string name="channel_description">Introduces you to the new articles of the MyNews application</string>
+    <string name="notification_enable">Enable notifications (once per day)</string>
+
+
+    <!--For Menu item-->
+    <string name="Search">Search</string>
+    <string name="Notification">Notifications</string>
 </resources>
