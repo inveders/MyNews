@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <CheckBox
+        android:id="@+id/checkBox_technology"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CheckboxTechnology"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox_science"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CheckboxScience"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_technology"
+        android:layout_marginTop="10dp"
+
+
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox_sports"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CheckboxSports"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_science"
+        android:layout_marginTop="10dp"
+
+
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CheckboxFood"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="200dp"
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox_travel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CheckboxTravel"
+        app:layout_constraintLeft_toLeftOf="@id/checkBox_food"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_food"
+        android:layout_marginTop="10dp"
+
+        />
+
+    <CheckBox
+        android:id="@+id/checkBox_world"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/CheckboxWorld"
+        app:layout_constraintLeft_toLeftOf="@id/checkBox_food"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox_travel"
+        android:layout_marginTop="10dp"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

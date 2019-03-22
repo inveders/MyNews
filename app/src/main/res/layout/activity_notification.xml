@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Importation of the Toolbar -->
+    <include
+        android:id="@+id/toolbar_return_layout"
+        layout="@layout/toolbar_return"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Importation of the Search query term -->
+    <include
+        android:id="@+id/text_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/search_query_term"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintRight_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_return_layout" />
+
+    <!-- Importation of the checkboxes-->
+    <include
+        android:id="@+id/checkboxes_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout"
+        android:layout_marginTop="10dp"
+        layout="@layout/checkboxes"
+        />
+
+    <!-- Importation of the notification enable-->
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        layout="@layout/notification_enable"
+        app:layout_constraintTop_toBottomOf="@id/checkboxes_layout"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
