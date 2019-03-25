@@ -2,8 +2,11 @@ package com.example.inved.mynews.controller;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
@@ -29,6 +32,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<SearchResult>{
 
@@ -50,12 +54,15 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     public static final String KEY="KEY_DIALOG" ;
     public static final String KEY_LIST_DOC="KEY_LIST_DOC" ;
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        this.configureToolbar();
 
-        editTextSearch = findViewById(R.id.text_input);
+
+        editTextSearch = findViewById(R.id.text_input_layout);
         checkboxTechnology = findViewById(R.id.checkBox_technology);
         checkboxScience = findViewById(R.id.checkBox_science);
         checkboxSports = findViewById(R.id.checkBox_sports);
@@ -111,6 +118,16 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
             }
         });
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void configureToolbar(){
+        // Get the toolbar view inside the activity layout
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        // Sets the Toolbar
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Search");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void fillCheckboxList() {

@@ -1,5 +1,7 @@
 package com.example.inved.mynews.utils;
 
+import android.app.job.JobService;
+
 import androidx.annotation.Nullable;
 
 import java.util.Collection;

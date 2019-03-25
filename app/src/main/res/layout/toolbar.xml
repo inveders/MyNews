@@ -4,6 +4,7 @@
 <androidx.appcompat.widget.Toolbar
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
 
     android:id="@+id/toolbar"
     android:minHeight="?attr/actionBarSize"
@@ -13,4 +14,6 @@
 
     android:theme="@style/ToolbarTheme"
     app:titleTextColor="@android:color/white"
-    app:titleTextAppearance="@style/Toolbar.TitleText"/>
+    app:titleTextAppearance="@style/Toolbar.TitleText">
+
+</androidx.appcompat.widget.Toolbar>

@@ -3,6 +3,7 @@
     package="com.example.inved.mynews">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <application
         android:allowBackup="true"
         android:name=".MainApplication"
@@ -20,15 +21,33 @@
         </activity>
 
         <activity android:name=".controller.SearchActivity"
+            android:parentActivityName=".controller.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".controller.SearchResultActivity"
+            android:parentActivityName=".controller.SearchActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".controller.NotificationActivity"
+            android:parentActivityName=".controller.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+        </activity>
+        <service
+            android:name=".utils.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" >
+        </service>
+        <receiver android:name="MyStartServiceReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
     </application>
+
 
 </manifest>
 

@@ -32,4 +32,7 @@
     <!--For Menu item-->
     <string name="Search">Search</string>
     <string name="Notification">Notifications</string>
+
+    <!--For Toolbar-->
+    <string name="TOOLBAR_TITLE">Toolbar Title</string>
 </resources>
