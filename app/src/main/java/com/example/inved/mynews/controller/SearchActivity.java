@@ -161,7 +161,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public void onLoadFinished(@NonNull Loader<SearchResult> loader, SearchResult data) {
         if(data!=null && data.response!=null && data.response.docs!=null){
-           // Log.d("DEBAGa", "Nombre de résultat "+data.response.docs.size());
+            Log.d("DEBAGa", "Nombre de résultat "+data.response.docs.size());
             Intent intent = new Intent (this, SearchResultActivity.class);
             intent.putParcelableArrayListExtra(KEY_LIST_DOC,data.response.docs);
             startActivity(intent);

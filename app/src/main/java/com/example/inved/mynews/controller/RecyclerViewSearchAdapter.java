@@ -19,6 +19,7 @@ import com.example.inved.mynews.searchapi.Doc;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
+import org.joda.time.Hours;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -29,6 +30,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Nullable
     private ArrayList<Doc> mData;
+
 
     RecyclerViewSearchAdapter() {
     }
@@ -69,6 +71,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
             }
         });
         /**Verifier que multimedia n'est pas vide*/
+
     }
 
     @Override
@@ -79,7 +82,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public void setData(ArrayList<Doc> data) {
-        Log.d("DEBAGa", "RVSA : On va remplir l'item");
+        //Log.d("DEBAGa", "RVSA : On va remplir l'item");
         mData = data;
 
         //Fill the Recycler View
@@ -115,5 +118,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
         CustomTabsIntent intent = builder.build();
         intent.launchUrl(context, Uri.parse(url));
     }
+
+
 
 }

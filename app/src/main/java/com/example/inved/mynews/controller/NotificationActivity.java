@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -31,22 +32,23 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class NotificationActivity extends AppCompatActivity {
+public class NotificationActivity extends AppCompatActivity  {
 
     EditText editTextSearch;
     CheckBox checkboxTechnology, checkboxScience, checkboxSports, checkboxFood, checkboxTravel, checkboxWorld;
     Switch notificationSwitchEnable;
     Boolean isNotificationEnabled;
-    String mQuery;
-    String mFilter;
+    public String mQueryNotif;
+    public String mFilterNotif;
 
     SearchBrain searchBrain;
     List<String> isCheckBoxList = new ArrayList<>();
     Gson gson = new Gson();
 
-    public static final String KEY_QUERY ="mQuery";
-    public static final String KEY_CHECKBOX_LIST ="checkbox_list";
-    public static final String KEY_NOTIFICATION_ENABLE ="isNotificationChecked";
+
+    public static final String KEY_QUERY = "mQuery";
+    public static final String KEY_CHECKBOX_LIST = "checkbox_list";
+    public static final String KEY_NOTIFICATION_ENABLE = "isNotificationChecked";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -74,12 +76,12 @@ public class NotificationActivity extends AppCompatActivity {
 
                 fillCheckboxList();
                 //Convert an EditText in String
-                mQuery = editTextSearch.getText().toString();
+                mQueryNotif = editTextSearch.getText().toString();
 
-                if (!isCheckBoxList.isEmpty() && !TextUtils.isEmpty(mQuery)) {
+                if (!isCheckBoxList.isEmpty() && !TextUtils.isEmpty(mQueryNotif)) {
 
                     searchBrain = new SearchBrain();
-                    mFilter = searchBrain.getLucene(isCheckBoxList);
+                    mFilterNotif = searchBrain.getLucene(isCheckBoxList);
 
                     //Launch of the asynctaskLoaderSearch
                     //startAsyncTaskLoaderSearch();
@@ -88,14 +90,16 @@ public class NotificationActivity extends AppCompatActivity {
                     if (bChecked) {
                         sharedPreferencesActions();
                         checkCheckboxIfListContainsTheirName();
+                        notificationActionIfEnabled();
                     } else {
                         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
                         preferences.edit().putBoolean(KEY_NOTIFICATION_ENABLE, false).apply();
-                        preferences.edit().putString(KEY_QUERY,mQuery).apply();
-                        preferences.edit().putString(KEY_CHECKBOX_LIST,gson.toJson(isCheckBoxList)).apply();
+                        preferences.edit().putString(KEY_QUERY, mQueryNotif).apply();
+                        preferences.edit().putString(KEY_CHECKBOX_LIST, gson.toJson(isCheckBoxList)).apply();
+                        notificationActionIfIsNotEnabled();
                     }
 
-                } else if (TextUtils.isEmpty(mQuery)) {
+                } else if (TextUtils.isEmpty(mQueryNotif)) {
                     editTextSearch.setError("Rentrez au moins un mot clé");
                     notificationSwitchEnable.setChecked(false);
 
@@ -107,7 +111,7 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
-        editTextSearch.addTextChangedListener(new TextWatcher(){
+        editTextSearch.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -120,73 +124,73 @@ public class NotificationActivity extends AppCompatActivity {
             }
 
             public void afterTextChanged(Editable arg0) {
-                if(isNotificationEnabled){
-                    mQuery = editTextSearch.getText().toString();
+                if (isNotificationEnabled) {
+                    mQueryNotif = editTextSearch.getText().toString();
                     sharedPreferencesActions();
                 }
             }
         });
 
-        checkboxTechnology.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener (){
+        checkboxTechnology.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(isNotificationEnabled) {
-                    mQuery = editTextSearch.getText().toString();
+                if (isNotificationEnabled) {
+                    mQueryNotif = editTextSearch.getText().toString();
                     fillCheckboxList();
                     sharedPreferencesActions();
                 }
             }
         });
 
-        checkboxFood.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener (){
+        checkboxFood.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(isNotificationEnabled) {
-                    mQuery = editTextSearch.getText().toString();
+                if (isNotificationEnabled) {
+                    mQueryNotif = editTextSearch.getText().toString();
                     fillCheckboxList();
                     sharedPreferencesActions();
                 }
             }
         });
 
-        checkboxScience.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener (){
+        checkboxScience.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(isNotificationEnabled) {
-                    mQuery = editTextSearch.getText().toString();
+                if (isNotificationEnabled) {
+                    mQueryNotif = editTextSearch.getText().toString();
                     fillCheckboxList();
                     sharedPreferencesActions();
                 }
             }
         });
 
-        checkboxSports.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener (){
+        checkboxSports.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(isNotificationEnabled) {
-                    mQuery = editTextSearch.getText().toString();
+                if (isNotificationEnabled) {
+                    mQueryNotif = editTextSearch.getText().toString();
                     fillCheckboxList();
                     sharedPreferencesActions();
                 }
             }
         });
 
-        checkboxTravel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener (){
+        checkboxTravel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(isNotificationEnabled) {
-                    mQuery = editTextSearch.getText().toString();
+                if (isNotificationEnabled) {
+                    mQueryNotif = editTextSearch.getText().toString();
                     fillCheckboxList();
                     sharedPreferencesActions();
                 }
             }
         });
 
-        checkboxWorld.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener (){
+        checkboxWorld.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(isNotificationEnabled) {
-                    mQuery = editTextSearch.getText().toString();
+                if (isNotificationEnabled) {
+                    mQueryNotif = editTextSearch.getText().toString();
                     fillCheckboxList();
                     sharedPreferencesActions();
                 }
@@ -213,29 +217,37 @@ public class NotificationActivity extends AppCompatActivity {
             notificationActionIfEnabled();
 
         } else {
-           // Toast.makeText(NotificationActivity.this, "éteint", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(NotificationActivity.this, "éteint", Toast.LENGTH_SHORT).show();
             notificationSwitchEnable.setChecked(false);
             editTextSearch.setText(getPreferences(MODE_PRIVATE).getString(KEY_QUERY, null));
             checkCheckboxIfListContainsTheirName();
+            notificationActionIfIsNotEnabled();
 
         }
     }
-
 
     public void sharedPreferencesActions() {
         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
         preferences.edit().putBoolean(KEY_NOTIFICATION_ENABLE, true).apply();
-        preferences.edit().putString(KEY_QUERY,mQuery).apply();
-        preferences.edit().putString(KEY_CHECKBOX_LIST,gson.toJson(isCheckBoxList)).apply();
+        preferences.edit().putString(KEY_QUERY, mQueryNotif).apply();
+        preferences.edit().putString(KEY_CHECKBOX_LIST, gson.toJson(isCheckBoxList)).apply();
     }
 
-    public boolean notificationActionIfEnabled() {
-        if (isNotificationEnabled){
-            return true;
-        }
-        else{
-            return false;
-        }
+    public void notificationActionIfEnabled() {
+        scheduleJob(this);
+
+    }
+
+    public String getmQueryNotif() {
+        return mQueryNotif;
+    }
+
+    public String getmFilterNotif() {
+        return mFilterNotif;
+    }
+
+    public void notificationActionIfIsNotEnabled() {
+        stopJobScheduler(this);
 
     }
 
@@ -253,24 +265,54 @@ public class NotificationActivity extends AppCompatActivity {
         if (checkboxWorld.isChecked()) isCheckBoxList.add("World");
     }
 
-    public void checkCheckboxIfListContainsTheirName(){
+    public void checkCheckboxIfListContainsTheirName() {
 
-        String json = getPreferences(MODE_PRIVATE).getString(KEY_CHECKBOX_LIST,null);
+        String json = getPreferences(MODE_PRIVATE).getString(KEY_CHECKBOX_LIST, null);
 
-        List<String> isCheckboxListMemories = null;
-        if(json != null)
-            isCheckBoxList = gson.fromJson(json,new TypeToken<List<String>>(){}.getType());
+       // List<String> isCheckboxListMemories = null;
+        if (json != null)
+            isCheckBoxList = gson.fromJson(json, new TypeToken<List<String>>() {
+            }.getType());
 
         // Check checkbox if they are in the list
         if (isCheckBoxList.contains("Technology")) checkboxTechnology.setChecked(true);
         if (isCheckBoxList.contains("Science")) checkboxScience.setChecked(true);
         if (isCheckBoxList.contains("Sports")) checkboxSports.setChecked(true);
-        if (isCheckBoxList.contains("Food"))checkboxFood.setChecked(true);
+        if (isCheckBoxList.contains("Food")) checkboxFood.setChecked(true);
         if (isCheckBoxList.contains("Travel")) checkboxTravel.setChecked(true);
         if (isCheckBoxList.contains("World")) checkboxWorld.setChecked(true);
 
     }
 
 
+    //Start service (job) from the JobScheduler
+    public static void scheduleJob(Context context) {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.d("debagaa", "lancé schedule");
+            long flexMillis = 15 * 60 * 1000; // le temps entre chaque réquete (15 minutes)
+            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
+            ComponentName serviceComponent = new ComponentName(context, MyJobService.class);
+
+            JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
+            builder.setRequiresCharging(false);
+            builder.setPeriodic(flexMillis, flexMillis);
+            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE);
+          //  builder.setMinimumLatency(5000);     // Temps d'attente minimal avant déclenchement (juste pour faire le test toutes les 5 secondes
+          //  builder.setOverrideDeadline(6000);  // Temps d'attente maximal avant déclenchement
+
+            assert jobScheduler != null;
+            jobScheduler.schedule(builder.build());
+
+        }
+
+    }
+
+    // Stop service (job) from the JobScheduler
+    private static void stopJobScheduler(Context context) {
+        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        assert jobScheduler != null;
+        jobScheduler.cancel(0);
+    }
 
 }

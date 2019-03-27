@@ -18,6 +18,9 @@ import com.example.inved.mynews.topstoriesapi.Result;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Hours;
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -27,6 +30,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Nullable
     private List<Result> mData;
+
+
 
 
     RecyclerViewAdapter() {
@@ -51,12 +56,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         DateTimeFormatter displayArticleDateFormat = DateTimeFormat.forPattern("dd/MM/yy");
         String convertedPublishedDate = dt.toString(displayArticleDateFormat);
 
-
         holder.mSectionItem.setText(mData.get(position).section);
         holder.mSubsectionItem.setText(mData.get(position).subsection);
         holder.mDateArticleItem.setText(convertedPublishedDate);
 
-        Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);
+        if (mData.get(position).getImageUrl() != null) {
+            Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);
+        }
+        else {
+            Picasso.get().load("https://pmcdeadline2.files.wordpress.com/2016/10/the-new-york-times-logo-featured.jpg?w=446&h=299&crop=1").into(holder.mImageItem);
+        }
 
         holder.mTitleItem.setText(mData.get(position).title);
         holder.mTitleItem.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +74,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                openChromeCustomTabs(view.getContext(),mData.get(position).url);
             }
         });
-
 
 
     }
