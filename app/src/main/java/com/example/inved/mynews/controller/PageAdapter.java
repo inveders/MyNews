@@ -1,5 +1,6 @@
 package com.example.inved.mynews.controller;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -20,6 +21,7 @@ public class PageAdapter extends FragmentPagerAdapter {
         return 8; // 3 - Number of page to show
     }
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
         if (Themes.values()[position].getIsMostPopular())

@@ -30,6 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/END_DATE"
+        app:layout_constraintTop_toTopOf="@+id/begin_date"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="205dp"
         />

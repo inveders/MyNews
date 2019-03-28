@@ -1,8 +1,6 @@
 package com.example.inved.mynews.utils;
 
 import android.content.Context;
-import androidx.loader.content.AsyncTaskLoader;
-import android.util.Log;
 
 import com.example.inved.mynews.controller.NyTimesMostPopularAPI;
 import com.example.inved.mynews.topstoriesapi.NewYorkTimesAPI;
@@ -11,6 +9,7 @@ import com.example.inved.mynews.topstoriesapi.Result;
 import java.io.IOException;
 import java.util.List;
 
+import androidx.loader.content.AsyncTaskLoader;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -22,8 +21,8 @@ import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
 
 public class MyAsyncTaskLoaderMostPopular extends AsyncTaskLoader<List<Result>> {
 
-    String name;
-    int period;
+    private String name;
+    private int period;
 
     /**
      * Constructor
@@ -40,12 +39,11 @@ public class MyAsyncTaskLoaderMostPopular extends AsyncTaskLoader<List<Result>> 
 
        Call<NewYorkTimesAPI> nyTimesMostPopularCall = service.getNyTimesMostPopular(name, period, API_KEY);
 
-        /**1st retrofit call*/
         Response<NewYorkTimesAPI> responseMostPopular = null;
         try {
-            Log.d("DEBAGA", "before retrofit Most Popular");
+
             responseMostPopular = nyTimesMostPopularCall.execute(); //on reste bloqué ici tant que pas fini
-            Log.d("DEBAGA", "retrofit Most Popular");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,9 +62,6 @@ public class MyAsyncTaskLoaderMostPopular extends AsyncTaskLoader<List<Result>> 
         forceLoad();
     }
 
-    /**
-     * Retrofit A DEPLACER
-     */
     private OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build();
@@ -80,7 +75,7 @@ public class MyAsyncTaskLoaderMostPopular extends AsyncTaskLoader<List<Result>> 
             .client(client)
             .build(); //Par défaut
 
-    private NyTimesMostPopularAPI service = retrofit.create(NyTimesMostPopularAPI.class); // nomInterface service = retrofit.create(nomInterface.class)
+    private NyTimesMostPopularAPI service = retrofit.create(NyTimesMostPopularAPI.class);
 
 
 }

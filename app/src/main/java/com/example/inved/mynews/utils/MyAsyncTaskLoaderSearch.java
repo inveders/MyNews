@@ -1,14 +1,13 @@
 package com.example.inved.mynews.utils;
 
 import android.content.Context;
-import androidx.loader.content.AsyncTaskLoader;
-import android.util.Log;
 
 import com.example.inved.mynews.controller.NyTimesSearchAPI;
 import com.example.inved.mynews.searchapi.SearchResult;
 
 import java.io.IOException;
 
+import androidx.loader.content.AsyncTaskLoader;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -32,7 +31,7 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
         this.filter = filter;
         this.beginDate = beginDate;
         this.endDate = endDate;
-        Log.d("DEBAGa", "Asyntask parameters"+query+" "+filter+" "+beginDate+" "+endDate);
+
 
     }
 
@@ -43,15 +42,15 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
 
         Response<SearchResult> responseSearchResult = null;
         try {
-            responseSearchResult = nyTimesSearchCall.execute(); //on reste bloqué ici tant que pas fini
+            responseSearchResult = nyTimesSearchCall.execute();
         } catch (IOException e) {
             e.printStackTrace();
         }
         if (responseSearchResult == null || responseSearchResult.body() == null) {
-            Log.d("DEBAGa", "loadInBackground pb");
+
             return null;
         } else
-            Log.d("DEBAGa", "loadInBackground ok super");
+
             return responseSearchResult.body();
     }
 

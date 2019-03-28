@@ -17,7 +17,6 @@ import androidx.viewpager.widget.ViewPager;
 public class MainActivity extends AppCompatActivity {
 
 
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
         this.configureViewPagerAndTabs();
     }
 
-    /**Creation of the toolbar and the menu*/
+    /**
+     * Creation of the toolbar and the menu
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu and add it to the Toolbar
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-   private void configureToolbar(){
+    private void configureToolbar() {
         // Get the toolbar view inside the activity layout
         Toolbar toolbar = findViewById(R.id.toolbar);
         // Sets the Toolbar
@@ -46,17 +47,18 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("My News");
     }
 
-    /**Action on the icons of Menu Item*/
+    /**
+     * Action on the icons of Menu Item
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //3 - Handle actions on menu items
         switch (item.getItemId()) {
             case R.id.menu_activity_main_params:
                 startActivity(new Intent(this, NotificationActivity.class));
-                //Toast.makeText(this, "Il n'y a rien à paramétrer ici, passez votre chemin...", Toast.LENGTH_LONG).show();
+
                 return true;
             case R.id.menu_activity_main_search:
-                //Toast.makeText(this, "Recherche indisponible, demandez plutôt l'avis de Google, c'est mieux et plus rapide.", Toast.LENGTH_LONG).show();
                 //To pass from MainActivity to SearchActivity
                 startActivity(new Intent(this, SearchActivity.class));
                 return true;
@@ -66,15 +68,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**Configuration of the ViewPager*/
-    private void configureViewPagerAndTabs(){
+    /**
+     * Configuration of the ViewPager
+     */
+    private void configureViewPagerAndTabs() {
         //Get ViewPager from layout
         ViewPager pager = findViewById(R.id.activity_main_viewpager);
         //Set Adapter PageAdapter and glue it together
         pager.setAdapter(new PageAdapter(getSupportFragmentManager()));
 
         // 1 - Get TabLayout from layout
-        TabLayout tabs= findViewById(R.id.activity_main_tabs);
+        TabLayout tabs = findViewById(R.id.activity_main_tabs);
         // 2 - Glue TabLayout and ViewPager together
         tabs.setupWithViewPager(pager);
     }

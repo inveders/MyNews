@@ -6,7 +6,6 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.controller.NotificationActivity;
@@ -56,7 +55,9 @@ public class MyJobService extends JobService {
 
     }
 
-    /**Retrofit Call*/
+    /**
+     * Retrofit Call
+     */
     private void retrofitCall() {
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -69,7 +70,7 @@ public class MyJobService extends JobService {
                 .client(client)
                 .build(); //Par défaut
 
-        NyTimesSearchAPI service = retrofit.create(NyTimesSearchAPI.class); // nomInterface service = retrofit.create(nomInterface.class)
+        NyTimesSearchAPI service = retrofit.create(NyTimesSearchAPI.class);
 
         Call<SearchResult> nyTimesSearchCall = service.getNyTimesSearchAPI(mQuery, mFilter, currentDate.minusHours(24).toString(), currentDate.toString(), API_KEY);
 
@@ -120,8 +121,6 @@ public class MyJobService extends JobService {
                 .setSmallIcon(R.drawable.ic_fiber_new_black_24dp)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText)
-                /* .setStyle(new NotificationCompat.BigTextStyle()
-                         .bigText(longerTextContent))*/
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET);
@@ -131,16 +130,12 @@ public class MyJobService extends JobService {
 
     public void createNotificationChannel() {
 
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
             String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
@@ -150,7 +145,6 @@ public class MyJobService extends JobService {
 
     public String getNotificationText(int articleCount) {
         String notifText;
-        Log.d("DEBAGaa", "Notif text " + articleCount);
 
         switch (articleCount) {
             case 0:

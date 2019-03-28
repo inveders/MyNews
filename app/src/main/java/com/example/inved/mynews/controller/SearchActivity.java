@@ -4,13 +4,6 @@ package com.example.inved.mynews.controller;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -22,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.brain.SearchBrain;
-import com.example.inved.mynews.searchapi.Response;
 import com.example.inved.mynews.searchapi.SearchResult;
 import com.example.inved.mynews.utils.MyAsyncTaskLoaderSearch;
 
@@ -33,6 +25,14 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<SearchResult>{
 
@@ -145,7 +145,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
     }
 
-    /**Start a new AsyncTaskLoader*/
+    /**Start a new AsyncTaskLoaderSearch*/
     private void startAsyncTaskLoaderSearch(){
 
         //LoaderManager initialization

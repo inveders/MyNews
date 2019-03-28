@@ -8,8 +8,8 @@ import java.util.Set;
 
 public class MemorizedArticlesDAO {
 
-    public static final String KEY_URL_LIST = "url_click_articles_list";
-    public static final String KEY_PREFERENCES = "PREFERENCES";
+    private static final String KEY_URL_LIST = "url_click_articles_list";
+    private static final String KEY_PREFERENCES = "PREFERENCES";
     private SharedPreferences preferences;
 
 

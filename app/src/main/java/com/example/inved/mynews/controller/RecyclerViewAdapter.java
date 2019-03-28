@@ -33,8 +33,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Nullable
     private List<Result> mData;
-    MemorizedArticlesDAO memorizedArticlesDAO;
-    Set<String> mUrlMemorized;
+    private MemorizedArticlesDAO memorizedArticlesDAO;
+    private Set<String> mUrlMemorized;
 
     RecyclerViewAdapter() {
 
@@ -81,7 +81,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if (mUrlMemorized != null) {
 
             if (mUrlMemorized.contains(mData.get(position).url)) {
-                Log.d("DEBAGaa", "contenu dans la liste des url mémorisées la position est" + position);
+               // Log.d("DEBAGaa", "contenu dans la liste des url mémorisées la position est" + position);
                 holder.mTitleItem.setTextColor(Color.parseColor("#8BC34A"));
 
             }
@@ -128,7 +128,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             mDateArticleItem = itemView.findViewById(R.id.fragment_general_item_date_article);
             mTitleItem = itemView.findViewById(R.id.fragment_general_item_title);
             mImageItem = itemView.findViewById(R.id.fragment_general_item_image);
-
 
         }
 

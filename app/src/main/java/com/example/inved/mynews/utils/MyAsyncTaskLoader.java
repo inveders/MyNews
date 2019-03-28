@@ -20,7 +20,7 @@ import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
 
 public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
 
-    String name;
+    private String name;
 
     /**Constructor*/
     public MyAsyncTaskLoader(Context context,String name){
@@ -46,7 +46,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
                 return null;
             } else
 
-            return (responseTopStories.body()).results; //the Objects.requiresNonNull is not necessary
+            return (responseTopStories.body()).results;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
             .client(client)
             .build(); //Par défaut
 
-    private com.example.inved.mynews.controller.NyTimesAPI service = retrofit.create(com.example.inved.mynews.controller.NyTimesAPI.class); // nomInterface service = retrofit.create(nomInterface.class)
+    private com.example.inved.mynews.controller.NyTimesAPI service = retrofit.create(com.example.inved.mynews.controller.NyTimesAPI.class);
 
 
 

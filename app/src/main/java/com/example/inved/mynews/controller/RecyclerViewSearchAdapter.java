@@ -46,7 +46,8 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewSearchAdapter.ViewHolder holder, final int position) {
-        Log.d("DEBAGa", "On rentre dans le recycler Adapter Search");
+
+        assert mData != null;
         holder.mSectionItem.setText(mData.get(position).sectionName);
         holder.mSubsectionItem.setText(mData.get(position).subsectionName);
 
@@ -56,7 +57,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
         holder.mDateArticleItem.setText(convertedPublishedDate);
 
         if (mData.get(position).getImageSearchUrl() != null) {
-            Log.d("DEBAGa", "N'est pas nul, valeur"+mData.get(position).getImageSearchUrl());
+
             Picasso.get().load(mData.get(position).getImageSearchUrl()).into(holder.mImageItem);
         }
         else {
@@ -70,7 +71,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
                 openChromeCustomTabs(view.getContext(),mData.get(position).webUrl);
             }
         });
-        /**Verifier que multimedia n'est pas vide*/
+
 
     }
 
@@ -82,7 +83,6 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
     }
 
     public void setData(ArrayList<Doc> data) {
-        //Log.d("DEBAGa", "RVSA : On va remplir l'item");
         mData = data;
 
         //Fill the Recycler View

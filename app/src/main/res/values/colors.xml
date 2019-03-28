@@ -6,6 +6,7 @@
     <color name="colorOrange">#f96c00</color>
     <color name="colorGreen">#039900</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
 
 
     <!-- Array of colors that will be used by ViewPager as background colors -->

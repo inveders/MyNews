@@ -2,7 +2,6 @@ package com.example.inved.mynews.controller;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import com.example.inved.mynews.utils.MyAsyncTaskLoaderMostPopular;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
@@ -26,8 +26,6 @@ import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static com.example.inved.mynews.MemorizedArticlesDAO.KEY_URL_LIST;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -36,15 +34,15 @@ import static com.example.inved.mynews.MemorizedArticlesDAO.KEY_URL_LIST;
 public abstract class AbsNyTimesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Result>> {
 
 
-    /*protected*/public static final String KEY_ARG_SECTION = "KEY_ARG_SECTION";
+    protected static final String KEY_ARG_SECTION = "KEY_ARG_SECTION";
     protected static final String KEY_ARG_PERIOD = "KEY_ARG_PERIOD";
     private MemorizedArticlesDAO mMemorizedArticlesDAO;
 
     /**
      * Create a static task id that will identify our loader
      */
-    LoaderManager mLoaderManager;
-    RecyclerViewAdapter mRecyclerViewAdapter;
+    private LoaderManager mLoaderManager;
+    private RecyclerViewAdapter mRecyclerViewAdapter;
 
 
     public static final String API_KEY = "69b33155fef846e29c9753f95e628397";
@@ -70,10 +68,9 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
 
         }
 
-        mMemorizedArticlesDAO = new MemorizedArticlesDAO(getActivity());
+        mMemorizedArticlesDAO = new MemorizedArticlesDAO(Objects.requireNonNull(getActivity()));
 
         //Launch AsyncTaskLoader
-
         this.startAsyncTaskLoader();
         this.resumeAsyncTaskLoaderIfPossible();
 
@@ -89,7 +86,6 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
      * Start a new AsyncTaskLoader
      */
     private void startAsyncTaskLoader() {
-
 
         mLoaderManager.initLoader(1, null, this);
     }
