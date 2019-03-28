@@ -6,33 +6,40 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.controller.NotificationActivity;
+import com.example.inved.mynews.controller.NyTimesSearchAPI;
 import com.example.inved.mynews.searchapi.SearchResult;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 
 import org.joda.time.DateTime;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
 
 
-public class MyJobService extends JobService implements LoaderManager.LoaderCallbacks<SearchResult>{
+public class MyJobService extends JobService {
 
 
     Context context;
     int notificationId = 1;
-    NotificationActivity notificationActivity = new NotificationActivity();
-    String mQuery = notificationActivity.getmQueryNotif();
-    String mFilter = notificationActivity.getmFilterNotif();
+    String mQuery;
+    String mFilter;
     String notificationTitle = "Nouveaux articles";
+
     String notificationText;
+
     public static final String CHANNEL_ID = "1";
     private DateTime currentDate = new DateTime();
 
@@ -40,63 +47,90 @@ public class MyJobService extends JobService implements LoaderManager.LoaderCall
     @Override
     public boolean onStartJob(final JobParameters jobParameters) {
 
-        startAsyncTaskLoaderSearch();
-        context = getBaseContext();
-        createNotificationChannel();
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        mQuery = jobParameters.getExtras().getString(NotificationActivity.KEY_QUERY_BUNDLE);
+        mFilter = jobParameters.getExtras().getString(NotificationActivity.KEY_FILTER_BUNDLE);
 
-        // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(notificationId, builderNotification.build());
-
-
-        try {
-// moi je rajoute souvent un TRY en cas de problème sur une opération risqué
-            Log.d("JOBB", "OK");
-//simple log dans le logcat
-            Toast.makeText(context, "test jobscheduler ok",
-                    Toast.LENGTH_LONG).show();
-// on affiche "test ok "
-        } catch (Exception x) {
-// rien en cas d\'echec dans la condition TRY
-        }
+        retrofitCall();
 
         return true;
 
     }
 
-    /**
-     * Start a new AsyncTaskLoader
-     */
-    private void startAsyncTaskLoaderSearch() {
-        //LoaderManager initialization
+    /**Retrofit Call*/
+    private void retrofitCall() {
 
-     //  getSupportLoaderManager().initLoader(1,null,this);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                .build();
+
+        Retrofit retrofit = new Retrofit.Builder() //Par défaut
+                .baseUrl("https://api.nytimes.com/svc/search/v2/") //API location
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build(); //Par défaut
+
+        NyTimesSearchAPI service = retrofit.create(NyTimesSearchAPI.class); // nomInterface service = retrofit.create(nomInterface.class)
+
+        Call<SearchResult> nyTimesSearchCall = service.getNyTimesSearchAPI(mQuery, mFilter, currentDate.minusHours(24).toString(), currentDate.toString(), API_KEY);
+
+        nyTimesSearchCall.enqueue(new Callback<SearchResult>() {
+
+
+            @Override
+            public void onResponse(@Nullable Call<SearchResult> call, @Nullable Response<SearchResult> response) {
+
+                assert response != null;
+                if (response.body() != null && response.body().response.docs != null) {
+
+                    notificationText = getNotificationText(response.body().response.docs.size());
+
+                    context = getBaseContext();
+
+                    createNotification();
+
+                    createNotificationChannel();
+
+                } else {
+                    notificationText = getNotificationText(0);
+                    createNotification();
+                    createNotificationChannel();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(@Nullable Call<SearchResult> call, @Nullable Throwable t) {
+
+            }
+        });
+
     }
 
-  /*  private LoaderManager getSupportLoaderManager() {
-        return getSupportLoaderManager();
-    }*/
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
-        Log.d("JOBB", "JOB TERMINE");
+
         return false;
     }
 
     /***Creation of the notification*/
-    NotificationCompat.Builder builderNotification = new NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_fiber_new_black_24dp)
-            .setContentTitle(notificationTitle)
-            .setContentText(notificationText)
-            /* .setStyle(new NotificationCompat.BigTextStyle()
-                     .bigText(longerTextContent))*/
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-            .setCategory(NotificationCompat.CATEGORY_REMINDER)
-            .setVisibility(NotificationCompat.VISIBILITY_SECRET);
-
-
+    private void createNotification() {
+        NotificationCompat.Builder builderNotification = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_fiber_new_black_24dp)
+                .setContentTitle(notificationTitle)
+                .setContentText(notificationText)
+                /* .setStyle(new NotificationCompat.BigTextStyle()
+                         .bigText(longerTextContent))*/
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setCategory(NotificationCompat.CATEGORY_REMINDER)
+                .setVisibility(NotificationCompat.VISIBILITY_SECRET);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+        notificationManager.notify(notificationId, builderNotification.build());
+    }
 
     public void createNotificationChannel() {
+
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -114,38 +148,25 @@ public class MyJobService extends JobService implements LoaderManager.LoaderCall
     }
 
 
-    public String getNewArticlesCount(int countArticles) {
+    public String getNotificationText(int articleCount) {
+        String notifText;
+        Log.d("DEBAGaa", "Notif text " + articleCount);
 
-        if (countArticles == 0) {
-            notificationText = "Il n'y a pas de nouveaux articles depuis hier";
-        } else if (countArticles == 1) {
-            notificationText = "Il y a " + countArticles + " nouvel article depuis hier";
-        } else {
-            notificationText = "Il y a " + countArticles + " nouveaux articles depuis hier";
+        switch (articleCount) {
+            case 0:
+                notifText = "Il n'y a pas de nouveaux articles depuis hier";
+                break;
+            case 1:
+                notifText = "Il y a 1 nouvel article depuis hier";
+                break;
+
+            default:
+                notifText = "Il y a " + articleCount + " nouveaux articles depuis hier";
         }
-        Log.d("debagaa", "nombre d'articles "+countArticles);
-        return notificationText;
+
+        return notifText;
     }
 
-    @NonNull
-    @Override
-    public Loader<SearchResult> onCreateLoader(int id, @Nullable Bundle args) {
-        return new MyAsyncTaskLoaderSearch(this, mQuery, mFilter, currentDate.minusHours(24).toString(), currentDate.toString());
-    }
 
-    @Override
-    public void onLoadFinished(@NonNull Loader<SearchResult> loader, SearchResult data) {
-        if (data != null && data.response != null && data.response.docs != null) {
-            Log.d("DEBAGaa", "Nombre de résultat des notifications " + data.response.docs.size());
-            getNewArticlesCount(data.response.docs.size());
-        } else {
-            getNewArticlesCount(0);
-        }
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<SearchResult> loader) {
-
-    }
 }
 

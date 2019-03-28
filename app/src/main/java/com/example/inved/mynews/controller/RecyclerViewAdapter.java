@@ -1,11 +1,8 @@
 package com.example.inved.mynews.controller;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,31 +10,35 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.inved.mynews.MemorizedArticlesDAO;
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.topstoriesapi.Result;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Hours;
-import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.List;
+import java.util.Set;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
+
     @Nullable
     private List<Result> mData;
-
-
-
+    MemorizedArticlesDAO memorizedArticlesDAO;
+    Set<String> mUrlMemorized;
 
     RecyclerViewAdapter() {
 
     }
-
 
 
     @NonNull
@@ -62,8 +63,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         if (mData.get(position).getImageUrl() != null) {
             Picasso.get().load(mData.get(position).getImageUrl()).into(holder.mImageItem);
-        }
-        else {
+        } else {
             Picasso.get().load("https://pmcdeadline2.files.wordpress.com/2016/10/the-new-york-times-logo-featured.jpg?w=446&h=299&crop=1").into(holder.mImageItem);
         }
 
@@ -71,10 +71,22 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.mTitleItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               openChromeCustomTabs(view.getContext(),mData.get(position).url);
+                openChromeCustomTabs(view.getContext(), mData.get(position).url);
+                memorizedArticlesDAO = new MemorizedArticlesDAO(view.getContext());
+                memorizedArticlesDAO.insertUrl(mData.get(position).url);
+
             }
         });
 
+        if (mUrlMemorized != null) {
+
+            if (mUrlMemorized.contains(mData.get(position).url)) {
+                Log.d("DEBAGaa", "contenu dans la liste des url mémorisées la position est" + position);
+                holder.mTitleItem.setTextColor(Color.parseColor("#8BC34A"));
+
+            }
+
+        }
 
     }
 
@@ -94,6 +106,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
+    public void setArticleMemorized(Set<String> urlMemorized) {
+        mUrlMemorized = urlMemorized;
+
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -118,13 +134,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
-    /**Creation of the Chrome Custom Tabs*/
-    private void openChromeCustomTabs (Context context, String url){
+    /**
+     * Creation of the Chrome Custom Tabs
+     */
+    private void openChromeCustomTabs(Context context, String url) {
         CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         CustomTabsIntent intent = builder.build();
         intent.launchUrl(context, Uri.parse(url));
     }
-
 
 
 }

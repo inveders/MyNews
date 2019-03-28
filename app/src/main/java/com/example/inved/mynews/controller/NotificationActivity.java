@@ -7,10 +7,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -45,7 +45,8 @@ public class NotificationActivity extends AppCompatActivity  {
     List<String> isCheckBoxList = new ArrayList<>();
     Gson gson = new Gson();
 
-
+    public static final String KEY_QUERY_BUNDLE="query_bundle";
+    public static final String KEY_FILTER_BUNDLE="filter_bundle";
     public static final String KEY_QUERY = "mQuery";
     public static final String KEY_CHECKBOX_LIST = "checkbox_list";
     public static final String KEY_NOTIFICATION_ENABLE = "isNotificationChecked";
@@ -82,9 +83,6 @@ public class NotificationActivity extends AppCompatActivity  {
 
                     searchBrain = new SearchBrain();
                     mFilterNotif = searchBrain.getLucene(isCheckBoxList);
-
-                    //Launch of the asynctaskLoaderSearch
-                    //startAsyncTaskLoaderSearch();
 
 
                     if (bChecked) {
@@ -234,16 +232,20 @@ public class NotificationActivity extends AppCompatActivity  {
     }
 
     public void notificationActionIfEnabled() {
+
+        fillCheckboxList();
+        //Convert an EditText in String
+        mQueryNotif = editTextSearch.getText().toString();
+
+        if (!isCheckBoxList.isEmpty() && !TextUtils.isEmpty(mQueryNotif)) {
+
+            searchBrain = new SearchBrain();
+            mFilterNotif = searchBrain.getLucene(isCheckBoxList);
+        }
+
+
         scheduleJob(this);
 
-    }
-
-    public String getmQueryNotif() {
-        return mQueryNotif;
-    }
-
-    public String getmFilterNotif() {
-        return mFilterNotif;
     }
 
     public void notificationActionIfIsNotEnabled() {
@@ -286,27 +288,32 @@ public class NotificationActivity extends AppCompatActivity  {
 
 
     //Start service (job) from the JobScheduler
-    public static void scheduleJob(Context context) {
+    public void scheduleJob(Context context) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.d("debagaa", "lancé schedule");
-            long flexMillis = 15 * 60 * 1000; // le temps entre chaque réquete (15 minutes)
+
+         //   long flexMillis = 15 * 60 * 1000; // le temps entre chaque réquete (15 minutes)
             JobScheduler jobScheduler = (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
             ComponentName serviceComponent = new ComponentName(context, MyJobService.class);
-
+            //String query = getPreferences(MODE_PRIVATE).getString(KEY_QUERY, null);
             JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
             builder.setRequiresCharging(false);
-            builder.setPeriodic(flexMillis, flexMillis);
+         //   builder.setPeriodic(flexMillis, flexMillis);
             builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE);
-          //  builder.setMinimumLatency(5000);     // Temps d'attente minimal avant déclenchement (juste pour faire le test toutes les 5 secondes
-          //  builder.setOverrideDeadline(6000);  // Temps d'attente maximal avant déclenchement
+            PersistableBundle bundlePersistable = new PersistableBundle();
+            bundlePersistable.putString(KEY_FILTER_BUNDLE,mQueryNotif);
+            bundlePersistable.putString(KEY_QUERY_BUNDLE,mFilterNotif);
+
+            builder.setExtras(bundlePersistable);
+            builder.setMinimumLatency(5000);     // Temps d'attente minimal avant déclenchement (juste pour faire le test toutes les 5 secondes
+            builder.setOverrideDeadline(6000);  // Temps d'attente maximal avant déclenchement
 
             assert jobScheduler != null;
             jobScheduler.schedule(builder.build());
-
         }
 
     }
+
 
     // Stop service (job) from the JobScheduler
     private static void stopJobScheduler(Context context) {
