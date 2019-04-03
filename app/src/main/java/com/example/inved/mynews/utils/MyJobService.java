@@ -6,6 +6,7 @@ import android.app.job.JobParameters;
 import android.app.job.JobService;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.controller.NotificationActivity;

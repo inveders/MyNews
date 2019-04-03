@@ -53,6 +53,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     TextView mDisplayEndDate;
     public static final String KEY="KEY_DIALOG" ;
     public static final String KEY_LIST_DOC="KEY_LIST_DOC" ;
+    public static final String KEY_LIST_NUMBER="KEY_LIST_NUMBER";
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -60,7 +61,6 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         this.configureToolbar();
-
 
         editTextSearch = findViewById(R.id.text_input_layout);
         checkboxTechnology = findViewById(R.id.checkBox_technology);
@@ -98,16 +98,14 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
 
 
                 if(!isCheckBoxList.isEmpty() && !TextUtils.isEmpty(mQuery)) {
-                   // Log.d("DEBAGa", "on lance la recherche");
+
                     searchBrain = new SearchBrain();
                     mFilter = searchBrain.getLucene(isCheckBoxList);
 
                     //Launch of the asynctaskLoaderSearch
                     startAsyncTaskLoaderSearch();
 
-                    // Toast.makeText(SearchActivity.this,userInput,Toast.LENGTH_SHORT).show();
-
-                    Toast.makeText(SearchActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, "Recherche en cours", Toast.LENGTH_SHORT).show();
                 }
                 else if (TextUtils.isEmpty(mQuery)) {
                     editTextSearch.setError("Rentrez au moins un mot clé");
@@ -155,17 +153,20 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     @NonNull
     @Override
     public Loader<SearchResult> onCreateLoader(int i, Bundle bundle) {
+        Log.d("DEBAGaa", "Données recherche, mQuery: "+mQuery+" mFilter: "+mFilter+" mBeginDate: "+mBeginDate+" mEnddate: "+mEndDate);
         return new MyAsyncTaskLoaderSearch(this,mQuery,mFilter,mBeginDate,mEndDate);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<SearchResult> loader, SearchResult data) {
         if(data!=null && data.response!=null && data.response.docs!=null){
-            Log.d("DEBAGa", "Nombre de résultat "+data.response.docs.size());
+            Log.d("DEBAGaa", "Nombre de résultat "+data.response.docs.size());
             Intent intent = new Intent (this, SearchResultActivity.class);
             intent.putParcelableArrayListExtra(KEY_LIST_DOC,data.response.docs);
+            intent.putExtra(KEY_LIST_NUMBER,data.response.docs.size());
             startActivity(intent);
         }
+
     }
 
     @Override

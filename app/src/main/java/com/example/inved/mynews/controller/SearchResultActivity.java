@@ -3,8 +3,7 @@ package com.example.inved.mynews.controller;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.searchapi.Doc;
@@ -26,22 +25,25 @@ public class SearchResultActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_result_search);
-            this.configureToolbar();
-            RecyclerView recyclerView = findViewById(R.id.search_recycler_view);
-            mRecyclerViewSearchAdapter = new RecyclerViewSearchAdapter();
-            recyclerView.setAdapter(mRecyclerViewSearchAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            Intent intent = getIntent();
-            ArrayList<Doc> docArrayList = intent.getParcelableArrayListExtra(SearchActivity.KEY_LIST_DOC);
-            mRecyclerViewSearchAdapter.setData(docArrayList);
-
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_result_search);
+        this.configureToolbar();
+        RecyclerView recyclerView = findViewById(R.id.search_recycler_view);
+        mRecyclerViewSearchAdapter = new RecyclerViewSearchAdapter();
+        recyclerView.setAdapter(mRecyclerViewSearchAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Intent intent = getIntent();
+        ArrayList<Doc> docArrayList = intent.getParcelableArrayListExtra(SearchActivity.KEY_LIST_DOC);
+        mRecyclerViewSearchAdapter.setData(docArrayList);
+        int number_result = intent.getIntExtra(SearchActivity.KEY_LIST_NUMBER, 0);
+        if (number_result == 0) {
+            Toast.makeText(SearchResultActivity.this, "Il n'y a aucun résultat", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private void configureToolbar(){
+    private void configureToolbar() {
         // Get the toolbar view inside the activity layout
         Toolbar toolbar = findViewById(R.id.toolbar);
         // Sets the Toolbar

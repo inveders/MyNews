@@ -2,6 +2,7 @@ package com.example.inved.mynews.controller;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,8 @@ import androidx.recyclerview.widget.RecyclerView;
 public abstract class AbsNyTimesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Result>> {
 
 
-    protected static final String KEY_ARG_SECTION = "KEY_ARG_SECTION";
-    protected static final String KEY_ARG_PERIOD = "KEY_ARG_PERIOD";
+    public static final String KEY_ARG_SECTION = "KEY_ARG_SECTION";
+    public static final String KEY_ARG_PERIOD = "KEY_ARG_PERIOD";
     private MemorizedArticlesDAO mMemorizedArticlesDAO;
 
     /**
@@ -105,11 +106,11 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     public Loader<List<Result>> onCreateLoader(int i, @Nullable Bundle bundle) {
 
         if (isMostPopular()) {
-
+           // Log.d("DEBAGO", "1a. argument asyntask most pop " + getArguments().getString(KEY_ARG_SECTION) + " et " + getArguments().getInt(KEY_ARG_PERIOD));
             return new MyAsyncTaskLoaderMostPopular(getContext(), getArguments().getString(KEY_ARG_SECTION), getArguments().getInt(KEY_ARG_PERIOD));
 
         } else {
-
+          //  Log.d("DEBAGO", "1b. argument asyntask general " + getArguments().getString(KEY_ARG_SECTION));
             return new MyAsyncTaskLoader(getContext(), getArguments().getString(KEY_ARG_SECTION));
         }
 
@@ -119,12 +120,14 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
     public void onLoadFinished(@NonNull Loader<List<Result>> loader, List<Result> results) {
 
         Set<String> listCommonUrl = new HashSet<>();
+      //  Log.d("DEBAGO", "2. result list " + results);
+        if (results != null) {
+            for (int i = 0; i < results.size(); i++) {
+                if (mMemorizedArticlesDAO.findMemorizedArticle(results.get(i).url)) {
+                    listCommonUrl.add(results.get(i).url);
+                }
 
-        for (int i = 0; i < results.size(); i++) {
-            if (mMemorizedArticlesDAO.findMemorizedArticle(results.get(i).url)) {
-                listCommonUrl.add(results.get(i).url);
             }
-
         }
         mRecyclerViewAdapter.setArticleMemorized(listCommonUrl);
         mRecyclerViewAdapter.setData(results);

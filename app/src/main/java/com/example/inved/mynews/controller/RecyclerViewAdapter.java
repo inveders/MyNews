@@ -3,7 +3,6 @@ package com.example.inved.mynews.controller;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,11 +80,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if (mUrlMemorized != null) {
 
             if (mUrlMemorized.contains(mData.get(position).url)) {
-               // Log.d("DEBAGaa", "contenu dans la liste des url mémorisées la position est" + position);
+                // Log.d("DEBAGaa", "contenu dans la liste des url mémorisées la position est" + position);
                 holder.mTitleItem.setTextColor(Color.parseColor("#8BC34A"));
-
             }
-
+            else {
+                holder.mTitleItem.setTextColor(Color.parseColor("#000000"));
+            }
         }
 
     }

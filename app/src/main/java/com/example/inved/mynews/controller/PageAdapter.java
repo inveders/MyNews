@@ -1,5 +1,7 @@
 package com.example.inved.mynews.controller;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,10 +26,15 @@ public class PageAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        if (Themes.values()[position].getIsMostPopular())
+        if (Themes.values()[position].getIsMostPopular()){
+
             return MostPopularPageFragment.newInstance(Themes.values()[position].getName());
-        else
+        }
+        else{
+
             return GeneralPageFragment.newInstance(Themes.values()[position].getName());
+        }
+
     }
 
 
