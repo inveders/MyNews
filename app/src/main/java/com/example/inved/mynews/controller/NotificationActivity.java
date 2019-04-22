@@ -311,7 +311,7 @@ public class NotificationActivity extends AppCompatActivity {
             JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
             builder.setRequiresCharging(false);
             builder.setPeriodic(flexMillis, flexMillis);
-            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE);
+            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
             PersistableBundle bundlePersistable = new PersistableBundle();
             bundlePersistable.putString(KEY_QUERY_BUNDLE, mQueryNotif);
             bundlePersistable.putString(KEY_FILTER_BUNDLE, mFilterNotif);

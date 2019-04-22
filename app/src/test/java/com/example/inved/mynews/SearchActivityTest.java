@@ -1,6 +1,7 @@
 package com.example.inved.mynews;
 
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.inved.mynews.controller.SearchActivity;
 
@@ -12,8 +13,11 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowToast;
 
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = {27})
@@ -21,6 +25,7 @@ public class SearchActivityTest {
 
     private SearchActivity searchActivity;
     private Button searchButton;
+    private EditText editTextSearch;
 
     @Before
     public void setUp() {
@@ -30,20 +35,19 @@ public class SearchActivityTest {
                 .get();
 
         searchButton = searchActivity.findViewById(R.id.button_Search);
-
+        editTextSearch = searchActivity.findViewById(R.id.text_input_layout);
 
     }
 
     @Test
     public void clickingSearchButton_WhenCheckboxListIsEmpty_ShouldProducedToastMessage() {
 
-        List<String> isCheckboxList = searchActivity.fillCheckboxList();
-        isCheckboxList.clear();
-        boolean expected1 = isCheckboxList.isEmpty();
+        //mettre le
+        editTextSearch.setText("Planes");
         searchButton.performClick();
 
-        Assert.assertTrue(expected1);
-        //assertEquals(ShadowToast.getTextOfLatestToast(),"Aucune Checkbox n'est cochée");
+
+        assertEquals("Aucune Checkbox n'est cochée",ShadowToast.getTextOfLatestToast());
     }
 
 }

@@ -1,29 +1,41 @@
 package com.example.inved.mynews;
 
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
+import android.os.PersistableBundle;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Switch;
 
 import com.example.inved.mynews.brain.SearchBrain;
 import com.example.inved.mynews.controller.NotificationActivity;
+import com.example.inved.mynews.utils.MyJobService;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.inved.mynews.controller.NotificationActivity.KEY_FILTER_BUNDLE;
+import static com.example.inved.mynews.controller.NotificationActivity.KEY_QUERY_BUNDLE;
+import static org.mockito.ArgumentMatchers.argThat;
+
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = {27})
 public class NotificationActivityTest {
-
 
     private NotificationActivity notificationActivity;
     private SearchBrain spySearchBrain;
@@ -31,19 +43,23 @@ public class NotificationActivityTest {
     private CheckBox checkboxWorld;
     private List<String> isCheckBoxList = new ArrayList<>();
     private Switch notificationSwitchEnableTest;
+    private EditText editTextSearch;
 
     @Before
     public void setUp() {
-        notificationActivity = Mockito.spy(Robolectric.buildActivity(NotificationActivity.class)
+        notificationActivity = Robolectric.buildActivity(NotificationActivity.class)
                 .create()
                 .resume()
-                .get());
+                .get();
 
-        spySearchBrain = Mockito.spy(new SearchBrain()); //Utiliser cette notation
+      //  spySearchBrain = Mockito.spy(new SearchBrain()); //Utiliser cette notation
 
         checkboxTechnology = notificationActivity.findViewById(R.id.checkBox_technology);
         checkboxWorld = notificationActivity.findViewById(R.id.checkBox_world);
         notificationSwitchEnableTest = notificationActivity.findViewById(R.id.notification_switch);
+
+
+        editTextSearch = notificationActivity.findViewById(R.id.text_input_layout);
     }
 
     @Test
@@ -86,15 +102,10 @@ public class NotificationActivityTest {
 
     }
 
-    //   @Test
- /*   public void checkingTechnologyAndWorldCheckboxes_ShouldSendGoodArgumentsWithScheduleJobSuccess() {
+    @Test
+    public void checkingTechnologyAndWorldCheckboxes_ShouldSendGoodArgumentsWithScheduleJobSuccess() {
 
         //Given
-        CheckBox checkboxTechnology = notificationActivity.findViewById(R.id.checkBox_technology);
-        CheckBox checkboxWorld = notificationActivity.findViewById(R.id.checkBox_world);
-        Switch notificationSwitchEnableTest = notificationActivity.findViewById(R.id.notification_switch);
-        EditText editTextSearch = notificationActivity.findViewById(R.id.text_input_layout);
-
         checkboxTechnology.setChecked(true);
         checkboxWorld.setChecked(true);
         editTextSearch.setText("Plane");
@@ -104,33 +115,52 @@ public class NotificationActivityTest {
 
         //Then
 
-        Mockito.verify(notificationActivity).firstScheduleJob(any(JobInfo.class));//On teste si notre activité appelle firstScheduleJob
-        Mockito.verify(notificationActivity).firstScheduleJob(argThat(new ArgumentMatcher<JobInfo>() {
+        //   Mockito.verify(notificationActivity).firstScheduleJob(any(JobInfo.class));//On teste si notre activité appelle firstScheduleJob
+        // Mockito.verify(notificationActivity).firstScheduleJob
+
+        JobScheduler jobScheduler = (JobScheduler) RuntimeEnvironment.application.getSystemService(Context.JOB_SCHEDULER_SERVICE);
+
+        ComponentName serviceComponent = new ComponentName(RuntimeEnvironment.application, MyJobService.class);
+        JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
+        builder.setRequiresCharging(false);
+        builder.setPeriodic(60 * 24 * 1000, 60 * 24 * 1000);
+        builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
+        PersistableBundle bundlePersistable = new PersistableBundle();
+        bundlePersistable.putString(KEY_QUERY_BUNDLE, "Plane");
+        bundlePersistable.putString(KEY_FILTER_BUNDLE, "section_name:(\"Technology\"\"World\")");
+        builder.setExtras(bundlePersistable);
+
+        jobScheduler.schedule(builder.build());
+
+       // Assert.assertTrue(jobScheduler.getAllPendingJobs().contains(builder.build()));
+       // Assert.assertTrue(jobScheduler.getAllPendingJobs().contains(builder.setRequiresCharging(false)));
+        Assert.assertTrue(jobScheduler.getAllPendingJobs().contains(builder.build()));
+     /*   argThat(new ArgumentMatcher<JobInfo>() {
             @Override
             public boolean matches(JobInfo argument) {
                 if (argument.isRequireCharging()) {
                     return false;
                 }
 
-                if (argument.getFlexMillis()!=60*24*1000){
+                if (argument.getFlexMillis() != 60 * 24 * 1000) {
                     return false;
                 }
 
-                if (argument.getRequiredNetwork().equals(JobInfo.NETWORK_TYPE_NONE)){
+                if (!argument.getRequiredNetwork().equals(JobInfo.NETWORK_TYPE_ANY)) {
                     return false;
                 }
 
-                if(!argument.getExtras().getString(KEY_FILTER_BUNDLE).equals("section_name:(\"Technology\"\"World\")")){
+                if (!argument.getExtras().getString(KEY_FILTER_BUNDLE).equals("section_name:(\"Technology\"\"World\")")) {
                     return false;
                 }
 
-                if(!argument.getExtras().getString(KEY_QUERY_BUNDLE).equals("Plane")){
+                if (!argument.getExtras().getString(KEY_QUERY_BUNDLE).equals("Plane")) {
                     return false;
                 }
 
                 return true;
             }
-        }));
-    }*/
+        });*/
+    }
 }
 
