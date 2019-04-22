@@ -23,7 +23,7 @@ public class SearchBrain {
                     .append("\"");
         }
         stringBuilder.append(")");
-        Log.d("DEBAGa", stringBuilder.toString());
+//        Log.d("DEBAGa", stringBuilder.toString());
         return stringBuilder.toString();
     }
 

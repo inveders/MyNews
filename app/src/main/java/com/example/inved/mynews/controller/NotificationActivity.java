@@ -264,7 +264,7 @@ public class NotificationActivity extends AppCompatActivity {
 
     }
 
-    public void fillCheckboxList() {
+    public List<String> fillCheckboxList() {
 
         //Delete all elements of the List before to verify is checkbox are checked.
         isCheckBoxList.clear();
@@ -276,6 +276,8 @@ public class NotificationActivity extends AppCompatActivity {
         if (checkboxFood.isChecked()) isCheckBoxList.add("Food");
         if (checkboxTravel.isChecked()) isCheckBoxList.add("Travel");
         if (checkboxWorld.isChecked()) isCheckBoxList.add("World");
+
+       return isCheckBoxList;
     }
 
     public void checkCheckboxIfListContainsTheirName() {
@@ -304,7 +306,7 @@ public class NotificationActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             long flexMillis = 60 * 24 * 1000; // le temps entre chaque réquete (toutes les 24 heures)
-            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
+
             ComponentName serviceComponent = new ComponentName(context, MyJobService.class);
             JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
             builder.setRequiresCharging(false);
@@ -315,8 +317,8 @@ public class NotificationActivity extends AppCompatActivity {
             bundlePersistable.putString(KEY_FILTER_BUNDLE, mFilterNotif);
             builder.setExtras(bundlePersistable);
 
-            assert jobScheduler != null;
-            jobScheduler.schedule(builder.build());
+            firstScheduleJob(builder.build());
+
         }
 
     }
@@ -327,6 +329,16 @@ public class NotificationActivity extends AppCompatActivity {
         JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
         assert jobScheduler != null;
         jobScheduler.cancel(0);
+    }
+
+    public JobScheduler getJobScheduler(Context context){
+        return (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
+    }
+
+    public void firstScheduleJob(JobInfo jobInfo){
+
+        getJobScheduler(this).schedule(jobInfo);
+
     }
 
 }

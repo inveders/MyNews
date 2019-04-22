@@ -36,7 +36,7 @@ import androidx.loader.content.Loader;
 
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<SearchResult>{
 
-    enum WhatDatePickerTyped { //C'est un type
+    public enum WhatDatePickerTyped { //C'est un type
         BEGIN,END
     }
 
@@ -128,7 +128,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void fillCheckboxList() {
+    public List<String> fillCheckboxList() {
 
         //Delete all elements of the List before to verify is checkbox are checked.
         isCheckBoxList.clear();
@@ -141,6 +141,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         if (checkboxTravel.isChecked()) isCheckBoxList.add("Travel");
         if (checkboxWorld.isChecked()) isCheckBoxList.add("World");
 
+        return isCheckBoxList;
     }
 
     /**Start a new AsyncTaskLoaderSearch*/
