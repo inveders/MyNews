@@ -1,6 +1,24 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+
+        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.4'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco-android'
 
-
+jacoco {
+    toolVersion = "0.8.3"
+}
+jacocoAndroidUnitTestReport {
+    csv.enabled false
+    html.enabled true
+    xml.enabled true
+}
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -21,7 +39,13 @@ android {
         unitTests {
             includeAndroidResources = true
         }
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
     }
+
 }
 
 
@@ -50,5 +74,7 @@ dependencies {
 
     androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
+
+
 
 }
