@@ -52,7 +52,7 @@ public class NotificationActivityTest {
                 .resume()
                 .get();
 
-      //  spySearchBrain = Mockito.spy(new SearchBrain()); //Utiliser cette notation
+        spySearchBrain = Mockito.spy(new SearchBrain()); //Utiliser cette notation
 
         checkboxTechnology = notificationActivity.findViewById(R.id.checkBox_technology);
         checkboxWorld = notificationActivity.findViewById(R.id.checkBox_world);

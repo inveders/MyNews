@@ -42,7 +42,6 @@ public class SearchActivityTest {
     @Test
     public void clickingSearchButton_WhenCheckboxListIsEmpty_ShouldProducedToastMessage() {
 
-        //mettre le
         editTextSearch.setText("Planes");
         searchButton.performClick();
 
