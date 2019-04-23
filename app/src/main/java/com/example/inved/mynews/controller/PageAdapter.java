@@ -1,17 +1,15 @@
 package com.example.inved.mynews.controller;
 
-import android.util.Log;
+import com.example.inved.mynews.Themes;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.inved.mynews.Themes;
-
 public class PageAdapter extends FragmentPagerAdapter {
 
-    // 2 - Default Constructor
+    // Default Constructor
     public PageAdapter(FragmentManager mgr) {
         super(mgr);
 
@@ -20,7 +18,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 8; // 3 - Number of page to show
+        return 8; // Number of page to show
     }
 
     @NonNull

@@ -1,7 +1,5 @@
 package com.example.inved.mynews.brain;
 
-import android.util.Log;
-
 import java.util.List;
 
 public class SearchBrain {

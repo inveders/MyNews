@@ -38,7 +38,7 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
     @Override
     public SearchResult loadInBackground() {
 
-        Call<SearchResult> nyTimesSearchCall = service.getNyTimesSearchAPI(query, filter,beginDate, endDate, API_KEY);
+        Call<SearchResult> nyTimesSearchCall = service.getNyTimesSearchAPI(query, filter, beginDate, endDate, API_KEY);
 
         Response<SearchResult> responseSearchResult = null;
         try {
@@ -60,9 +60,6 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
         forceLoad();
     }
 
-    /**
-     * Retrofit A DEPLACER
-     */
     private OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build();

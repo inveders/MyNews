@@ -92,7 +92,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
             @Override
             public void onClick(View view){
 
-                fillCheckboxList();
+                isCheckBoxList= fillCheckboxList();
                 //Convert an EditText in String
                 mQuery = editTextSearch.getText().toString();
 
