@@ -48,7 +48,7 @@ public class MainActivityTest {
     }
 
 
-    @Test
+ /*   @Test
     public void clickingMainParamIcon_ShouldStartNotificationActivity(){
 
         ShadowActivity shadowActivity = shadowOf(mainActivity);
@@ -60,5 +60,5 @@ public class MainActivityTest {
 
         assertEquals(expectedIntent.getComponent(),actual.getComponent());
 
-    }
+    }*/
 }
