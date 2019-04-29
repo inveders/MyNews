@@ -24,3 +24,4 @@ before_script:
 script:
 - ./gradlew clean build test check 
 - ./gradlew jacocoTestReport --stacktrace
+- ./gradlew connectedCheck --stacktrace
