@@ -115,9 +115,6 @@ public class NotificationActivityTest {
 
         //Then
 
-        //   Mockito.verify(notificationActivity).firstScheduleJob(any(JobInfo.class));//On teste si notre activité appelle firstScheduleJob
-        // Mockito.verify(notificationActivity).firstScheduleJob
-
         JobScheduler jobScheduler = (JobScheduler) RuntimeEnvironment.application.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
         ComponentName serviceComponent = new ComponentName(RuntimeEnvironment.application, MyJobService.class);
@@ -132,8 +129,6 @@ public class NotificationActivityTest {
 
         jobScheduler.schedule(builder.build());
 
-       // Assert.assertTrue(jobScheduler.getAllPendingJobs().contains(builder.build()));
-       // Assert.assertTrue(jobScheduler.getAllPendingJobs().contains(builder.setRequiresCharging(false)));
         Assert.assertTrue(jobScheduler.getAllPendingJobs().contains(builder.build()));
      /*   argThat(new ArgumentMatcher<JobInfo>() {
             @Override
