@@ -3,12 +3,16 @@ apply plugin: 'jacoco-android'
 
 jacoco {
     toolVersion = "0.8.3"
+    reportsDir = file("$buildDir/customJacocoReportDir")
 }
-jacocoAndroidUnitTestReport {
-    csv.enabled false
-    html.enabled true
-    xml.enabled true
+
+jacocoAndroidUnitTestReport{
+            csv.enabled true
+        html.enabled true
+        xml.enabled true
+
 }
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -67,7 +71,6 @@ dependencies {
 
     androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
-
 
 
 }
