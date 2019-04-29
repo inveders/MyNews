@@ -16,6 +16,8 @@ android:
     # Additional components
     - extra-google-m2repository
     - extra-android-m2repository
+env : 
+  - CODECOV_TOKEN="4dc04613-4fbe-4907-b04a-55ccddcfe822"
 
 before_install:
 - chmod +x gradlew
@@ -24,3 +26,6 @@ before_script:
 script:
 - ./gradlew clean build test check 
 - ./gradlew jacocoTestReport --stacktrace
+
+after_success:
+- bash <(curl -s https://codecov.io/bash)
