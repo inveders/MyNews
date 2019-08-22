@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +33,7 @@ public class SearchResultActivity extends AppCompatActivity {
         mRecyclerViewSearchAdapter = new RecyclerViewSearchAdapter();
         recyclerView.setAdapter(mRecyclerViewSearchAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
         Intent intent = getIntent();
         ArrayList<Doc> docArrayList = intent.getParcelableArrayListExtra(SearchActivity.KEY_LIST_DOC);
         mRecyclerViewSearchAdapter.setData(docArrayList);
