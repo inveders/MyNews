@@ -11,6 +11,8 @@ import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -86,12 +88,12 @@ public class NotificationActivity extends AppCompatActivity {
 
 
                     if (bChecked) {
-                        Toast.makeText(NotificationActivity.this, "Notifications actives", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NotificationActivity.this, getString(R.string.notification_actives), Toast.LENGTH_SHORT).show();
                         sharedPreferencesActions();
                         checkCheckboxIfListContainsTheirName();
                         notificationActionIfEnabled();
                     } else {
-                        Toast.makeText(NotificationActivity.this, "Désactivation des notifications", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NotificationActivity.this, getString(R.string.notification_not_actives), Toast.LENGTH_SHORT).show();
                         SharedPreferences preferences = getPreferences(MODE_PRIVATE);
                         preferences.edit().putBoolean(KEY_NOTIFICATION_ENABLE, false).apply();
                         preferences.edit().putString(KEY_QUERY, mQueryNotif).apply();
@@ -100,11 +102,11 @@ public class NotificationActivity extends AppCompatActivity {
                     }
 
                 } else if (TextUtils.isEmpty(mQueryNotif)) {
-                    editTextSearch.setError("Rentrez au moins un mot clé");
+                    editTextSearch.setError(getString(R.string.enter_key_word));
                     notificationSwitchEnable.setChecked(false);
 
                 } else {
-                    Toast.makeText(NotificationActivity.this, "Cocher au moins une Checkbox", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NotificationActivity.this, getString(R.string.check_checkbox), Toast.LENGTH_SHORT).show();
                     notificationSwitchEnable.setChecked(false);
 
                 }
@@ -127,7 +129,7 @@ public class NotificationActivity extends AppCompatActivity {
             public void afterTextChanged(Editable arg0) {
 
                 if (editTextSearch.getText().toString().isEmpty()) {
-                    editTextSearch.setError("Rentrez au moins un mot clé");
+                    editTextSearch.setError(getString(R.string.enter_key_word));
                     notificationSwitchEnable.setChecked(false);
                     sharedPreferencesActions();
                 } else {
@@ -138,7 +140,7 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
-        checkboxTechnology.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+     /*   checkboxTechnology.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (isNotificationEnabled) {
@@ -190,8 +192,27 @@ public class NotificationActivity extends AppCompatActivity {
                     actionsOnChangements();
                 }
             }
-        });
+        });*/
     }
+
+    /**QUESTION*/
+    public void onCheckboxClicked(View view) {
+        // Take the current view?
+        Log.d("Debago","onCheckboxClicked 1 "+ view);
+        ((CheckBox) view).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                Log.d("Debago","onCheckboxClicked 2");
+                if (isNotificationEnabled) {
+                    Log.d("Debago","onCheckboxClicked 3");
+                    actionsOnChangements();
+                }
+            }
+        });
+
+    }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void configureToolbar() {
@@ -199,7 +220,7 @@ public class NotificationActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         // Sets the Toolbar
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Notifications");
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.Notification));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -232,7 +253,7 @@ public class NotificationActivity extends AppCompatActivity {
     }
 
     public void toastMessage(){
-        Toast.makeText(NotificationActivity.this, "Modifications enregistrées", Toast.LENGTH_SHORT).show();
+        Toast.makeText(NotificationActivity.this, getString(R.string.modifications_registered), Toast.LENGTH_SHORT).show();
     }
 
     private void actionsOnChangements(){
@@ -270,12 +291,12 @@ public class NotificationActivity extends AppCompatActivity {
         isCheckBoxList.clear();
 
         // Check which checkbox was clicked
-        if (checkboxTechnology.isChecked()) isCheckBoxList.add("Technology");
-        if (checkboxScience.isChecked()) isCheckBoxList.add("Science");
-        if (checkboxSports.isChecked()) isCheckBoxList.add("Sports");
-        if (checkboxFood.isChecked()) isCheckBoxList.add("Food");
-        if (checkboxTravel.isChecked()) isCheckBoxList.add("Travel");
-        if (checkboxWorld.isChecked()) isCheckBoxList.add("World");
+        if (checkboxTechnology.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxTechnology));
+        if (checkboxScience.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxScience));
+        if (checkboxSports.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxSports));
+        if (checkboxFood.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxFood));
+        if (checkboxTravel.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxTravel));
+        if (checkboxWorld.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxWorld));
 
        return isCheckBoxList;
     }
@@ -290,12 +311,12 @@ public class NotificationActivity extends AppCompatActivity {
             }.getType());
 
         // Check checkbox if they are in the list
-        if (isCheckBoxList.contains("Technology")) checkboxTechnology.setChecked(true);
-        if (isCheckBoxList.contains("Science")) checkboxScience.setChecked(true);
-        if (isCheckBoxList.contains("Sports")) checkboxSports.setChecked(true);
-        if (isCheckBoxList.contains("Food")) checkboxFood.setChecked(true);
-        if (isCheckBoxList.contains("Travel")) checkboxTravel.setChecked(true);
-        if (isCheckBoxList.contains("World")) checkboxWorld.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxTechnology))) checkboxTechnology.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxScience))) checkboxScience.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxSports))) checkboxSports.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxFood))) checkboxFood.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxTravel))) checkboxTravel.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxWorld))) checkboxWorld.setChecked(true);
 
     }
 

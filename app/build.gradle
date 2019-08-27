@@ -6,8 +6,9 @@ jacoco {
     reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
+
 jacocoAndroidUnitTestReport{
-            csv.enabled true
+        csv.enabled true
         html.enabled true
         xml.enabled true
 
@@ -27,6 +28,9 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled true
         }
     }
     testOptions {

@@ -24,9 +24,7 @@ public class MyAsyncTaskLoaderMostPopular extends AsyncTaskLoader<List<Result>> 
     private String name;
     private int period;
 
-    /**
-     * Constructor
-     */
+    //Constructor
     public MyAsyncTaskLoaderMostPopular(Context context, String name, int period) {
 
         super(context);
@@ -66,9 +64,7 @@ public class MyAsyncTaskLoaderMostPopular extends AsyncTaskLoader<List<Result>> 
             .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build();
 
-    /**
-     * Retrofit Top Stories API
-     */
+    //Retrofit
     private Retrofit retrofit = new Retrofit.Builder() //Par défaut
             .baseUrl("https://api.nytimes.com/svc/mostpopular/v2/") //API location
             .addConverterFactory(GsonConverterFactory.create())

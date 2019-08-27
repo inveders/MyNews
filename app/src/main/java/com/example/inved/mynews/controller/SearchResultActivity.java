@@ -39,7 +39,7 @@ public class SearchResultActivity extends AppCompatActivity {
         mRecyclerViewSearchAdapter.setData(docArrayList);
         int number_result = intent.getIntExtra(SearchActivity.KEY_LIST_NUMBER, 0);
         if (number_result == 0) {
-            Toast.makeText(SearchResultActivity.this, "Il n'y a aucun résultat", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchResultActivity.this, getString(R.string.no_result), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -50,7 +50,7 @@ public class SearchResultActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         // Sets the Toolbar
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Search results");
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.titlePageSearchResult));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

@@ -7,6 +7,7 @@ import android.app.job.JobService;
 import android.content.Context;
 import android.os.Build;
 
+import com.example.inved.mynews.MainApplication;
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.controller.NotificationActivity;
 import com.example.inved.mynews.controller.NyTimesSearchAPI;
@@ -35,8 +36,7 @@ public class MyJobService extends JobService {
     int notificationId = 1;
     String mQuery;
     String mFilter;
-    String notificationTitle = "Nouveaux articles";
-
+    String notificationTitle = MainApplication.getResourses().getString(R.string.newArticlesJobService);
     String notificationText;
 
     public static final String CHANNEL_ID = "1";
@@ -55,9 +55,7 @@ public class MyJobService extends JobService {
 
     }
 
-    /**
-     * Retrofit Call
-     */
+    //Retrofit
     private void retrofitCall() {
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -115,7 +113,7 @@ public class MyJobService extends JobService {
         return false;
     }
 
-    /***Creation of the notification*/
+    //Creation of the notification
     private void createNotification() {
         NotificationCompat.Builder builderNotification = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_fiber_new_black_24dp)
@@ -148,14 +146,14 @@ public class MyJobService extends JobService {
 
         switch (articleCount) {
             case 0:
-                notifText = "Il n'y a pas de nouveaux articles depuis hier";
+                notifText = getString(R.string.no_new_articles);
                 break;
             case 1:
-                notifText = "Il y a 1 nouvel article depuis hier";
+                notifText = getString(R.string.one_new_article);
                 break;
 
             default:
-                notifText = "Il y a " + articleCount + " nouveaux articles depuis hier";
+                notifText = getString(R.string.new_articles_1) + articleCount + getString(R.string.new_articles_2);
         }
 
         return notifText;

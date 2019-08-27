@@ -22,7 +22,7 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
 
     private String name;
 
-    /**Constructor*/
+    //Constructor
     public MyAsyncTaskLoader(Context context,String name){
 
         super(context);
@@ -55,12 +55,12 @@ public class MyAsyncTaskLoader extends AsyncTaskLoader<List<Result>> {
         forceLoad();
     }
 
-    /**Retrofit A DEPLACER*/
+    //Retrofit
     private OkHttpClient client = new OkHttpClient.Builder()
             .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build();
 
-    /**Retrofit Top Stories API*/
+
     private Retrofit retrofit = new Retrofit.Builder() //Par défaut
             .baseUrl("https://api.nytimes.com/svc/topstories/v2/") //API location
             .addConverterFactory(GsonConverterFactory.create())

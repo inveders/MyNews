@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">MyNews</string>
-
+    <string name="titleApp">My News</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="SECTION">SECTION</string>
     <string name="SUBSECTION">SUBSECTION</string>
@@ -22,12 +22,20 @@
     <string name="CheckboxScience">Science</string>
     <string name="CheckboxFood">Food</string>
     <string name="CheckboxTravel">Travel</string>
+    <string name="dateFormatOne">dd/MM/yyyy</string>
+    <string name="dateFormatTwo">yyyyMMdd</string>
+    <string name="no_result">Il n\'y a aucun résultat</string>
+    <string name="titlePageSearchResult">Search results</string>
 
     <!--For Notification only-->
     <string name="channel_name">News articles</string>
     <string name="channel_description">Introduces you to the new articles of the MyNews application</string>
     <string name="notification_enable">Enable notifications (once per day)</string>
-
+    <string name="notification_actives">Notifications actives</string>
+    <string name="notification_not_actives">Désactivation des notifications</string>
+    <string name="enter_key_word">Rentrez au moins un mot clé</string>
+    <string name="check_checkbox">Cocher au moins une Checkbox</string>
+    <string name="modifications_registered">Modifications enregistrées</string>
 
     <!--For Menu item-->
     <string name="Search">Search</string>
@@ -35,4 +43,15 @@
 
     <!--For Toolbar-->
     <string name="TOOLBAR_TITLE">Toolbar Title</string>
+    <string name="search_in_progress">Recherche en cours</string>
+    <string name="no_checkbox_checked">Aucune Checkbox n\'est cochée</string>
+
+    <!--Job Service-->
+    <string name="newArticlesJobService">Nouveaux articles</string>
+    <string name="no_new_articles">Il n\'y a pas de nouveaux articles depuis hier</string>
+    <string name="one_new_article">Il y a 1 nouvel article depuis hier</string>
+    <string name="new_articles_2">nouveaux articles depuis hier</string>
+    <string name="new_articles_1">Il y a</string>
+
+
 </resources>

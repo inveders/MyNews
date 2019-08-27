@@ -64,9 +64,7 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
             .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build();
 
-    /**
-     * Retrofit Top Stories API
-     */
+    //Retrofit
     private Retrofit retrofit = new Retrofit.Builder() //Par défaut
             .baseUrl("https://api.nytimes.com/svc/search/v2/") //API location
             .addConverterFactory(GsonConverterFactory.create())

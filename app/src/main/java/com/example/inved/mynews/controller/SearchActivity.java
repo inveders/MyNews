@@ -5,13 +5,20 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.brain.SearchBrain;
@@ -26,20 +33,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
-
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<SearchResult>{
 
     public enum WhatDatePickerTyped { //C'est un type
         BEGIN,END
     }
 
+    String TAG_DATE_PICKER ="datePicker";
+    String TAG_BEGIN ="BEGIN";
     EditText editTextSearch;
     CheckBox checkboxTechnology,checkboxScience,checkboxSports,checkboxFood,checkboxTravel,checkboxWorld;
     Button buttonSearch;
@@ -105,13 +106,13 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
                     //Launch of the asynctaskLoaderSearch
                     startAsyncTaskLoaderSearch();
 
-                    Toast.makeText(SearchActivity.this, "Recherche en cours", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, getString(R.string.search_in_progress), Toast.LENGTH_SHORT).show();
                 }
                 else if (TextUtils.isEmpty(mQuery)) {
-                    editTextSearch.setError("Rentrez au moins un mot clé");
+                    editTextSearch.setError(getString(R.string.enter_key_word));
                 }
                 else {
-                    Toast.makeText(SearchActivity.this, "Aucune Checkbox n'est cochée", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, getString(R.string.no_checkbox_checked), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -124,7 +125,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         Toolbar toolbar = findViewById(R.id.toolbar);
         // Sets the Toolbar
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Search");
+        Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.Search));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -134,12 +135,12 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         isCheckBoxList.clear();
 
         // Check which checkbox was clicked
-        if (checkboxTechnology.isChecked()) isCheckBoxList.add("Technology");
-        if (checkboxScience.isChecked()) isCheckBoxList.add("Science");
-        if (checkboxSports.isChecked()) isCheckBoxList.add("Sports");
-        if (checkboxFood.isChecked()) isCheckBoxList.add("Food");
-        if (checkboxTravel.isChecked()) isCheckBoxList.add("Travel");
-        if (checkboxWorld.isChecked()) isCheckBoxList.add("World");
+        if (checkboxTechnology.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxTechnology));
+        if (checkboxScience.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxScience));
+        if (checkboxSports.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxSports));
+        if (checkboxFood.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxFood));
+        if (checkboxTravel.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxTravel));
+        if (checkboxWorld.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxWorld));
 
         return isCheckBoxList;
     }
@@ -154,14 +155,14 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     @NonNull
     @Override
     public Loader<SearchResult> onCreateLoader(int i, Bundle bundle) {
-        Log.d("DEBAGaa", "Données recherche, mQuery: "+mQuery+" mFilter: "+mFilter+" mBeginDate: "+mBeginDate+" mEnddate: "+mEndDate);
+      //  Log.d("DEBAGaa", "Données recherche, mQuery: "+mQuery+" mFilter: "+mFilter+" mBeginDate: "+mBeginDate+" mEnddate: "+mEndDate);
         return new MyAsyncTaskLoaderSearch(this,mQuery,mFilter,mBeginDate,mEndDate);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<SearchResult> loader, SearchResult data) {
         if(data!=null && data.response!=null && data.response.docs!=null){
-            Log.d("DEBAGaa", "Nombre de résultat "+data.response.docs.size());
+          //  Log.d("DEBAGaa", "Nombre de résultat "+data.response.docs.size());
             Intent intent = new Intent (this, SearchResultActivity.class);
             intent.putParcelableArrayListExtra(KEY_LIST_DOC,data.response.docs);
             intent.putExtra(KEY_LIST_NUMBER,data.response.docs.size());
@@ -180,20 +181,20 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY,whatDatePickerTyped);
         newFragment.setArguments(bundle);
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        newFragment.show(getSupportFragmentManager(), TAG_DATE_PICKER);
 
     }
 
     public void onDatePicked (LocalDateTime localDateTime, WhatDatePickerTyped whatDatePickerTyped){
 
-        DateTimeFormatter searchDisplayDateFormat = DateTimeFormat.forPattern("dd/MM/yyyy");
+        DateTimeFormatter searchDisplayDateFormat = DateTimeFormat.forPattern(getString(R.string.dateFormatOne));
         String stringDisplayDateFormat = localDateTime.toString(searchDisplayDateFormat);
 
-        DateTimeFormatter retrofitFormat = DateTimeFormat.forPattern("yyyyMMdd");
+        DateTimeFormatter retrofitFormat = DateTimeFormat.forPattern(getString(R.string.dateFormatTwo));
         String stringRetrofitDateFormat = localDateTime.toString(retrofitFormat);
 
 
-        if (whatDatePickerTyped.toString().equals("BEGIN")){
+        if (whatDatePickerTyped.toString().equals(TAG_BEGIN)){
             mDisplayBeginDate.setText(stringDisplayDateFormat);
             mBeginDate = stringRetrofitDateFormat;
         }

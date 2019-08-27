@@ -13,7 +13,7 @@
         android:text="@string/CheckboxTechnology"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-
+        android:onClick="onCheckboxClicked"
 
         />
 
@@ -25,7 +25,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_technology"
         android:layout_marginTop="10dp"
-
+        android:onClick="onCheckboxClicked"
 
         />
 
@@ -37,7 +37,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_science"
         android:layout_marginTop="10dp"
-
+        android:onClick="onCheckboxClicked"
 
         />
 
@@ -49,6 +49,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="200dp"
+        android:onClick="onCheckboxClicked"
         />
 
     <CheckBox
@@ -59,7 +60,7 @@
         app:layout_constraintLeft_toLeftOf="@id/checkBox_food"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_food"
         android:layout_marginTop="10dp"
-
+        android:onClick="onCheckboxClicked"
         />
 
     <CheckBox
@@ -70,7 +71,7 @@
         app:layout_constraintLeft_toLeftOf="@id/checkBox_food"
         app:layout_constraintTop_toBottomOf="@+id/checkBox_travel"
         android:layout_marginTop="10dp"
-
+        android:onClick="onCheckboxClicked"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
