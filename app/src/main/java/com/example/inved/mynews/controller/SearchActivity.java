@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -143,6 +145,18 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         if (checkboxWorld.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxWorld));
 
         return isCheckBoxList;
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Take the current view?
+        Log.d("Debago","onCheckboxClicked 1 "+ view);
+        ((CheckBox) view).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+
     }
 
     /**Start a new AsyncTaskLoaderSearch*/
