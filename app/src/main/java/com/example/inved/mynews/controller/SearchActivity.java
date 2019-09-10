@@ -163,7 +163,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     private void startAsyncTaskLoaderSearch(){
 
         //LoaderManager initialization
-        getSupportLoaderManager().initLoader(1,null,this);
+        getSupportLoaderManager().initLoader(1,null,this); /**REMPLACER AVEC LIVEVIEX ET LIVE DATA*/
     }
 
     @NonNull

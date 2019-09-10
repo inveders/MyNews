@@ -23,17 +23,45 @@ public class MemorizedArticlesDAO {
         Set<String> setString = preferences.getStringSet(KEY_URL_LIST, new HashSet<String>());
       //  Log.d("DEBAGO", "articles mémorisés dans la DAO " + setString);
 
-        return setString.contains(url);
+        if (setString != null) {
+            return setString.contains(url);
+        }
+
+        return false;
     }
 
     public void insertUrl(String url) {
         Set<String> setString = preferences.getStringSet(KEY_URL_LIST, new HashSet<String>());
-        setString.add(url);
-      //  Log.d("DEBAGO", "articles insérés dans la DAO " + setString);
+        if (setString != null) {
+            setString.add(url);
+        }
+        //  Log.d("DEBAGO", "articles insérés dans la DAO " + setString);
         SharedPreferences.Editor prefsEditor = preferences.edit();
         prefsEditor.clear(); //use to debug the shared preferences which didn't saved my preferences before
         prefsEditor.putStringSet(KEY_URL_LIST, setString);
-        prefsEditor.commit();
+        prefsEditor.apply();
+    }
+
+    public void deleteLast15Url() {
+        Set<String> setString = preferences.getStringSet(KEY_URL_LIST, new HashSet<String>());
+        if (setString != null) {
+
+            if(setString.size()>30){
+                
+            }
+
+
+
+           //00 setString.add(url);
+        }
+
+
+
+        //  Log.d("DEBAGO", "articles supprimés dans la DAO " + setString);
+        SharedPreferences.Editor prefsEditor = preferences.edit();
+        prefsEditor.clear();
+        prefsEditor.putStringSet(KEY_URL_LIST, setString);
+        prefsEditor.apply();
     }
 
 }

@@ -13,6 +13,8 @@ import com.example.inved.mynews.R;
 
 import org.joda.time.LocalDateTime;
 
+import java.util.Objects;
+
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     private SearchActivity myActivity ;
@@ -31,12 +33,15 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         LocalDateTime localDateTimeNow = LocalDateTime.now();
 
         // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(),R.style.MyDatePickerStyle, this, localDateTimeNow.getYear(), localDateTimeNow.getMonthOfYear()-1, localDateTimeNow.getDayOfMonth());
+        return new DatePickerDialog(myActivity,R.style.MyDatePickerStyle, this, localDateTimeNow.getYear(), localDateTimeNow.getMonthOfYear()-1, localDateTimeNow.getDayOfMonth());
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
-        myActivity.onDatePicked(new LocalDateTime(year,month+1,day,0,0), (SearchActivity.WhatDatePickerTyped) getArguments().getSerializable(SearchActivity.KEY));
+
+        if (getArguments() != null) {
+            myActivity.onDatePicked(new LocalDateTime(year,month+1,day,0,0), (SearchActivity.WhatDatePickerTyped) Objects.requireNonNull(getArguments().getSerializable(SearchActivity.KEY)));
+        }
 
     }
 

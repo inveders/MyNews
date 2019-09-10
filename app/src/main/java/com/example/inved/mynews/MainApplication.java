@@ -7,16 +7,19 @@ import net.danlew.android.joda.JodaTimeAndroid;
 
 public class MainApplication extends Application {
 
-    private static MainApplication mInstance;
+
     private static Resources res;
+    private static MainApplication mInstance;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        JodaTimeAndroid.init(this);
         mInstance = this;
+        JodaTimeAndroid.init(this);
+
         res = getResources();
     }
+
 
     public static MainApplication getInstance() {
         return mInstance;

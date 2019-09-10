@@ -34,8 +34,8 @@ import java.util.Set;
 public abstract class AbsNyTimesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Result>> {
 
 
-    public static final String KEY_ARG_SECTION = "KEY_ARG_SECTION";
-    public static final String KEY_ARG_PERIOD = "KEY_ARG_PERIOD";
+    static final String KEY_ARG_SECTION = "KEY_ARG_SECTION";
+    static final String KEY_ARG_PERIOD = "KEY_ARG_PERIOD";
     private MemorizedArticlesDAO mMemorizedArticlesDAO;
 
     /**
@@ -62,10 +62,9 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(),DividerItemDecoration.VERTICAL));
 
         //LoaderManager initialization
-        mLoaderManager = getLoaderManager();
+        mLoaderManager = getLoaderManager(); /**IL FAUDFRAIT UTILISER VIEWMODEL AND LIVE DATA*/
         if (mLoaderManager.getLoader(1) != null) {
             mLoaderManager.initLoader(1, null, this);
-
 
         }
 
@@ -107,11 +106,13 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
 
         if (isMostPopular()) {
            // Log.d("DEBAGO", "1a. argument asyntask most pop " + getArguments().getString(KEY_ARG_SECTION) + " et " + getArguments().getInt(KEY_ARG_PERIOD));
-            return new MyAsyncTaskLoaderMostPopular(getContext(), getArguments().getString(KEY_ARG_SECTION), getArguments().getInt(KEY_ARG_PERIOD));
+            return new MyAsyncTaskLoaderMostPopular(getContext(), getArguments() != null ? getArguments().getString(KEY_ARG_SECTION) : null, getArguments() != null ? getArguments().getInt(KEY_ARG_PERIOD) : 0);
+
+
 
         } else {
           //  Log.d("DEBAGO", "1b. argument asyntask general " + getArguments().getString(KEY_ARG_SECTION));
-            return new MyAsyncTaskLoader(getContext(), getArguments().getString(KEY_ARG_SECTION));
+            return new MyAsyncTaskLoader(getContext(), getArguments() != null ? getArguments().getString(KEY_ARG_SECTION) : null);
         }
 
     }

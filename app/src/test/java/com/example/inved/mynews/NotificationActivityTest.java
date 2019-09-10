@@ -11,15 +11,13 @@ import android.widget.EditText;
 import android.widget.Switch;
 
 import com.example.inved.mynews.brain.SearchBrain;
-import com.example.inved.mynews.controller.NotificationActivity;
-import com.example.inved.mynews.utils.MyJobService;
+import com.example.inved.mynews.notifications.NotificationActivity;
 
 import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentMatcher;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
@@ -29,9 +27,8 @@ import org.robolectric.annotation.Config;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.inved.mynews.controller.NotificationActivity.KEY_FILTER_BUNDLE;
-import static com.example.inved.mynews.controller.NotificationActivity.KEY_QUERY_BUNDLE;
-import static org.mockito.ArgumentMatchers.argThat;
+import static com.example.inved.mynews.notifications.NotificationActivity.KEY_FILTER_BUNDLE;
+import static com.example.inved.mynews.notifications.NotificationActivity.KEY_QUERY_BUNDLE;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = {27})
@@ -117,7 +114,7 @@ public class NotificationActivityTest {
 
         JobScheduler jobScheduler = (JobScheduler) RuntimeEnvironment.application.getSystemService(Context.JOB_SCHEDULER_SERVICE);
 
-        ComponentName serviceComponent = new ComponentName(RuntimeEnvironment.application, MyJobService.class);
+        ComponentName serviceComponent = new ComponentName(RuntimeEnvironment.application, NotificationService.class);
         JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
         builder.setRequiresCharging(false);
         builder.setPeriodic(60 * 24 * 1000, 60 * 24 * 1000);

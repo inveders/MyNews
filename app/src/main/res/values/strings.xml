@@ -51,7 +51,7 @@
     <string name="no_new_articles">Il n\'y a pas de nouveaux articles depuis hier</string>
     <string name="one_new_article">Il y a 1 nouvel article depuis hier</string>
     <string name="new_articles_2">nouveaux articles depuis hier</string>
-    <string name="new_articles_1">Il y a</string>
+    <string name="new_articles_1">Il y a %d nouveaux articles depuis hier</string>
 
 
 </resources>

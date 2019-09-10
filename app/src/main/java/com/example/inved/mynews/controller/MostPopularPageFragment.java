@@ -25,10 +25,9 @@ public class MostPopularPageFragment extends AbsNyTimesFragment {
     }
 
 
-
     @Override
     public String getTitle() {
-        return getArguments().getString(KEY_ARG_SECTION);
+        return getArguments() != null ? getArguments().getString(KEY_ARG_SECTION) : null;
     }
 
     @Override

@@ -1,12 +1,9 @@
 package com.example.inved.mynews;
 
 import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.example.inved.mynews.controller.MainActivity;
-import com.example.inved.mynews.controller.NotificationActivity;
 import com.example.inved.mynews.controller.SearchActivity;
 
 import org.junit.Before;
@@ -16,7 +13,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowActivity;
 
 import static org.junit.Assert.assertEquals;
 import static org.robolectric.Shadows.shadowOf;

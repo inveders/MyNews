@@ -1,13 +1,10 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.notifications;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -19,23 +16,27 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.work.Data;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.brain.SearchBrain;
-import com.example.inved.mynews.utils.MyJobService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import java.util.concurrent.TimeUnit;
 
 public class NotificationActivity extends AppCompatActivity {
 
+    private static final String TAG = "AlarmReceiver";
     EditText editTextSearch;
     CheckBox checkboxTechnology, checkboxScience, checkboxSports, checkboxFood, checkboxTravel, checkboxWorld;
     Switch notificationSwitchEnable;
@@ -46,6 +47,9 @@ public class NotificationActivity extends AppCompatActivity {
     SearchBrain searchBrain;
     List<String> isCheckBoxList = new ArrayList<>();
     Gson gson = new Gson();
+
+    AlarmManager alarmManager;
+
 
     public static final String KEY_QUERY_BUNDLE = "query_bundle";
     public static final String KEY_FILTER_BUNDLE = "filter_bundle";
@@ -59,6 +63,9 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         this.configureToolbar();
+        this.configureAlarmManager();
+
+
 
         editTextSearch = findViewById(R.id.text_input_layout);
         checkboxTechnology = findViewById(R.id.checkBox_technology);
@@ -98,7 +105,7 @@ public class NotificationActivity extends AppCompatActivity {
                         preferences.edit().putBoolean(KEY_NOTIFICATION_ENABLE, false).apply();
                         preferences.edit().putString(KEY_QUERY, mQueryNotif).apply();
                         preferences.edit().putString(KEY_CHECKBOX_LIST, gson.toJson(isCheckBoxList)).apply();
-                        notificationActionIfIsNotEnabled();
+                        cancelJob();
                     }
 
                 } else if (TextUtils.isEmpty(mQueryNotif)) {
@@ -135,6 +142,7 @@ public class NotificationActivity extends AppCompatActivity {
                 } else {
                     queryToEditTextSearch();
                     sharedPreferencesActions();
+                    //launchJob();
                 }
 
             }
@@ -195,16 +203,22 @@ public class NotificationActivity extends AppCompatActivity {
         });*/
     }
 
-    /**QUESTION*/
+    private void configureAlarmManager() {
+        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+      //  Intent alarmIntent = new Intent(this, AlarmReceiver.class);
+       // pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+
     public void onCheckboxClicked(View view) {
         // Take the current view?
-        Log.d("Debago","onCheckboxClicked 1 "+ view);
+
         ((CheckBox) view).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                Log.d("Debago","onCheckboxClicked 2");
+
                 if (isNotificationEnabled) {
-                    Log.d("Debago","onCheckboxClicked 3");
+
                     actionsOnChangements();
                 }
             }
@@ -275,13 +289,33 @@ public class NotificationActivity extends AppCompatActivity {
             mFilterNotif = searchBrain.getLucene(isCheckBoxList);
         }
 
+        launchJob();
 
-        scheduleJob(this);
 
     }
 
-    public void notificationActionIfIsNotEnabled() {
-        stopJobScheduler(this);
+    public void launchJob(){
+
+        Data data = new Data.Builder()
+                .putString(MyWorkerNotification.EXTRA_QUERY, mQueryNotif)
+                .putString(MyWorkerNotification.EXTRA_FILTER, mFilterNotif)
+                .build();
+
+
+        Log.d(TAG, "HERE launch job");
+        PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
+                MyWorkerNotification.class, 15,TimeUnit.MINUTES)
+                .setInputData(data)
+                .addTag("periodic_work")
+                .build();
+        WorkManager.getInstance().enqueue(periodicWorkRequest);
+    }
+
+    public void cancelJob() {
+
+        Log.d(TAG, "HERE cancel job");
+        WorkManager.getInstance().cancelAllWorkByTag("periodic_work");
+
 
     }
 
@@ -320,46 +354,5 @@ public class NotificationActivity extends AppCompatActivity {
 
     }
 
-
-    //Start service (job) from the JobScheduler
-    public void scheduleJob(Context context) {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            long flexMillis = 60 * 24 * 1000; // le temps entre chaque réquete (toutes les 24 heures)
-
-            ComponentName serviceComponent = new ComponentName(context, MyJobService.class);
-            JobInfo.Builder builder = new JobInfo.Builder(0, serviceComponent);
-            builder.setRequiresCharging(false);
-            builder.setPeriodic(flexMillis, flexMillis);
-            builder.setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY);
-            PersistableBundle bundlePersistable = new PersistableBundle();
-            bundlePersistable.putString(KEY_QUERY_BUNDLE, mQueryNotif);
-            bundlePersistable.putString(KEY_FILTER_BUNDLE, mFilterNotif);
-            builder.setExtras(bundlePersistable);
-
-            firstScheduleJob(builder.build());
-
-        }
-
-    }
-
-
-    // Stop service (job) from the JobScheduler
-    private static void stopJobScheduler(Context context) {
-        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
-        assert jobScheduler != null;
-        jobScheduler.cancel(0);
-    }
-
-    public JobScheduler getJobScheduler(Context context){
-        return (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
-    }
-
-    public void firstScheduleJob(JobInfo jobInfo){
-
-        getJobScheduler(this).schedule(jobInfo);
-
-    }
 
 }

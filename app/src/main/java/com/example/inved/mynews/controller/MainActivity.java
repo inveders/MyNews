@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.notifications.NotificationActivity;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.RequiresApi;
