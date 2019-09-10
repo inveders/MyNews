@@ -2,7 +2,7 @@ package com.example.inved.mynews.utils;
 
 import android.content.Context;
 
-import com.example.inved.mynews.controller.NyTimesSearchAPI;
+import com.example.inved.mynews.retrofit.NyTimesSearchAPI;
 import com.example.inved.mynews.searchapi.SearchResult;
 
 import java.io.IOException;
@@ -31,7 +31,6 @@ public class MyAsyncTaskLoaderSearch extends AsyncTaskLoader<SearchResult> {
         this.filter = filter;
         this.beginDate = beginDate;
         this.endDate = endDate;
-
 
     }
 

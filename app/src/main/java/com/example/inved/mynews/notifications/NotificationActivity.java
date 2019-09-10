@@ -1,7 +1,5 @@
 package com.example.inved.mynews.notifications;
 
-import android.app.AlarmManager;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -48,9 +45,6 @@ public class NotificationActivity extends AppCompatActivity {
     List<String> isCheckBoxList = new ArrayList<>();
     Gson gson = new Gson();
 
-    AlarmManager alarmManager;
-
-
     public static final String KEY_QUERY_BUNDLE = "query_bundle";
     public static final String KEY_FILTER_BUNDLE = "filter_bundle";
     public static final String KEY_QUERY = "mQuery";
@@ -63,9 +57,6 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         this.configureToolbar();
-        this.configureAlarmManager();
-
-
 
         editTextSearch = findViewById(R.id.text_input_layout);
         checkboxTechnology = findViewById(R.id.checkBox_technology);
@@ -80,43 +71,40 @@ public class NotificationActivity extends AppCompatActivity {
 
         isNotificationEnableInMemory();
 
-        notificationSwitchEnable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean bChecked) {
+        notificationSwitchEnable.setOnCheckedChangeListener((compoundButton, bChecked) -> {
 
-                fillCheckboxList();
-                //Convert an EditText in String
-                queryToEditTextSearch();
+            fillCheckboxList();
+            //Convert an EditText in String
+            queryToEditTextSearch();
 
-                if (!isCheckBoxList.isEmpty() && !TextUtils.isEmpty(mQueryNotif)) {
+            if (!isCheckBoxList.isEmpty() && !TextUtils.isEmpty(mQueryNotif)) {
 
-                    searchBrain = new SearchBrain();
-                    mFilterNotif = searchBrain.getLucene(isCheckBoxList);
+                searchBrain = new SearchBrain();
+                mFilterNotif = searchBrain.getLucene(isCheckBoxList);
 
 
-                    if (bChecked) {
-                        Toast.makeText(NotificationActivity.this, getString(R.string.notification_actives), Toast.LENGTH_SHORT).show();
-                        sharedPreferencesActions();
-                        checkCheckboxIfListContainsTheirName();
-                        notificationActionIfEnabled();
-                    } else {
-                        Toast.makeText(NotificationActivity.this, getString(R.string.notification_not_actives), Toast.LENGTH_SHORT).show();
-                        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-                        preferences.edit().putBoolean(KEY_NOTIFICATION_ENABLE, false).apply();
-                        preferences.edit().putString(KEY_QUERY, mQueryNotif).apply();
-                        preferences.edit().putString(KEY_CHECKBOX_LIST, gson.toJson(isCheckBoxList)).apply();
-                        cancelJob();
-                    }
-
-                } else if (TextUtils.isEmpty(mQueryNotif)) {
-                    editTextSearch.setError(getString(R.string.enter_key_word));
-                    notificationSwitchEnable.setChecked(false);
-
+                if (bChecked) {
+                    Toast.makeText(NotificationActivity.this, getString(R.string.notification_actives), Toast.LENGTH_SHORT).show();
+                    sharedPreferencesActions();
+                    checkCheckboxIfListContainsTheirName();
+                    notificationActionIfEnabled();
                 } else {
-                    Toast.makeText(NotificationActivity.this, getString(R.string.check_checkbox), Toast.LENGTH_SHORT).show();
-                    notificationSwitchEnable.setChecked(false);
-
+                    Toast.makeText(NotificationActivity.this, getString(R.string.notification_not_actives), Toast.LENGTH_SHORT).show();
+                    SharedPreferences preferences = getPreferences(MODE_PRIVATE);
+                    preferences.edit().putBoolean(KEY_NOTIFICATION_ENABLE, false).apply();
+                    preferences.edit().putString(KEY_QUERY, mQueryNotif).apply();
+                    preferences.edit().putString(KEY_CHECKBOX_LIST, gson.toJson(isCheckBoxList)).apply();
+                    cancelJob();
                 }
+
+            } else if (TextUtils.isEmpty(mQueryNotif)) {
+                editTextSearch.setError(getString(R.string.enter_key_word));
+                notificationSwitchEnable.setChecked(false);
+
+            } else {
+                Toast.makeText(NotificationActivity.this, getString(R.string.check_checkbox), Toast.LENGTH_SHORT).show();
+                notificationSwitchEnable.setChecked(false);
+
             }
         });
 
@@ -148,84 +136,20 @@ public class NotificationActivity extends AppCompatActivity {
             }
         });
 
-     /*   checkboxTechnology.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (isNotificationEnabled) {
-                    actionsOnChangements();
-                }
-            }
-        });
-
-        checkboxFood.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (isNotificationEnabled) {
-                    actionsOnChangements();
-                }
-            }
-        });
-
-        checkboxScience.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (isNotificationEnabled) {
-                    actionsOnChangements();
-                }
-            }
-        });
-
-        checkboxSports.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (isNotificationEnabled) {
-                    actionsOnChangements();
-                }
-            }
-        });
-
-        checkboxTravel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (isNotificationEnabled) {
-                    actionsOnChangements();
-                }
-            }
-        });
-
-        checkboxWorld.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (isNotificationEnabled) {
-                    actionsOnChangements();
-                }
-            }
-        });*/
     }
-
-    private void configureAlarmManager() {
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-      //  Intent alarmIntent = new Intent(this, AlarmReceiver.class);
-       // pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
 
     public void onCheckboxClicked(View view) {
         // Take the current view?
 
-        ((CheckBox) view).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        ((CheckBox) view).setOnCheckedChangeListener((compoundButton, b) -> {
 
-                if (isNotificationEnabled) {
+            if (isNotificationEnabled) {
 
-                    actionsOnChangements();
-                }
+                actionsOnChangements();
             }
         });
 
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

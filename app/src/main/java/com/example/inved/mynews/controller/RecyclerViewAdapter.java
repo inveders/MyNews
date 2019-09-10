@@ -9,8 +9,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.inved.mynews.MemorizedArticlesDAO;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.inved.mynews.MainApplication;
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.database.MemorizedArticles;
+import com.example.inved.mynews.database.MemorizedArticlesDatabase;
 import com.example.inved.mynews.topstoriesapi.Result;
 import com.squareup.picasso.Picasso;
 
@@ -21,21 +28,15 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Set;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.browser.customtabs.CustomTabsIntent;
-import androidx.recyclerview.widget.RecyclerView;
-
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
 
     @Nullable
     private List<Result> mData;
-    private MemorizedArticlesDAO memorizedArticlesDAO;
     private Set<String> mUrlMemorized;
 
-    RecyclerViewAdapter() {
+    public RecyclerViewAdapter() {
 
     }
 
@@ -71,9 +72,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
                 openChromeCustomTabs(view.getContext(), mData.get(position).url);
-                memorizedArticlesDAO = new MemorizedArticlesDAO(view.getContext());
-                memorizedArticlesDAO.insertUrl(mData.get(position).url);
+            /*    memorizedArticlesDAO = new MemorizedArticlesDAO(view.getContext());
+                memorizedArticlesDAO.insertUrl(mData.get(position).url);*/
+                MemorizedArticlesDatabase.getInstance(MainApplication.getInstance().getApplicationContext()).memorizedArticlesDao().insertNewArticles(new MemorizedArticles(mData.get(position).url));
+                verifyDaoSize();
+            }
 
+            private void verifyDaoSize() {
+                if(MemorizedArticlesDatabase.getInstance(MainApplication.getInstance().getApplicationContext()).memorizedArticlesDao().getRowCount()>30){
+                    for (int i = 0; i <15 ; i++) {
+                        MemorizedArticlesDatabase.getInstance(MainApplication.getInstance().getApplicationContext()).memorizedArticlesDao().deleteMemorizedArticles(new MemorizedArticles(mData.get(i).url));
+                    }
+                }
             }
         });
 
@@ -91,6 +101,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
+
     @Override
     public int getItemCount() {
         if (mData == null) return 0;
@@ -98,7 +109,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mData.size();
     }
 
-    public void setData(List<Result> data) {
+    void setData(List<Result> data) {
         mData = data;
 
         //Fill the Recycler View
@@ -106,7 +117,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
-    public void setArticleMemorized(Set<String> urlMemorized) {
+    void setArticleMemorized(Set<String> urlMemorized) {
         mUrlMemorized = urlMemorized;
 
     }

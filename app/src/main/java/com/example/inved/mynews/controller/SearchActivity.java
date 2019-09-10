@@ -11,19 +11,24 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Observer;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.brain.SearchBrain;
+import com.example.inved.mynews.models.ResultModel;
+import com.example.inved.mynews.searchapi.Doc;
 import com.example.inved.mynews.searchapi.SearchResult;
 import com.example.inved.mynews.utils.MyAsyncTaskLoaderSearch;
 
@@ -35,28 +40,50 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<SearchResult>{
+import butterknife.BindView;
+
+public class SearchActivity extends AppCompatActivity {
 
     public enum WhatDatePickerTyped { //C'est un type
         BEGIN,END
     }
 
+    @BindView(R.id.text_input_layout)
+    EditText editTextSearch;
+    @BindView(R.id.button_Search)
+    Button buttonSearch;
+    @BindView(R.id.checkBox_technology)
+    CheckBox checkboxTechnology;
+    @BindView(R.id.checkBox_science)
+    CheckBox checkboxScience;
+    @BindView(R.id.checkBox_sports)
+    CheckBox checkboxSports;
+    @BindView(R.id.checkBox_food)
+    CheckBox checkboxFood;
+    @BindView(R.id.checkBox_travel)
+    CheckBox checkboxTravel;
+    @BindView(R.id.checkBox_world)
+    CheckBox checkboxWorld;
+    @BindView(R.id.begin_date_select)
+    TextView mDisplayBeginDate;
+    @BindView(R.id.end_date_select)
+    TextView mDisplayEndDate;
+
+
     String TAG_DATE_PICKER ="datePicker";
     String TAG_BEGIN ="BEGIN";
-    EditText editTextSearch;
-    CheckBox checkboxTechnology,checkboxScience,checkboxSports,checkboxFood,checkboxTravel,checkboxWorld;
-    Button buttonSearch;
+
     SearchBrain searchBrain;
     String mQuery;
     String mFilter;
     String mBeginDate;
     String mEndDate;
     List<String> isCheckBoxList= new ArrayList<>();
-    TextView mDisplayBeginDate;
-    TextView mDisplayEndDate;
+    ResultModel resultModel;
+
+
     public static final String KEY="KEY_DIALOG" ;
-    public static final String KEY_LIST_DOC="KEY_LIST_DOC" ;
-    public static final String KEY_LIST_NUMBER="KEY_LIST_NUMBER";
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -65,58 +92,33 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         setContentView(R.layout.activity_search);
         this.configureToolbar();
 
-        editTextSearch = findViewById(R.id.text_input_layout);
-        checkboxTechnology = findViewById(R.id.checkBox_technology);
-        checkboxScience = findViewById(R.id.checkBox_science);
-        checkboxSports = findViewById(R.id.checkBox_sports);
-        checkboxFood = findViewById(R.id.checkBox_food);
-        checkboxTravel = findViewById(R.id.checkBox_travel);
-        checkboxWorld = findViewById(R.id.checkBox_world);
-        buttonSearch = findViewById(R.id.button_Search);
-        mDisplayBeginDate = findViewById(R.id.begin_date_select);
-        mDisplayEndDate = findViewById(R.id.end_date_select);
+        mDisplayEndDate.setOnClickListener(view -> showDatePickerDialog(WhatDatePickerTyped.END));
 
-        mDisplayEndDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDatePickerDialog(WhatDatePickerTyped.END);
-            }
-        });
-
-        mDisplayBeginDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDatePickerDialog(WhatDatePickerTyped.BEGIN);
-            }
-        });
+        mDisplayBeginDate.setOnClickListener(view -> showDatePickerDialog(WhatDatePickerTyped.BEGIN));
 
         //In this part of the code, we show a Toast when we click on the activity_search button
-        buttonSearch.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
+        buttonSearch.setOnClickListener(view -> {
 
-                isCheckBoxList= fillCheckboxList();
-                //Convert an EditText in String
-                mQuery = editTextSearch.getText().toString();
+            isCheckBoxList= fillCheckboxList();
+            //Convert an EditText in String
+            mQuery = editTextSearch.getText().toString();
 
 
-                if(!isCheckBoxList.isEmpty() && !TextUtils.isEmpty(mQuery)) {
+            if(!isCheckBoxList.isEmpty() && !TextUtils.isEmpty(mQuery)) {
 
-                    searchBrain = new SearchBrain();
-                    mFilter = searchBrain.getLucene(isCheckBoxList);
+                searchBrain = new SearchBrain();
+                mFilter = searchBrain.getLucene(isCheckBoxList);
 
-                    //Launch of the asynctaskLoaderSearch
-                    startAsyncTaskLoaderSearch();
-
-                    Toast.makeText(SearchActivity.this, getString(R.string.search_in_progress), Toast.LENGTH_SHORT).show();
-                }
-                else if (TextUtils.isEmpty(mQuery)) {
-                    editTextSearch.setError(getString(R.string.enter_key_word));
-                }
-                else {
-                    Toast.makeText(SearchActivity.this, getString(R.string.no_checkbox_checked), Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(SearchActivity.this, getString(R.string.search_in_progress), Toast.LENGTH_SHORT).show();
             }
+            else if (TextUtils.isEmpty(mQuery)) {
+                editTextSearch.setError(getString(R.string.enter_key_word));
+            }
+            else {
+                Toast.makeText(SearchActivity.this, getString(R.string.no_checkbox_checked), Toast.LENGTH_SHORT).show();
+            }
+
+            liveDataObservers(mQuery,mFilter,mBeginDate,mEndDate);
         });
 
     }
@@ -148,47 +150,29 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     }
 
     public void onCheckboxClicked(View view) {
-        // Take the current view?
-        Log.d("Debago","onCheckboxClicked 1 "+ view);
-        ((CheckBox) view).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-            }
+        ((CheckBox) view).setOnCheckedChangeListener((compoundButton, b) -> {
+
         });
 
     }
 
-    /**Start a new AsyncTaskLoaderSearch*/
-    private void startAsyncTaskLoaderSearch(){
+    private void liveDataObservers(String mQuery, String mFilter, String mBeginDate,String mEndDate) {
 
-        //LoaderManager initialization
-        getSupportLoaderManager().initLoader(1,null,this); /**REMPLACER AVEC LIVEVIEX ET LIVE DATA*/
+        resultModel.getAllSearchResults(mQuery,mFilter,mBeginDate,mEndDate).observe(this, new Observer<List<Doc>>() {
+            @Override
+            public void onChanged(@Nullable List<Doc> searchResults) {
+
+                //Update the data to adapter
+                mRecyclerViewSearchAdapter.setData(searchResults);
+                //Update to the UI with latest data
+                mRecyclerViewSearchAdapter.notifyDataSetChanged();
+
+                Log.d("AbsTimeFragment:", "Data has updated");
+            }
+        });
     }
 
-    @NonNull
-    @Override
-    public Loader<SearchResult> onCreateLoader(int i, Bundle bundle) {
-      //  Log.d("DEBAGaa", "Données recherche, mQuery: "+mQuery+" mFilter: "+mFilter+" mBeginDate: "+mBeginDate+" mEnddate: "+mEndDate);
-        return new MyAsyncTaskLoaderSearch(this,mQuery,mFilter,mBeginDate,mEndDate);
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<SearchResult> loader, SearchResult data) {
-        if(data!=null && data.response!=null && data.response.docs!=null){
-          //  Log.d("DEBAGaa", "Nombre de résultat "+data.response.docs.size());
-            Intent intent = new Intent (this, SearchResultActivity.class);
-            intent.putParcelableArrayListExtra(KEY_LIST_DOC,data.response.docs);
-            intent.putExtra(KEY_LIST_NUMBER,data.response.docs.size());
-            startActivity(intent);
-        }
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<SearchResult> loader) {
-
-    }
 
     public void showDatePickerDialog(WhatDatePickerTyped whatDatePickerTyped) {
         DialogFragment newFragment = new DatePickerFragment();

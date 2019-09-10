@@ -2,7 +2,7 @@ package com.example.inved.mynews.utils;
 
 import android.content.Context;
 
-import com.example.inved.mynews.controller.NyTimesMostPopularAPI;
+import com.example.inved.mynews.retrofit.NyTimesMostPopularAPI;
 import com.example.inved.mynews.topstoriesapi.NewYorkTimesAPI;
 import com.example.inved.mynews.topstoriesapi.Result;
 

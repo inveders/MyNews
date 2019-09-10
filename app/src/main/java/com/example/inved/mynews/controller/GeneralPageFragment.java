@@ -2,6 +2,14 @@ package com.example.inved.mynews.controller;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.content.Loader;
+
+import com.example.inved.mynews.topstoriesapi.Result;
+
+import java.util.List;
+
 public class GeneralPageFragment extends AbsNyTimesFragment {
 
 
@@ -25,6 +33,22 @@ public class GeneralPageFragment extends AbsNyTimesFragment {
     public boolean isMostPopular() {
 
         return false;
+    }
+
+    @NonNull
+    @Override
+    public Loader<List<Result>> onCreateLoader(int id, @Nullable Bundle args) {
+        return null;
+    }
+
+    @Override
+    public void onLoadFinished(@NonNull Loader<List<Result>> loader, List<Result> data) {
+
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
+
     }
 }
 

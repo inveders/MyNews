@@ -2,29 +2,24 @@ package com.example.inved.mynews.controller;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.inved.mynews.MemorizedArticlesDAO;
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.models.ResultModel;
 import com.example.inved.mynews.topstoriesapi.Result;
-import com.example.inved.mynews.utils.MyAsyncTaskLoader;
-import com.example.inved.mynews.utils.MyAsyncTaskLoaderMostPopular;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,20 +28,13 @@ import java.util.Set;
 
 public abstract class AbsNyTimesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Result>> {
 
-
     static final String KEY_ARG_SECTION = "KEY_ARG_SECTION";
     static final String KEY_ARG_PERIOD = "KEY_ARG_PERIOD";
-    private MemorizedArticlesDAO mMemorizedArticlesDAO;
 
-    /**
-     * Create a static task id that will identify our loader
-     */
-    private LoaderManager mLoaderManager;
     private RecyclerViewAdapter mRecyclerViewAdapter;
-
+    private ResultModel resultModel;
 
     public static final String API_KEY = "69b33155fef846e29c9753f95e628397";
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,83 +49,64 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mRecyclerView.getContext(),DividerItemDecoration.VERTICAL));
 
-        //LoaderManager initialization
-        mLoaderManager = getLoaderManager(); /**IL FAUDFRAIT UTILISER VIEWMODEL AND LIVE DATA*/
-        if (mLoaderManager.getLoader(1) != null) {
-            mLoaderManager.initLoader(1, null, this);
-
-        }
-
-        mMemorizedArticlesDAO = new MemorizedArticlesDAO(Objects.requireNonNull(getActivity()));
-
-        //Launch AsyncTaskLoader
-        this.startAsyncTaskLoader();
-        this.resumeAsyncTaskLoaderIfPossible();
+        //Assign the value to declared resultModel variable
+        resultModel = ViewModelProviders.of(this).get(ResultModel.class);
+        this.liveDataObservers();
 
         return v;
     }
+
+
 
     public abstract String getTitle();
 
     public abstract boolean isMostPopular();
 
 
-    /**
-     * Start a new AsyncTaskLoader
-     */
-    private void startAsyncTaskLoader() {
-
-        mLoaderManager.initLoader(1, null, this);
-    }
-
-    /**
-     * Resume previous AsyncTaskLoader if still running
-     */
-    private void resumeAsyncTaskLoaderIfPossible() {
-
-    }
-
-    /**
-     * Implements callback methods of the Loader Manager
-     */
-    @NonNull
-    @Override
-    public Loader<List<Result>> onCreateLoader(int i, @Nullable Bundle bundle) {
-
-        if (isMostPopular()) {
-           // Log.d("DEBAGO", "1a. argument asyntask most pop " + getArguments().getString(KEY_ARG_SECTION) + " et " + getArguments().getInt(KEY_ARG_PERIOD));
-            return new MyAsyncTaskLoaderMostPopular(getContext(), getArguments() != null ? getArguments().getString(KEY_ARG_SECTION) : null, getArguments() != null ? getArguments().getInt(KEY_ARG_PERIOD) : 0);
+    private void liveDataObservers() {
 
 
+        if(isMostPopular()){
+            resultModel.getAllResultsMostPopular(getTitle()).observe(this, results -> {
 
-        } else {
-          //  Log.d("DEBAGO", "1b. argument asyntask general " + getArguments().getString(KEY_ARG_SECTION));
-            return new MyAsyncTaskLoader(getContext(), getArguments() != null ? getArguments().getString(KEY_ARG_SECTION) : null);
-        }
+                //Update the data to adapter
+                mRecyclerViewAdapter.setData(results);
+                //Update to the UI with latest data
+                mRecyclerViewAdapter.notifyDataSetChanged();
 
-    }
+                Log.d("Debago", "AbsTimeFragment: getTitle "+getTitle());
+            });
+        }else {
+            resultModel.getAllResultsTopStories(getTitle()).observe(this, results -> {
 
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<Result>> loader, List<Result> results) {
+          /*      Set<String> listCommonUrl = new HashSet<>();
+                listCommonUrl.clear();
+                //  Log.d("DEBAGO", "2. result list " + results);
+                if (results != null) {
+                    for (int i = 0; i < results.size(); i++) {
+                        if (!MemorizedArticlesDatabase.getInstance(getContext()).memorizedArticlesDao().getMemorizedArticles(results.get(i).url).isEmpty()) {
+                            listCommonUrl.add(results.get(i).url);
+                        }else{
+                            Log.d("DEBAGO", "article "+i+" n'est pas dans la bdd ");
+                        }
 
-        Set<String> listCommonUrl = new HashSet<>();
-      //  Log.d("DEBAGO", "2. result list " + results);
-        if (results != null) {
-            for (int i = 0; i < results.size(); i++) {
-                if (mMemorizedArticlesDAO.findMemorizedArticle(results.get(i).url)) {
-                    listCommonUrl.add(results.get(i).url);
+                    }
                 }
+                //Set Memorized articles in Recycler view to change their color
+                mRecyclerViewAdapter.setArticleMemorized(listCommonUrl);*/
+                //Update the data to adapter
+                mRecyclerViewAdapter.setData(results);
+                //Update to the UI with latest data
+                mRecyclerViewAdapter.notifyDataSetChanged();
 
-            }
+                Log.d("Debago", "AbsTimeFragment: getTitle "+getTitle());
+            });
         }
-        mRecyclerViewAdapter.setArticleMemorized(listCommonUrl);
-        mRecyclerViewAdapter.setData(results);
-    }
 
-    @Override
-    public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
 
     }
+
+
 
 
 }

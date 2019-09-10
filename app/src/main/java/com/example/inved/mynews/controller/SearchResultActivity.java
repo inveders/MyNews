@@ -3,9 +3,11 @@ package com.example.inved.mynews.controller;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.models.ResultModel;
 import com.example.inved.mynews.searchapi.Doc;
 
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class SearchResultActivity extends AppCompatActivity {
 
     RecyclerViewSearchAdapter mRecyclerViewSearchAdapter;
+    private ResultModel resultModel;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -34,6 +38,7 @@ public class SearchResultActivity extends AppCompatActivity {
         recyclerView.setAdapter(mRecyclerViewSearchAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
+
         Intent intent = getIntent();
         ArrayList<Doc> docArrayList = intent.getParcelableArrayListExtra(SearchActivity.KEY_LIST_DOC);
         mRecyclerViewSearchAdapter.setData(docArrayList);
@@ -41,8 +46,13 @@ public class SearchResultActivity extends AppCompatActivity {
         if (number_result == 0) {
             Toast.makeText(SearchResultActivity.this, getString(R.string.no_result), Toast.LENGTH_SHORT).show();
         }
+        //Assign the value to declared resultModel variable
+        resultModel = ViewModelProviders.of(this).get(ResultModel.class);
+      //  this.liveDataObservers();
 
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void configureToolbar() {

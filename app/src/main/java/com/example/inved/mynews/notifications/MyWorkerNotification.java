@@ -15,7 +15,7 @@ import androidx.work.WorkerParameters;
 
 import com.example.inved.mynews.MainApplication;
 import com.example.inved.mynews.R;
-import com.example.inved.mynews.controller.NyTimesSearchAPI;
+import com.example.inved.mynews.retrofit.NyTimesSearchAPI;
 import com.example.inved.mynews.searchapi.SearchResult;
 
 import org.joda.time.DateTime;

@@ -1,4 +1,4 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.retrofit;
 
 import com.example.inved.mynews.searchapi.SearchResult;
 

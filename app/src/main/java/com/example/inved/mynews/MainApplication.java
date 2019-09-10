@@ -3,6 +3,8 @@ package com.example.inved.mynews;
 import android.app.Application;
 import android.content.res.Resources;
 
+import com.facebook.stetho.Stetho;
+
 import net.danlew.android.joda.JodaTimeAndroid;
 
 public class MainApplication extends Application {
@@ -16,7 +18,7 @@ public class MainApplication extends Application {
         super.onCreate();
         mInstance = this;
         JodaTimeAndroid.init(this);
-
+        Stetho.initializeWithDefaults(this);
         res = getResources();
     }
 
