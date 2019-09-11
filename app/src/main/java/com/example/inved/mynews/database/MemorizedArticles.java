@@ -1,28 +1,36 @@
 package com.example.inved.mynews.database;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity (tableName = "MemorizedArticles")
+@Entity(tableName = "memorized_articles",
+        indices = {@Index(value = "url", unique = true)})
 public class MemorizedArticles {
 
-    public MemorizedArticles(@NonNull String url) {
-        this.url = url;
-    }
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "did")
+    public int id;
 
+    @ColumnInfo(name = "url")
     @NonNull
-    @PrimaryKey
-    private String url;
+    public String url;
 
     @NonNull
     public String getUrl() {
         return url;
     }
 
-    @NonNull
-    public void setUrl(String url) {
+
+    public void setUrl(@NonNull String url) {
         this.url = url;
     }
+
+    public MemorizedArticles(@NonNull String url) {
+        this.url = url;
+    }
+
 
 }
