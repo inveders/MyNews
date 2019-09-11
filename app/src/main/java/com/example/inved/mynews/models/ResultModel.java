@@ -12,6 +12,7 @@ import com.example.inved.mynews.retrofit.RepositoryTopStories;
 import com.example.inved.mynews.searchapi.Doc;
 import com.example.inved.mynews.topstoriesapi.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultModel extends AndroidViewModel {
@@ -24,7 +25,7 @@ public class ResultModel extends AndroidViewModel {
     public ResultModel(@NonNull Application application) {
         super(application);
         repositoryTopStories = new RepositoryTopStories();
-        repositoryMostPopular = new RepositoryMostPopular(application);
+        repositoryMostPopular = new RepositoryMostPopular();
         repositorySearch = new RepositorySearch();
     }
 
@@ -38,7 +39,7 @@ public class ResultModel extends AndroidViewModel {
         return repositoryMostPopular.getMutableLiveData(name);
     }
 
-    public LiveData<List<Doc>> getAllSearchResults(String query, String filter, String beginDate, String endDate) {
+    public LiveData<ArrayList<Doc>> getAllSearchResults(String query, String filter, String beginDate, String endDate) {
         return repositorySearch.getMutableLiveData(query,filter,beginDate,endDate);
     }
 

@@ -62,12 +62,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
         }
 
         holder.mTitleItem.setText(mData.get(position).headline.main);
-        holder.mTitleItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openChromeCustomTabs(view.getContext(),mData.get(position).webUrl);
-            }
-        });
+        holder.mTitleItem.setOnClickListener(view -> openChromeCustomTabs(view.getContext(),mData.get(position).webUrl));
 
 
     }
@@ -79,7 +74,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
         return mData.size();
     }
 
-    public void setData(ArrayList<Doc> data) {
+    void setData(ArrayList<Doc> data) {
         mData = data;
 
         //Fill the Recycler View

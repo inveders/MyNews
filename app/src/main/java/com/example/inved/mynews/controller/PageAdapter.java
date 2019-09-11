@@ -10,7 +10,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 public class PageAdapter extends FragmentPagerAdapter {
 
     // Default Constructor
-    public PageAdapter(FragmentManager mgr) {
+    PageAdapter(FragmentManager mgr) {
         super(mgr);
 
     }

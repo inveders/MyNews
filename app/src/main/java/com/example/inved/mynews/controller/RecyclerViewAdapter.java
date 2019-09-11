@@ -36,7 +36,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<Result> mData;
     private Set<String> mUrlMemorized;
 
-    public RecyclerViewAdapter() {
+    RecyclerViewAdapter() {
 
     }
 
@@ -74,8 +74,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 openChromeCustomTabs(view.getContext(), mData.get(position).url);
             /*    memorizedArticlesDAO = new MemorizedArticlesDAO(view.getContext());
                 memorizedArticlesDAO.insertUrl(mData.get(position).url);*/
-                MemorizedArticlesDatabase.getInstance(MainApplication.getInstance().getApplicationContext()).memorizedArticlesDao().insertNewArticles(new MemorizedArticles(mData.get(position).url));
-                verifyDaoSize();
+//                MemorizedArticlesDatabase.getInstance(MainApplication.getInstance().getApplicationContext()).memorizedArticlesDao().insertNewArticles(new MemorizedArticles(mData.get(position).url));
+            //    verifyDaoSize();
             }
 
             private void verifyDaoSize() {

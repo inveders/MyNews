@@ -1,7 +1,6 @@
 package com.example.inved.mynews.retrofit;
 
-import android.app.Application;
-
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.inved.mynews.topstoriesapi.NewYorkTimesAPI;
@@ -20,11 +19,8 @@ public class RepositoryMostPopular {
 
     private ArrayList<Result> results = new ArrayList<>();
     private MutableLiveData<List<Result>> mutableLiveData = new MutableLiveData<>();
-    private int period = 7;
-    private Application application;
 
-    public RepositoryMostPopular(Application application) {
-        this.application = application;
+    public RepositoryMostPopular() {
     }
 
 
@@ -32,20 +28,24 @@ public class RepositoryMostPopular {
 
         NyTimesMostPopularAPI nyTimesMostPopularAPI = RetrofitServiceMostPopular.getApiServiceMostPopular();
 
-        Call<NewYorkTimesAPI> call = nyTimesMostPopularAPI.getNyTimesMostPopular(name,period, API_KEY);
+        int period = 7;
+        Call<NewYorkTimesAPI> call = nyTimesMostPopularAPI.getNyTimesMostPopular(name, period, API_KEY);
 
         call.enqueue(new Callback<NewYorkTimesAPI>() {
             @Override
-            public void onResponse(Call<NewYorkTimesAPI> call, Response<NewYorkTimesAPI> response) {
+            public void onResponse(@NonNull Call<NewYorkTimesAPI> call,@NonNull Response<NewYorkTimesAPI> response) {
                 NewYorkTimesAPI newYorkTimesAPI = response.body();
-                if (newYorkTimesAPI != null || newYorkTimesAPI.results != null) {
-                    results = (ArrayList<Result>) newYorkTimesAPI.results;
-                    mutableLiveData.setValue(results);
+                if(newYorkTimesAPI!=null){
+                    if (newYorkTimesAPI.results != null) {
+                        results = (ArrayList<Result>) newYorkTimesAPI.results;
+                        mutableLiveData.setValue(results);
+                    }
                 }
+
             }
 
             @Override
-            public void onFailure(Call<NewYorkTimesAPI> call, Throwable t) {
+            public void onFailure(@NonNull Call<NewYorkTimesAPI> call,@NonNull Throwable t) {
 
             }
         });

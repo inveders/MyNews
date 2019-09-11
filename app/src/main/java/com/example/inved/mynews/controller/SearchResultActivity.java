@@ -6,13 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.inved.mynews.R;
-import com.example.inved.mynews.models.ResultModel;
-import com.example.inved.mynews.searchapi.Doc;
-
-import java.util.ArrayList;
-import java.util.Objects;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,10 +15,25 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.inved.mynews.R;
+import com.example.inved.mynews.models.ResultModel;
+
+import java.util.Objects;
+
+import static com.example.inved.mynews.controller.SearchActivity.KEY_DATA_BEGIN_DATE;
+import static com.example.inved.mynews.controller.SearchActivity.KEY_DATA_END_DATE;
+import static com.example.inved.mynews.controller.SearchActivity.KEY_DATA_FILTER;
+import static com.example.inved.mynews.controller.SearchActivity.KEY_DATA_QUERY;
+
 public class SearchResultActivity extends AppCompatActivity {
 
     RecyclerViewSearchAdapter mRecyclerViewSearchAdapter;
-    private ResultModel resultModel;
+    ResultModel resultModel;
+
+    String mQuery;
+    String mFilter;
+    String mBeginDate;
+    String mEndDate;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -33,25 +41,27 @@ public class SearchResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_search);
         this.configureToolbar();
+
         RecyclerView recyclerView = findViewById(R.id.search_recycler_view);
         mRecyclerViewSearchAdapter = new RecyclerViewSearchAdapter();
         recyclerView.setAdapter(mRecyclerViewSearchAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),DividerItemDecoration.VERTICAL));
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
+
 
         Intent intent = getIntent();
-        ArrayList<Doc> docArrayList = intent.getParcelableArrayListExtra(SearchActivity.KEY_LIST_DOC);
-        mRecyclerViewSearchAdapter.setData(docArrayList);
-        int number_result = intent.getIntExtra(SearchActivity.KEY_LIST_NUMBER, 0);
-        if (number_result == 0) {
-            Toast.makeText(SearchResultActivity.this, getString(R.string.no_result), Toast.LENGTH_SHORT).show();
-        }
+        mQuery = intent.getStringExtra(KEY_DATA_QUERY);
+        mFilter = intent.getStringExtra(KEY_DATA_FILTER);
+        mBeginDate = intent.getStringExtra(KEY_DATA_BEGIN_DATE);
+        mEndDate = intent.getStringExtra(KEY_DATA_END_DATE);
+
+
         //Assign the value to declared resultModel variable
         resultModel = ViewModelProviders.of(this).get(ResultModel.class);
-      //  this.liveDataObservers();
+        liveDataObservers(mQuery, mFilter, mBeginDate, mEndDate);
+
 
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -62,5 +72,23 @@ public class SearchResultActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(getString(R.string.titlePageSearchResult));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void liveDataObservers(String mQuery, String mFilter, String mBeginDate, String mEndDate) {
+
+        Log.d("SearchActivity:", "Data query " + mQuery + " filter: " + mFilter + " mBeginDate " + mBeginDate + " mEndDate" + mEndDate);
+
+        resultModel.getAllSearchResults(mQuery, mFilter, mBeginDate, mEndDate).observe(this, searchResults -> {
+
+            int number_result = searchResults.size();
+            if (number_result == 0) {
+                Toast.makeText(SearchResultActivity.this, getString(R.string.no_result), Toast.LENGTH_SHORT).show();
+            }
+
+            mRecyclerViewSearchAdapter.setData(searchResults);
+            mRecyclerViewSearchAdapter.notifyDataSetChanged();
+
+            Log.d("SearchActivityResult:", "Data has updated");
+        });
     }
 }

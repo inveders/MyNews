@@ -10,23 +10,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.loader.app.LoaderManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.models.ResultModel;
-import com.example.inved.mynews.topstoriesapi.Result;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 
 
-public abstract class AbsNyTimesFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<Result>> {
+public abstract class AbsNyTimesFragment extends Fragment {
 
     static final String KEY_ARG_SECTION = "KEY_ARG_SECTION";
     static final String KEY_ARG_PERIOD = "KEY_ARG_PERIOD";
@@ -56,8 +52,6 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
         return v;
     }
 
-
-
     public abstract String getTitle();
 
     public abstract boolean isMostPopular();
@@ -65,6 +59,7 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
 
     private void liveDataObservers() {
 
+        Log.d("Debago", "Je reviens ici après le click sur le custom tab");
 
         if(isMostPopular()){
             resultModel.getAllResultsMostPopular(getTitle()).observe(this, results -> {
@@ -74,7 +69,7 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
                 //Update to the UI with latest data
                 mRecyclerViewAdapter.notifyDataSetChanged();
 
-                Log.d("Debago", "AbsTimeFragment: getTitle "+getTitle());
+            //    Log.d("Debago", "AbsTimeFragment: getTitle "+getTitle());
             });
         }else {
             resultModel.getAllResultsTopStories(getTitle()).observe(this, results -> {
@@ -99,7 +94,7 @@ public abstract class AbsNyTimesFragment extends Fragment implements LoaderManag
                 //Update to the UI with latest data
                 mRecyclerViewAdapter.notifyDataSetChanged();
 
-                Log.d("Debago", "AbsTimeFragment: getTitle "+getTitle());
+            //    Log.d("Debago", "AbsTimeFragment: getTitle "+getTitle());
             });
         }
 

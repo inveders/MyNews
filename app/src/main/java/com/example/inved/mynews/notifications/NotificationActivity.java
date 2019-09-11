@@ -31,12 +31,31 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
+
 public class NotificationActivity extends AppCompatActivity {
 
-    private static final String TAG = "AlarmReceiver";
+    @BindView(R.id.text_input_layout)
     EditText editTextSearch;
-    CheckBox checkboxTechnology, checkboxScience, checkboxSports, checkboxFood, checkboxTravel, checkboxWorld;
+
+    @BindView(R.id.checkBox_technology)
+    CheckBox checkboxTechnology;
+    @BindView(R.id.checkBox_science)
+    CheckBox checkboxScience;
+    @BindView(R.id.checkBox_sports)
+    CheckBox checkboxSports;
+    @BindView(R.id.checkBox_food)
+    CheckBox checkboxFood;
+    @BindView(R.id.checkBox_travel)
+    CheckBox checkboxTravel;
+    @BindView(R.id.checkBox_world)
+    CheckBox checkboxWorld;
+    @BindView(R.id.notification_switch)
     Switch notificationSwitchEnable;
+
+    private static final String TAG = "AlarmReceiver";
+
+
     Boolean isNotificationEnabled;
     public String mQueryNotif;
     public String mFilterNotif;
@@ -57,15 +76,6 @@ public class NotificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         this.configureToolbar();
-
-        editTextSearch = findViewById(R.id.text_input_layout);
-        checkboxTechnology = findViewById(R.id.checkBox_technology);
-        checkboxScience = findViewById(R.id.checkBox_science);
-        checkboxSports = findViewById(R.id.checkBox_sports);
-        checkboxFood = findViewById(R.id.checkBox_food);
-        checkboxTravel = findViewById(R.id.checkBox_travel);
-        checkboxWorld = findViewById(R.id.checkBox_world);
-        notificationSwitchEnable = findViewById(R.id.notification_switch);
 
         isNotificationEnabled = getPreferences(MODE_PRIVATE).getBoolean(KEY_NOTIFICATION_ENABLE, false);
 

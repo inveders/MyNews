@@ -2,14 +2,6 @@ package com.example.inved.mynews.controller;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.loader.content.Loader;
-
-import com.example.inved.mynews.topstoriesapi.Result;
-
-import java.util.List;
-
 public class GeneralPageFragment extends AbsNyTimesFragment {
 
 
@@ -25,8 +17,9 @@ public class GeneralPageFragment extends AbsNyTimesFragment {
     }
 
     @Override
+
     public String getTitle() {
-        return getArguments().getString(KEY_ARG_SECTION);
+        return getArguments() != null ? getArguments().getString(KEY_ARG_SECTION) : null;
     }
 
     @Override
@@ -35,20 +28,6 @@ public class GeneralPageFragment extends AbsNyTimesFragment {
         return false;
     }
 
-    @NonNull
-    @Override
-    public Loader<List<Result>> onCreateLoader(int id, @Nullable Bundle args) {
-        return null;
-    }
 
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<Result>> loader, List<Result> data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
-
-    }
 }
 

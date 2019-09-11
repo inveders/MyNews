@@ -3,14 +3,7 @@ package com.example.inved.mynews.controller;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.loader.content.Loader;
-
-import com.example.inved.mynews.topstoriesapi.Result;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,19 +36,5 @@ public class MostPopularPageFragment extends AbsNyTimesFragment {
         return true;
     }
 
-    @NonNull
-    @Override
-    public Loader<List<Result>> onCreateLoader(int id, @Nullable Bundle args) {
-        return null;
-    }
 
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<Result>> loader, List<Result> data) {
-
-    }
-
-    @Override
-    public void onLoaderReset(@NonNull Loader<List<Result>> loader) {
-
-    }
 }
