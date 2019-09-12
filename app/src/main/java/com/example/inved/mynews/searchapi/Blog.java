@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.retrofit.searchapi;
+package com.example.inved.mynews.searchapi;
 
 
 import android.os.Parcel;
@@ -17,14 +17,16 @@ public class Blog implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
     }
 
+    public Blog() {
+    }
 
-    private Blog() {
+    protected Blog(Parcel in) {
     }
 
     public static final Creator<Blog> CREATOR = new Creator<Blog>() {
         @Override
         public Blog createFromParcel(Parcel source) {
-            return new Blog();
+            return new Blog(source);
         }
 
         @Override

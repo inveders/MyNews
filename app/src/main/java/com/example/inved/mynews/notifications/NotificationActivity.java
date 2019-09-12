@@ -41,7 +41,7 @@ public class NotificationActivity extends AppCompatActivity {
     CheckBox checkboxWorld;
     Switch notificationSwitchEnable;
 
-    private static final int TIME_IN_MINUTES = 60;
+    private static final int TIME_IN_HOURS = 24;
 
     Boolean isNotificationEnabled;
     public String mQueryNotif;
@@ -232,7 +232,7 @@ public class NotificationActivity extends AppCompatActivity {
 
 
         PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
-                MyWorkerNotification.class, TIME_IN_MINUTES,TimeUnit.MINUTES)
+                MyWorkerNotification.class, TIME_IN_HOURS,TimeUnit.HOURS)
                 .setInputData(data)
                 .addTag("periodic_work")
                 .build();

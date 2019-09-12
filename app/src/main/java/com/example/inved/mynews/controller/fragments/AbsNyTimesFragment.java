@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.models.MemorizedArticlesViewModel;
 import com.example.inved.mynews.models.ResultModel;
-import com.example.inved.mynews.retrofit.topstoriesapi.Result;
+import com.example.inved.mynews.topstoriesapi.Result;
 
 import java.util.HashSet;
 import java.util.List;
@@ -136,7 +136,8 @@ public abstract class AbsNyTimesFragment extends Fragment {
                 int id = memorizedArticlesViewModel.getId();
 
 
-                for (int i = id-DATABASE_MAX_SIZE_BEFORE_DELETING_DATA; i < id-(DATABASE_MAX_SIZE_BEFORE_DELETING_DATA-DATABASE_NUMBER_DATA_TO_DELETE); i++) {
+                for (int i = id-DATABASE_MAX_SIZE_BEFORE_DELETING_DATA; i <
+                        id-(DATABASE_MAX_SIZE_BEFORE_DELETING_DATA-DATABASE_NUMBER_DATA_TO_DELETE); i++) {
                     memorizedArticlesViewModel.deleteArticle(i);
                 }
 

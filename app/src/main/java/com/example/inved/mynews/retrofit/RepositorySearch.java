@@ -3,8 +3,8 @@ package com.example.inved.mynews.retrofit;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.inved.mynews.retrofit.searchapi.Doc;
-import com.example.inved.mynews.retrofit.searchapi.SearchResult;
+import com.example.inved.mynews.searchapi.Doc;
+import com.example.inved.mynews.searchapi.SearchResult;
 
 import java.util.ArrayList;
 

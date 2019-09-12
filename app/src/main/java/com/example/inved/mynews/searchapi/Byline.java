@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.retrofit.searchapi;
+package com.example.inved.mynews.searchapi;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -13,10 +13,13 @@ public class Byline implements Parcelable {
 
     @SerializedName("original")
     @Expose
-    private String original;
+    public String original;
     @SerializedName("person")
     @Expose
-    private List<Person> person;
+    public List<Person> person = null;
+    @SerializedName("organization")
+    @Expose
+    public Object organization;
 
 
     @Override
@@ -31,11 +34,14 @@ public class Byline implements Parcelable {
 
     }
 
-    private Byline(Parcel in) {
-        this.original = in.readString();
-        this.person = new ArrayList<>();
-        in.readList(this.person, Person.class.getClassLoader());
+    public Byline() {
+    }
 
+    protected Byline(Parcel in) {
+        this.original = in.readString();
+        this.person = new ArrayList<Person>();
+        in.readList(this.person, Person.class.getClassLoader());
+        this.organization = in.readParcelable(Object.class.getClassLoader());
     }
 
     public static final Creator<Byline> CREATOR = new Creator<Byline>() {

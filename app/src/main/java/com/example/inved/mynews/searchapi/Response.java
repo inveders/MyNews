@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.retrofit.searchapi;
+package com.example.inved.mynews.searchapi;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

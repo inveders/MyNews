@@ -84,7 +84,6 @@ public class SearchResultActivity extends AppCompatActivity {
             }
 
             mRecyclerViewSearchAdapter.setData(searchResults);
-            mRecyclerViewSearchAdapter.notifyDataSetChanged();
 
 
         });

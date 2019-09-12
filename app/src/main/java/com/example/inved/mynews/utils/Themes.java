@@ -2,8 +2,14 @@ package com.example.inved.mynews.utils;
 
 public enum Themes {
 
-    HOME("home",false,"TOP STORIES"),MOSTPOPULAR("all-sections",true,"MOST POPULAR"),TECHNOLOGY("technology",false,"TECH"),SCIENCE("science",false,"SCIENCE"),SPORTS("sports",false,"SPORTS"),
-    FOOD("food",false,"FOOD"),TRAVEL("travel",false,"TRAVEL"),WORLD("world",false,"WORLD");
+    HOME("home",false,"TOP STORIES"),
+    MOSTPOPULAR("all-sections",true,"MOST POPULAR"),
+    TECHNOLOGY("technology",false,"TECH"),
+    SCIENCE("science",false,"SCIENCE"),
+    SPORTS("sports",false,"SPORTS"),
+    FOOD("food",false,"FOOD"),
+    TRAVEL("travel",false,"TRAVEL"),
+    WORLD("world",false,"WORLD");
 
     String mName;
     boolean mIsMostPopular;

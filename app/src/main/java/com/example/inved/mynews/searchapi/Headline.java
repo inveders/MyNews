@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.retrofit.searchapi;
+package com.example.inved.mynews.searchapi;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,14 +12,24 @@ public class Headline implements Parcelable {
     @SerializedName("main")
     @Expose
     public String main;
-
+    @SerializedName("kicker")
+    @Expose
+    public Object kicker;
+    @SerializedName("content_kicker")
+    @Expose
+    public Object contentKicker;
     @SerializedName("print_headline")
     @Expose
-    private String printHeadline;
+    public String printHeadline;
     @SerializedName("name")
     @Expose
     public Object name;
-
+    @SerializedName("seo")
+    @Expose
+    public Object seo;
+    @SerializedName("sub")
+    @Expose
+    public Object sub;
 
 
     @Override
@@ -34,12 +44,17 @@ public class Headline implements Parcelable {
 
     }
 
+    public Headline() {
+    }
 
-    private Headline(Parcel in) {
+    protected Headline(Parcel in) {
         this.main = in.readString();
-
+        /*this.kicker = in.readParcelable(Object.class.getClassLoader());
+        this.contentKicker = in.readParcelable(Object.class.getClassLoader());*/
         this.printHeadline = in.readString();
-
+      /*  this.name = in.readParcelable(Object.class.getClassLoader());
+        this.seo = in.readParcelable(Object.class.getClassLoader());
+        this.sub = in.readParcelable(Object.class.getClassLoader());*/
     }
 
     public static final Creator<Headline> CREATOR = new Creator<Headline>() {

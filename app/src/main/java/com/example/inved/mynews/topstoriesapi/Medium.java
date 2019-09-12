@@ -1,16 +1,16 @@
-package com.example.inved.mynews.retrofit.topstoriesapi;
+package com.example.inved.mynews.topstoriesapi;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class Medium {
+public class Medium {
 
     @SerializedName("media-metadata")
     @Expose
     private List<MediaMetadatum> mediaMetadata = null;
 
-    List<MediaMetadatum> getMediaMetadata() {
+    public List<MediaMetadatum> getMediaMetadata() {
         return mediaMetadata;
     }
 }

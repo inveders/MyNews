@@ -9,8 +9,8 @@ import androidx.lifecycle.LiveData;
 import com.example.inved.mynews.retrofit.RepositoryMostPopular;
 import com.example.inved.mynews.retrofit.RepositorySearch;
 import com.example.inved.mynews.retrofit.RepositoryTopStories;
-import com.example.inved.mynews.retrofit.searchapi.Doc;
-import com.example.inved.mynews.retrofit.topstoriesapi.Result;
+import com.example.inved.mynews.searchapi.Doc;
+import com.example.inved.mynews.topstoriesapi.Result;
 
 import java.util.ArrayList;
 import java.util.List;

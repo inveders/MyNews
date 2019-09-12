@@ -12,10 +12,10 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.example.inved.mynews.utils.MainApplication;
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.retrofit.NyTimesSearchAPI;
-import com.example.inved.mynews.retrofit.searchapi.SearchResult;
+import com.example.inved.mynews.searchapi.SearchResult;
+import com.example.inved.mynews.utils.MainApplication;
 
 import org.joda.time.DateTime;
 
@@ -33,7 +33,6 @@ public class MyWorkerNotification extends Worker {
 
     static final String EXTRA_QUERY = "EXTRA_QUERY";
     static final String EXTRA_FILTER = "EXTRA_FILTER";
-
 
     private static final String CHANNEL_ID = "CHANNEL_1";
     private String notificationTitle = MainApplication.getResourses().getString(R.string.newArticlesJobService);
@@ -56,22 +55,25 @@ public class MyWorkerNotification extends Worker {
 
         retrofitCall(mQueryNotif, mFilterNotif);
 
+
         return Result.success();
 
     }
 
+
+
     private void createNotification() {
 
-        NotificationCompat.Builder builderNotification = new NotificationCompat.Builder(MainApplication.getInstance().getApplicationContext(), CHANNEL_ID)
+        NotificationCompat.Builder builderNotification = new NotificationCompat.Builder
+                (MainApplication.getInstance().getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_fiber_new_black_24dp)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText).setAutoCancel(true)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                .setSmallIcon(R.mipmap.ic_launcher_round)
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET);
 
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainApplication.getInstance().getApplicationContext());
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(
+                MainApplication.getInstance().getApplicationContext());
         int notificationId = 1;
         notificationManager.notify(notificationId, builderNotification.build());
         createNotificationChannel();
@@ -84,7 +86,7 @@ public class MyWorkerNotification extends Worker {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = MainApplication.getResourses().getString(R.string.channel_name);
             String description = MainApplication.getResourses().getString(R.string.channel_description);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
             NotificationManager notificationManager = MainApplication.getInstance().getSystemService(NotificationManager.class);

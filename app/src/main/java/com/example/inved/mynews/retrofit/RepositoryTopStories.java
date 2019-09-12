@@ -3,8 +3,8 @@ package com.example.inved.mynews.retrofit;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.inved.mynews.retrofit.topstoriesapi.NewYorkTimesAPI;
-import com.example.inved.mynews.retrofit.topstoriesapi.Result;
+import com.example.inved.mynews.topstoriesapi.NewYorkTimesAPI;
+import com.example.inved.mynews.topstoriesapi.Result;
 
 import java.util.ArrayList;
 import java.util.List;

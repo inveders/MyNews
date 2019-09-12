@@ -26,9 +26,6 @@ class RetrofitServiceTopStories {
                     .build();
         }
 
-
-
-
         return retrofit.create(NyTimesAPI.class);
     }
 

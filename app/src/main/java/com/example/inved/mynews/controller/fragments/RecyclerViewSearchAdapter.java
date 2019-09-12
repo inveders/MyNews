@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.inved.mynews.R;
-import com.example.inved.mynews.retrofit.searchapi.Doc;
+import com.example.inved.mynews.searchapi.Doc;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;

@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.database.MemorizedArticles;
 import com.example.inved.mynews.models.MemorizedArticlesViewModel;
-import com.example.inved.mynews.retrofit.topstoriesapi.Result;
+import com.example.inved.mynews.topstoriesapi.Result;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;

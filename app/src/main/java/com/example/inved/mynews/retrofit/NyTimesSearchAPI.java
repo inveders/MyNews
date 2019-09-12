@@ -1,6 +1,6 @@
 package com.example.inved.mynews.retrofit;
 
-import com.example.inved.mynews.retrofit.searchapi.SearchResult;
+import com.example.inved.mynews.searchapi.SearchResult;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

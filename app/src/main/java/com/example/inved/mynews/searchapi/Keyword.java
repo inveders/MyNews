@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.retrofit.searchapi;
+package com.example.inved.mynews.searchapi;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,13 +14,13 @@ public class Keyword implements Parcelable {
     public String name;
     @SerializedName("value")
     @Expose
-    private String value;
+    public String value;
     @SerializedName("rank")
     @Expose
-    private Integer rank;
+    public Integer rank;
     @SerializedName("major")
     @Expose
-    private String major;
+    public String major;
 
 
     @Override
@@ -36,8 +36,10 @@ public class Keyword implements Parcelable {
         dest.writeString(this.major);
     }
 
+    public Keyword() {
+    }
 
-    private Keyword(Parcel in) {
+    protected Keyword(Parcel in) {
         this.name = in.readString();
         this.value = in.readString();
         this.rank = (Integer) in.readValue(Integer.class.getClassLoader());

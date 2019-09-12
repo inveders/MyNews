@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.retrofit.topstoriesapi;
+package com.example.inved.mynews.topstoriesapi;
 
 import java.util.List;
 

@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.retrofit.topstoriesapi;
+package com.example.inved.mynews.topstoriesapi;
 
 import com.example.inved.mynews.utils.CollectionUtils;
 import com.google.gson.annotations.Expose;
@@ -26,7 +26,9 @@ public class Result {
     @Expose
     public String title;
 
-
+    @SerializedName("abstract")
+    @Expose
+    public String _abstract;
 
     @SerializedName("url")
     @Expose
@@ -48,16 +50,12 @@ public class Result {
     @Expose
     private List<Medium> media = null;
 
-    public Result(List<Multimedium> multimedia) {
-        this.multimedia = multimedia;
-    }
-
     public String getImageUrl() {
 
         if (CollectionUtils.isEmpty(media)) {
 
             for (int i = 0; i < multimedia.size(); i++) {
-
+                String url = multimedia.get(i).getUrl(); /**Permet de gagner de la vitesse en gaspillant un tout petit peu de mémoire en plus(4 bytes)*/
                 if (url != null) {
                     return url;
                 }
