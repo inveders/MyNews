@@ -11,7 +11,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     // Default Constructor
     PageAdapter(FragmentManager mgr) {
-        super(mgr);
+        super(mgr,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
     }
 

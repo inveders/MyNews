@@ -5,8 +5,6 @@ import android.widget.EditText;
 
 import com.example.inved.mynews.controller.SearchActivity;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,21 +13,18 @@ import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowToast;
 
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(sdk = {27})
 public class SearchActivityTest {
 
-    private SearchActivity searchActivity;
     private Button searchButton;
     private EditText editTextSearch;
 
     @Before
     public void setUp() {
-        searchActivity = Robolectric.buildActivity(SearchActivity.class)
+        SearchActivity searchActivity = Robolectric.buildActivity(SearchActivity.class)
                 .create()
                 .resume()
                 .get();

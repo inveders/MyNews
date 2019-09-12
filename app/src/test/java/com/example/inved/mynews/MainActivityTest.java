@@ -11,14 +11,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
+import org.robolectric.shadows.ShadowActivity;
 
 import static org.junit.Assert.assertEquals;
 import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)
-@Config(sdk = {27})
+@Config(sdk = {28})
 public class MainActivityTest {
 
     private MainActivity mainActivity;
@@ -37,25 +37,13 @@ public class MainActivityTest {
         View searchIcon = mainActivity.findViewById(R.id.menu_activity_main_search);
         searchIcon.performClick();
 
+        ShadowActivity shadow = shadowOf(mainActivity);
         Intent expectedIntent = new Intent(mainActivity, SearchActivity.class);
-        Intent actual = shadowOf(RuntimeEnvironment.application).getNextStartedActivity();
+        Intent actual =shadow.getNextStartedActivity();
 
         assertEquals(expectedIntent.getComponent(), actual.getComponent());
 
     }
 
 
-  /*  @Test
-    public void clickingMainParamIcon_ShouldStartNotificationActivity(){
-
-        ShadowActivity shadowActivity = shadowOf(mainActivity);
-        MenuItem menuIcon = shadowActivity.getOptionsMenu().findItem(R.id.menu_activity_main_params);
-        menuIcon.getActionView().performClick();
-
-        Intent expectedIntent = new Intent (mainActivity, NotificationActivity.class);
-        Intent actual = shadowOf(RuntimeEnvironment.application).getNextStartedActivity();
-
-        assertEquals(expectedIntent.getComponent(),actual.getComponent());
-
-    }*/
 }

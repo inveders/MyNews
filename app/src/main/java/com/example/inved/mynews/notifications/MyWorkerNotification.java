@@ -36,8 +36,8 @@ public class MyWorkerNotification extends Worker {
     static final String EXTRA_FILTER = "EXTRA_FILTER";
 
 
-    private static final String TAG = "AlarmReceiver";
-    private static final String CHANNEL_ID = "VH";
+    private static final String TAG = "Debago";
+    private static final String CHANNEL_ID = "CHANNEL_1";
     private String notificationTitle = MainApplication.getResourses().getString(R.string.newArticlesJobService);
     private String notificationText;
     private DateTime currentDate = new DateTime();
@@ -84,6 +84,7 @@ public class MyWorkerNotification extends Worker {
 
     private void createNotificationChannel() {
 
+        Log.d(TAG, "2bis. Create Notification channel");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = MainApplication.getResourses().getString(R.string.channel_name);
             String description = MainApplication.getResourses().getString(R.string.channel_description);
@@ -94,7 +95,6 @@ public class MyWorkerNotification extends Worker {
             assert notificationManager != null;
             notificationManager.createNotificationChannel(channel);
 
-            createNotificationChannel();
         }
 
     }
@@ -146,8 +146,6 @@ public class MyWorkerNotification extends Worker {
                 if (response.body() != null && response.body().response.docs != null) {
 
                     notificationText = getNotificationText(response.body().response.docs.size());
-
-                    // context =
 
                     createNotification();
 

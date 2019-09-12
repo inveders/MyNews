@@ -1,5 +1,6 @@
 package com.example.inved.mynews.notifications;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,30 +32,19 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.BindView;
-
 public class NotificationActivity extends AppCompatActivity {
 
-    @BindView(R.id.text_input_layout)
     EditText editTextSearch;
-
-    @BindView(R.id.checkBox_technology)
     CheckBox checkboxTechnology;
-    @BindView(R.id.checkBox_science)
     CheckBox checkboxScience;
-    @BindView(R.id.checkBox_sports)
     CheckBox checkboxSports;
-    @BindView(R.id.checkBox_food)
     CheckBox checkboxFood;
-    @BindView(R.id.checkBox_travel)
     CheckBox checkboxTravel;
-    @BindView(R.id.checkBox_world)
     CheckBox checkboxWorld;
-    @BindView(R.id.notification_switch)
     Switch notificationSwitchEnable;
 
-    private static final String TAG = "AlarmReceiver";
-
+    private static final String TAG = "Debago";
+    private static final int TIME_IN_MINUTES = 60;
 
     Boolean isNotificationEnabled;
     public String mQueryNotif;
@@ -77,6 +67,15 @@ public class NotificationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_notification);
         this.configureToolbar();
 
+        editTextSearch = findViewById(R.id.text_input_layout);
+        checkboxTechnology = findViewById(R.id.checkBox_technology);
+        checkboxScience = findViewById(R.id.checkBox_science);
+        checkboxSports = findViewById(R.id.checkBox_sports);
+        checkboxFood = findViewById(R.id.checkBox_food);
+        checkboxTravel = findViewById(R.id.checkBox_travel);
+        checkboxWorld = findViewById(R.id.checkBox_world);
+        notificationSwitchEnable = findViewById(R.id.notification_switch);
+
         isNotificationEnabled = getPreferences(MODE_PRIVATE).getBoolean(KEY_NOTIFICATION_ENABLE, false);
 
         isNotificationEnableInMemory();
@@ -91,7 +90,6 @@ public class NotificationActivity extends AppCompatActivity {
 
                 searchBrain = new SearchBrain();
                 mFilterNotif = searchBrain.getLucene(isCheckBoxList);
-
 
                 if (bChecked) {
                     Toast.makeText(NotificationActivity.this, getString(R.string.notification_actives), Toast.LENGTH_SHORT).show();
@@ -238,17 +236,17 @@ public class NotificationActivity extends AppCompatActivity {
 
         Log.d(TAG, "HERE launch job");
         PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
-                MyWorkerNotification.class, 15,TimeUnit.MINUTES)
+                MyWorkerNotification.class, TIME_IN_MINUTES,TimeUnit.MINUTES)
                 .setInputData(data)
                 .addTag("periodic_work")
                 .build();
-        WorkManager.getInstance().enqueue(periodicWorkRequest);
+        WorkManager.getInstance(this).enqueue(periodicWorkRequest);
     }
 
     public void cancelJob() {
 
         Log.d(TAG, "HERE cancel job");
-        WorkManager.getInstance().cancelAllWorkByTag("periodic_work");
+        WorkManager.getInstance(this).cancelAllWorkByTag("periodic_work");
 
 
     }
