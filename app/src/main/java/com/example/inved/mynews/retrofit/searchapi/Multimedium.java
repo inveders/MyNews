@@ -1,5 +1,5 @@
 
-package com.example.inved.mynews.searchapi;
+package com.example.inved.mynews.retrofit.searchapi;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -14,7 +14,7 @@ public class Multimedium implements Parcelable {
     @Expose
     public String url;
 
-    public String getSearchUrl() {
+    String getSearchUrl() {
         return url;
     }
 
@@ -29,10 +29,8 @@ public class Multimedium implements Parcelable {
         dest.writeString(this.url);
     }
 
-    public Multimedium() {
-    }
 
-    protected Multimedium(Parcel in) {
+    private Multimedium(Parcel in) {
         this.url = in.readString();
     }
 

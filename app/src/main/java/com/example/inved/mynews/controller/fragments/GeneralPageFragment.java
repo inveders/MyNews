@@ -1,17 +1,23 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.controller.fragments;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
+
+/**
+ * A simple {@link Fragment} subclass.
+ */
 public class GeneralPageFragment extends AbsNyTimesFragment {
 
 
-    static GeneralPageFragment newInstance(String name) {
+    public static GeneralPageFragment newInstance(String name) {
 
         Bundle arg = new Bundle(1);
         arg.putString(KEY_ARG_SECTION, name);
 
         GeneralPageFragment generalPageFragment = new GeneralPageFragment();
-        generalPageFragment.setArguments(arg); //Le fragment est lié à la bundle
+        //Le fragment est lié à la bundle
+        generalPageFragment.setArguments(arg);
         return generalPageFragment;
 
     }

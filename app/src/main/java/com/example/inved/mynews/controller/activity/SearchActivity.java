@@ -1,4 +1,4 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.controller.activity;
 
 
 import android.content.Intent;
@@ -19,6 +19,7 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.brain.SearchBrain;
+import com.example.inved.mynews.controller.fragments.DatePickerFragment;
 
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;

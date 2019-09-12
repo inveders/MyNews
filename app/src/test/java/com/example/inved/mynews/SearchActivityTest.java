@@ -3,7 +3,7 @@ package com.example.inved.mynews;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.inved.mynews.controller.SearchActivity;
+import com.example.inved.mynews.controller.activity.SearchActivity;
 
 import org.junit.Before;
 import org.junit.Test;

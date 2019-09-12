@@ -1,4 +1,4 @@
-package com.example.inved.mynews;
+package com.example.inved.mynews.utils;
 
 public enum Themes {
 

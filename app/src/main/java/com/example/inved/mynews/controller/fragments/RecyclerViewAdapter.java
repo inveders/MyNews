@@ -1,4 +1,4 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.controller.fragments;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.database.MemorizedArticles;
 import com.example.inved.mynews.models.MemorizedArticlesViewModel;
-import com.example.inved.mynews.topstoriesapi.Result;
+import com.example.inved.mynews.retrofit.topstoriesapi.Result;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
@@ -86,7 +86,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             if (mUrlMemorized != null) {
 
                 if (mUrlMemorized.contains(mData.get(position).url)) {
-                    // Log.d("DEBAGo", "contenu dans la liste des url mémorisées la position est" + position);
+
                     holder.mTitleItem.setTextColor(Color.parseColor("#8BC34A"));
                 } else {
                     holder.mTitleItem.setTextColor(Color.parseColor("#000000"));
@@ -152,12 +152,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private void insertArticleInDatabase(String url) {
 
-
-
-      //  Log.d("DEBAGO", "Memorized Articles "+MemorizedArticlesDatabase.getDatabase(MainApplication.getInstance().getApplicationContext()).memorizedArticlesDao());
         MemorizedArticles article = new MemorizedArticles(url);
         memorizedArticlesViewModel.insert(article);
-     //   Log.d("DEBAGO", "On a inséré une url dans la base de données");
 
     }
 

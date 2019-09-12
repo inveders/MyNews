@@ -1,6 +1,6 @@
 package com.example.inved.mynews.retrofit;
 
-import com.example.inved.mynews.topstoriesapi.NewYorkTimesAPI;
+import com.example.inved.mynews.retrofit.topstoriesapi.NewYorkTimesAPI;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

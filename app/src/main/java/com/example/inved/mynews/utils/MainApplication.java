@@ -1,4 +1,4 @@
-package com.example.inved.mynews;
+package com.example.inved.mynews.utils;
 
 import android.app.Application;
 import android.content.res.Resources;

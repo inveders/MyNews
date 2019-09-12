@@ -1,13 +1,11 @@
 package com.example.inved.mynews.notifications;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -43,7 +41,6 @@ public class NotificationActivity extends AppCompatActivity {
     CheckBox checkboxWorld;
     Switch notificationSwitchEnable;
 
-    private static final String TAG = "Debago";
     private static final int TIME_IN_MINUTES = 60;
 
     Boolean isNotificationEnabled;
@@ -54,8 +51,7 @@ public class NotificationActivity extends AppCompatActivity {
     List<String> isCheckBoxList = new ArrayList<>();
     Gson gson = new Gson();
 
-    public static final String KEY_QUERY_BUNDLE = "query_bundle";
-    public static final String KEY_FILTER_BUNDLE = "filter_bundle";
+
     public static final String KEY_QUERY = "mQuery";
     public static final String KEY_CHECKBOX_LIST = "checkbox_list";
     public static final String KEY_NOTIFICATION_ENABLE = "isNotificationChecked";
@@ -234,7 +230,7 @@ public class NotificationActivity extends AppCompatActivity {
                 .build();
 
 
-        Log.d(TAG, "HERE launch job");
+
         PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
                 MyWorkerNotification.class, TIME_IN_MINUTES,TimeUnit.MINUTES)
                 .setInputData(data)
@@ -245,7 +241,7 @@ public class NotificationActivity extends AppCompatActivity {
 
     public void cancelJob() {
 
-        Log.d(TAG, "HERE cancel job");
+
         WorkManager.getInstance(this).cancelAllWorkByTag("periodic_work");
 
 

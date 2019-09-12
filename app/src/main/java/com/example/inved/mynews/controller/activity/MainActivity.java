@@ -1,4 +1,4 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.controller.activity;
 
 import android.content.Intent;
 import android.os.Build;
@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.controller.PageAdapter;
 import com.example.inved.mynews.notifications.NotificationActivity;
 import com.google.android.material.tabs.TabLayout;
 

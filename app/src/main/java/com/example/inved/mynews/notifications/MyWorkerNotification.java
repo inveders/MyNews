@@ -4,7 +4,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,10 +12,10 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
-import com.example.inved.mynews.MainApplication;
+import com.example.inved.mynews.utils.MainApplication;
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.retrofit.NyTimesSearchAPI;
-import com.example.inved.mynews.searchapi.SearchResult;
+import com.example.inved.mynews.retrofit.searchapi.SearchResult;
 
 import org.joda.time.DateTime;
 
@@ -28,7 +27,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
+import static com.example.inved.mynews.controller.fragments.AbsNyTimesFragment.API_KEY;
 
 public class MyWorkerNotification extends Worker {
 
@@ -36,7 +35,6 @@ public class MyWorkerNotification extends Worker {
     static final String EXTRA_FILTER = "EXTRA_FILTER";
 
 
-    private static final String TAG = "Debago";
     private static final String CHANNEL_ID = "CHANNEL_1";
     private String notificationTitle = MainApplication.getResourses().getString(R.string.newArticlesJobService);
     private String notificationText;
@@ -55,7 +53,7 @@ public class MyWorkerNotification extends Worker {
 
         String mQueryNotif = getInputData().getString(EXTRA_QUERY);
         String mFilterNotif = getInputData().getString(EXTRA_FILTER);
-        Log.d(TAG, "0. mQueryNotif " + mQueryNotif);
+
         retrofitCall(mQueryNotif, mFilterNotif);
 
         return Result.success();
@@ -63,16 +61,14 @@ public class MyWorkerNotification extends Worker {
     }
 
     private void createNotification() {
-        Log.d(TAG, "2. Create Notification");
+
         NotificationCompat.Builder builderNotification = new NotificationCompat.Builder(MainApplication.getInstance().getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_fiber_new_black_24dp)
                 .setContentTitle(notificationTitle)
                 .setContentText(notificationText).setAutoCancel(true)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setCategory(NotificationCompat.CATEGORY_REMINDER)
-                //   .setSound(alarmSound)
                 .setSmallIcon(R.mipmap.ic_launcher_round)
-                //.setContentIntent(pendingIntent)
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(MainApplication.getInstance().getApplicationContext());
@@ -84,7 +80,7 @@ public class MyWorkerNotification extends Worker {
 
     private void createNotificationChannel() {
 
-        Log.d(TAG, "2bis. Create Notification channel");
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = MainApplication.getResourses().getString(R.string.channel_name);
             String description = MainApplication.getResourses().getString(R.string.channel_description);
@@ -121,7 +117,7 @@ public class MyWorkerNotification extends Worker {
     //Retrofit
     private void retrofitCall(String mQuery, String mFilter) {
 
-        Log.d(TAG, "1. retrofit call");
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 .build();

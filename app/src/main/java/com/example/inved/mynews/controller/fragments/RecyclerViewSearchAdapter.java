@@ -1,4 +1,4 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.controller.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.inved.mynews.R;
-import com.example.inved.mynews.searchapi.Doc;
+import com.example.inved.mynews.retrofit.searchapi.Doc;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
@@ -29,7 +29,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
     private ArrayList<Doc> mData;
 
 
-    RecyclerViewSearchAdapter() {
+    public RecyclerViewSearchAdapter() {
     }
 
     @NonNull
@@ -74,7 +74,7 @@ public class RecyclerViewSearchAdapter extends RecyclerView.Adapter<RecyclerView
         return mData.size();
     }
 
-    void setData(ArrayList<Doc> data) {
+    public void setData(ArrayList<Doc> data) {
         mData = data;
 
         //Fill the Recycler View

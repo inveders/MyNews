@@ -11,12 +11,6 @@ import java.util.List;
 @Dao
 public interface MemorizedArticlesDao {
 
-    /**
-     * Je veux la liste des url de la base de données pour les comparer au résultat de mon retrofit et les colorer.
-     * Je veux ajouter des url dans la base de donnée
-     * Je veux supprimer les 15 derniers url de ma base de données*
-     * Je veux le nombre de données dans ma base de données*/
-
     @Query("SELECT * FROM memorized_articles")
     LiveData<List<MemorizedArticles>>  getAllMemorizedArticles();
 

@@ -1,6 +1,8 @@
 package com.example.inved.mynews.controller;
 
-import com.example.inved.mynews.Themes;
+import com.example.inved.mynews.utils.Themes;
+import com.example.inved.mynews.controller.fragments.GeneralPageFragment;
+import com.example.inved.mynews.controller.fragments.MostPopularPageFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -10,7 +12,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 public class PageAdapter extends FragmentPagerAdapter {
 
     // Default Constructor
-    PageAdapter(FragmentManager mgr) {
+    public PageAdapter(FragmentManager mgr) {
         super(mgr,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
 
     }

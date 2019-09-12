@@ -3,8 +3,8 @@ package com.example.inved.mynews;
 import android.content.Intent;
 import android.view.View;
 
-import com.example.inved.mynews.controller.MainActivity;
-import com.example.inved.mynews.controller.SearchActivity;
+import com.example.inved.mynews.controller.activity.MainActivity;
+import com.example.inved.mynews.controller.activity.SearchActivity;
 
 import org.junit.Before;
 import org.junit.Test;

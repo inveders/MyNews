@@ -3,8 +3,8 @@ package com.example.inved.mynews.retrofit;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.inved.mynews.topstoriesapi.NewYorkTimesAPI;
-import com.example.inved.mynews.topstoriesapi.Result;
+import com.example.inved.mynews.retrofit.topstoriesapi.NewYorkTimesAPI;
+import com.example.inved.mynews.retrofit.topstoriesapi.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
+import static com.example.inved.mynews.controller.fragments.AbsNyTimesFragment.API_KEY;
 
 public class RepositoryMostPopular {
 

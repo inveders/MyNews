@@ -3,8 +3,8 @@ package com.example.inved.mynews.retrofit;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.inved.mynews.searchapi.Doc;
-import com.example.inved.mynews.searchapi.SearchResult;
+import com.example.inved.mynews.retrofit.searchapi.Doc;
+import com.example.inved.mynews.retrofit.searchapi.SearchResult;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.example.inved.mynews.controller.AbsNyTimesFragment.API_KEY;
+import static com.example.inved.mynews.controller.fragments.AbsNyTimesFragment.API_KEY;
 
 public class RepositorySearch {
 

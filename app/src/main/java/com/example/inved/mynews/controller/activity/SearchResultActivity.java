@@ -1,9 +1,8 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.controller.activity;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -16,14 +15,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.controller.fragments.RecyclerViewSearchAdapter;
 import com.example.inved.mynews.models.ResultModel;
 
 import java.util.Objects;
 
-import static com.example.inved.mynews.controller.SearchActivity.KEY_DATA_BEGIN_DATE;
-import static com.example.inved.mynews.controller.SearchActivity.KEY_DATA_END_DATE;
-import static com.example.inved.mynews.controller.SearchActivity.KEY_DATA_FILTER;
-import static com.example.inved.mynews.controller.SearchActivity.KEY_DATA_QUERY;
+import static com.example.inved.mynews.controller.activity.SearchActivity.KEY_DATA_BEGIN_DATE;
+import static com.example.inved.mynews.controller.activity.SearchActivity.KEY_DATA_END_DATE;
+import static com.example.inved.mynews.controller.activity.SearchActivity.KEY_DATA_FILTER;
+import static com.example.inved.mynews.controller.activity.SearchActivity.KEY_DATA_QUERY;
 
 public class SearchResultActivity extends AppCompatActivity {
 
@@ -76,8 +76,6 @@ public class SearchResultActivity extends AppCompatActivity {
 
     private void liveDataObservers(String mQuery, String mFilter, String mBeginDate, String mEndDate) {
 
-        Log.d("SearchActivity:", "Data query " + mQuery + " filter: " + mFilter + " mBeginDate " + mBeginDate + " mEndDate" + mEndDate);
-
         resultModel.getAllSearchResults(mQuery, mFilter, mBeginDate, mEndDate).observe(this, searchResults -> {
 
             int number_result = searchResults.size();
@@ -88,7 +86,7 @@ public class SearchResultActivity extends AppCompatActivity {
             mRecyclerViewSearchAdapter.setData(searchResults);
             mRecyclerViewSearchAdapter.notifyDataSetChanged();
 
-            Log.d("SearchActivityResult:", "Data has updated");
+
         });
     }
 }

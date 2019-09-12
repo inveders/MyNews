@@ -1,4 +1,4 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.controller.fragments;
 
 
 import android.os.Bundle;
@@ -17,15 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.inved.mynews.R;
 import com.example.inved.mynews.models.MemorizedArticlesViewModel;
 import com.example.inved.mynews.models.ResultModel;
-import com.example.inved.mynews.topstoriesapi.Result;
+import com.example.inved.mynews.retrofit.topstoriesapi.Result;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-/**
- * A simple {@link Fragment} subclass.
- */
 
 
 public abstract class AbsNyTimesFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.example.inved.mynews.controller;
+package com.example.inved.mynews.controller.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment;
 import android.widget.DatePicker;
 
 import com.example.inved.mynews.R;
+import com.example.inved.mynews.controller.activity.SearchActivity;
 
 import org.joda.time.LocalDateTime;
 
@@ -23,7 +24,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        myActivity = (SearchActivity) context; //on garde une référence vers l'activité
+        myActivity = (SearchActivity) context; //On garde une référence vers l'activité
     }
 
     @NonNull
