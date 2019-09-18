@@ -101,16 +101,10 @@ public class MyWorkerNotification extends Worker {
     private String getNotificationText(int articleCount) {
         String notifText;
 
-        switch (articleCount) {
-            case 0:
-                notifText = MainApplication.getResourses().getString(R.string.no_new_articles);
-                break;
-            case 1:
-                notifText = MainApplication.getResourses().getString(R.string.one_new_article);
-                break;
-
-            default:
-                notifText = MainApplication.getResourses().getString(R.string.new_articles_1, articleCount);
+        if (articleCount == 1) {
+            notifText = MainApplication.getResourses().getString(R.string.one_new_article);
+        } else {
+            notifText = MainApplication.getResourses().getString(R.string.new_articles_1, articleCount);
         }
 
         return notifText;
@@ -143,15 +137,11 @@ public class MyWorkerNotification extends Worker {
                 assert response != null;
                 if (response.body() != null && response.body().response.docs != null) {
 
-                    notificationText = getNotificationText(response.body().response.docs.size());
+                    if (response.body().response.docs.size()!=0){
+                        notificationText = getNotificationText(response.body().response.docs.size());
 
-                    createNotification();
-
-
-                } else {
-                    notificationText = getNotificationText(0);
-                    createNotification();
-
+                        createNotification();
+                    }
 
                 }
 

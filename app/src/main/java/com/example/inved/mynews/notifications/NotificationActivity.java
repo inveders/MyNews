@@ -41,7 +41,7 @@ public class NotificationActivity extends AppCompatActivity {
     CheckBox checkboxWorld;
     Switch notificationSwitchEnable;
 
-    private static final int TIME_IN_HOURS = 24;
+    private static final int TIME_IN_HOURS = 1;
 
     Boolean isNotificationEnabled;
     public String mQueryNotif;
