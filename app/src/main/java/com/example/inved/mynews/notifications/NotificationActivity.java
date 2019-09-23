@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -42,7 +41,7 @@ public class NotificationActivity extends AppCompatActivity {
     CheckBox checkboxWorld;
     Switch notificationSwitchEnable;
 
-    private static final int TIME_IN_HOURS = 1;
+    private static final int TIME_IN_HOURS = 24;
 
     Boolean isNotificationEnabled;
     public String mQueryNotif;
@@ -198,17 +197,6 @@ public class NotificationActivity extends AppCompatActivity {
 
     public void queryToEditTextSearch() {
         mQueryNotif = editTextSearch.getText().toString();
-    }
-
-    public void toastMessage() {
-        Toast.makeText(NotificationActivity.this, getString(R.string.modifications_registered), Toast.LENGTH_SHORT).show();
-    }
-
-    private void actionsOnChangements() {
-        queryToEditTextSearch();
-        fillCheckboxList();
-        sharedPreferencesActions();
-        toastMessage();
     }
 
     public void notificationActionIfEnabled() {
