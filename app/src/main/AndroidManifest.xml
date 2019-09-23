@@ -44,6 +44,12 @@
             android:parentActivityName=".controller.activity.MainActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".utils.WebViewActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".controller.activity.MainActivity"
+            android:screenOrientation="portrait" />
+
 
         <uses-library
             android:name="android.test.runner"

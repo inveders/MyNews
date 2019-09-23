@@ -6,15 +6,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.inved.mynews.R;
-import com.example.inved.mynews.controller.PageAdapter;
-import com.example.inved.mynews.notifications.NotificationActivity;
-import com.google.android.material.tabs.TabLayout;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.inved.mynews.R;
+import com.example.inved.mynews.controller.PageAdapter;
+import com.example.inved.mynews.notifications.NotificationActivity;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.Objects;
 

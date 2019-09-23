@@ -1,8 +1,8 @@
 package com.example.inved.mynews.controller.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +19,7 @@ import com.example.inved.mynews.R;
 import com.example.inved.mynews.database.MemorizedArticles;
 import com.example.inved.mynews.models.MemorizedArticlesViewModel;
 import com.example.inved.mynews.topstoriesapi.Result;
+import com.example.inved.mynews.utils.WebViewActivity;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.DateTime;
@@ -77,9 +77,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             holder.mTitleItem.setText(mData.get(position).title);
             holder.mTitleItem.setOnClickListener(view -> {
-                openChromeCustomTabs(view.getContext(), mData.get(position).url);
 
-                insertArticleInDatabase(mData.get(position).url);
+                String url = mData.get(position).url;
+
+                //Show article in a webview
+                Intent intent = new Intent(view.getContext(), WebViewActivity.class);
+                intent.putExtra(WebViewActivity.WebUrl,url);
+                view.getContext().startActivity(intent);
+
+                insertArticleInDatabase(url);
 
             });
 
@@ -141,14 +147,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
-    /**
-     * Creation of the Chrome Custom Tabs
-     */
-    private void openChromeCustomTabs(Context context, String url) {
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-        CustomTabsIntent intent = builder.build();
-        intent.launchUrl(context, Uri.parse(url));
-    }
 
     private void insertArticleInDatabase(String url) {
 
