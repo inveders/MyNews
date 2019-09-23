@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -73,8 +74,8 @@ public class NotificationActivity extends AppCompatActivity {
         notificationSwitchEnable = findViewById(R.id.notification_switch);
 
         isNotificationEnabled = getPreferences(MODE_PRIVATE).getBoolean(KEY_NOTIFICATION_ENABLE, false);
-
         isNotificationEnableInMemory();
+
 
         notificationSwitchEnable.setOnCheckedChangeListener((compoundButton, bChecked) -> {
 
@@ -123,6 +124,10 @@ public class NotificationActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+                if (isNotificationEnabled) {
+                    notificationSwitchEnable.setChecked(false);
+                }
+
             }
 
             public void afterTextChanged(Editable arg0) {
@@ -134,7 +139,6 @@ public class NotificationActivity extends AppCompatActivity {
                 } else {
                     queryToEditTextSearch();
                     sharedPreferencesActions();
-                    //launchJob();
                 }
 
             }
@@ -145,15 +149,17 @@ public class NotificationActivity extends AppCompatActivity {
     public void onCheckboxClicked(View view) {
         // Take the current view?
 
-        ((CheckBox) view).setOnCheckedChangeListener((compoundButton, b) -> {
-
             if (isNotificationEnabled) {
+                if (((CheckBox) view).isChecked()) {
 
-                actionsOnChangements();
+                    notificationSwitchEnable.setChecked(false);
+                } else {
+
+                    notificationSwitchEnable.setChecked(false);
+                }
             }
-        });
+        }
 
-    }
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -190,15 +196,15 @@ public class NotificationActivity extends AppCompatActivity {
         preferences.edit().putString(KEY_CHECKBOX_LIST, gson.toJson(isCheckBoxList)).apply();
     }
 
-    public void queryToEditTextSearch(){
+    public void queryToEditTextSearch() {
         mQueryNotif = editTextSearch.getText().toString();
     }
 
-    public void toastMessage(){
+    public void toastMessage() {
         Toast.makeText(NotificationActivity.this, getString(R.string.modifications_registered), Toast.LENGTH_SHORT).show();
     }
 
-    private void actionsOnChangements(){
+    private void actionsOnChangements() {
         queryToEditTextSearch();
         fillCheckboxList();
         sharedPreferencesActions();
@@ -222,7 +228,7 @@ public class NotificationActivity extends AppCompatActivity {
 
     }
 
-    public void launchJob(){
+    public void launchJob() {
 
         Data data = new Data.Builder()
                 .putString(MyWorkerNotification.EXTRA_QUERY, mQueryNotif)
@@ -230,9 +236,8 @@ public class NotificationActivity extends AppCompatActivity {
                 .build();
 
 
-
         PeriodicWorkRequest periodicWorkRequest = new PeriodicWorkRequest.Builder(
-                MyWorkerNotification.class, TIME_IN_HOURS,TimeUnit.HOURS)
+                MyWorkerNotification.class, TIME_IN_HOURS, TimeUnit.HOURS)
                 .setInputData(data)
                 .addTag("periodic_work")
                 .build();
@@ -253,14 +258,15 @@ public class NotificationActivity extends AppCompatActivity {
         isCheckBoxList.clear();
 
         // Check which checkbox was clicked
-        if (checkboxTechnology.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxTechnology));
+        if (checkboxTechnology.isChecked())
+            isCheckBoxList.add(getString(R.string.CheckboxTechnology));
         if (checkboxScience.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxScience));
         if (checkboxSports.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxSports));
         if (checkboxFood.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxFood));
         if (checkboxTravel.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxTravel));
         if (checkboxWorld.isChecked()) isCheckBoxList.add(getString(R.string.CheckboxWorld));
 
-       return isCheckBoxList;
+        return isCheckBoxList;
     }
 
     public void checkCheckboxIfListContainsTheirName() {
@@ -273,12 +279,18 @@ public class NotificationActivity extends AppCompatActivity {
             }.getType());
 
         // Check checkbox if they are in the list
-        if (isCheckBoxList.contains(getString(R.string.CheckboxTechnology))) checkboxTechnology.setChecked(true);
-        if (isCheckBoxList.contains(getString(R.string.CheckboxScience))) checkboxScience.setChecked(true);
-        if (isCheckBoxList.contains(getString(R.string.CheckboxSports))) checkboxSports.setChecked(true);
-        if (isCheckBoxList.contains(getString(R.string.CheckboxFood))) checkboxFood.setChecked(true);
-        if (isCheckBoxList.contains(getString(R.string.CheckboxTravel))) checkboxTravel.setChecked(true);
-        if (isCheckBoxList.contains(getString(R.string.CheckboxWorld))) checkboxWorld.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxTechnology)))
+            checkboxTechnology.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxScience)))
+            checkboxScience.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxSports)))
+            checkboxSports.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxFood)))
+            checkboxFood.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxTravel)))
+            checkboxTravel.setChecked(true);
+        if (isCheckBoxList.contains(getString(R.string.CheckboxWorld)))
+            checkboxWorld.setChecked(true);
 
     }
 
