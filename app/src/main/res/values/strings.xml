@@ -39,6 +39,7 @@
 
     <!--For Menu item-->
     <string name="Search">Search</string>
+    <string name="Refresh">Refresh</string>
     <string name="Notification">Notifications</string>
 
     <!--For Toolbar-->
